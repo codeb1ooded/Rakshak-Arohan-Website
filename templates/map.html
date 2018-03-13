@@ -20,21 +20,29 @@
 
         // Create an array of alphabetical characters used to label the markers.
         var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        var geocoder = new google.maps.Geocoder;
 
         // Add some markers to the map.
         // Note: The code uses the JavaScript Array.prototype.map() method to
         // create an array of markers based on a given "locations" array.
         // The map() method here has nothing to do with the Google Maps API.
         var markers = locations.map(function(location, i) {
+//            console.log(location.lat);
+          var latlng = {lat: parseFloat(location.lat), lng: parseFloat(location.lng)};
           var marker =  new google.maps.Marker({
             position: location,
-            title : locations[i].crime,
+            title : location.crime,
             label: labels[i % labels.length],
           });
+
           marker.addListener('click', function() {
-          infowindow.setContent("<div id='pop_up'> <b>CRIME: </b>"+locations[i].crime+"<br><b>STATUS: </b>"+locations[i].status+"</div>");
+              geocoder.geocode({'location': latlng}, function(results, status) {
+                console.log(results[0].formatted_address);
+
+          infowindow.setContent("<div id='pop_up'> <b>CRIME: </b>"+location.crime+"<br><b>STATUS: </b>"+location.status+"<br><b>AREA: </b>"+results[0].formatted_address+"</div>");
           infowindow.open(map, marker);
-        });
+            });
+          });
           return marker;
         });
 
@@ -51,16 +59,8 @@
           content: contentString
         });
 
-
-
-//        console.log(titleText);
-        // Add a marker clusterer to manage the markers.
         var markerCluster = new MarkerClusterer(map, markers,
             {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-
-
-
-
       }
       var locations = [
         {lat: 18.975, lng: 72.825833, crime: 'burglary', status:'pending'},
