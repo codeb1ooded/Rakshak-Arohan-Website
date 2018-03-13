@@ -14,8 +14,8 @@
       function initMap() {
 
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 3,
-          center: {lat: -28.024, lng: 140.887}
+          zoom: 4,
+          center: {lat: 23.033333, lng: 80.616667}
         });
 
         // Create an array of alphabetical characters used to label the markers.
@@ -26,40 +26,66 @@
         // create an array of markers based on a given "locations" array.
         // The map() method here has nothing to do with the Google Maps API.
         var markers = locations.map(function(location, i) {
-          return new google.maps.Marker({
+          var marker =  new google.maps.Marker({
             position: location,
-            label: labels[i % labels.length]
+            title : locations[i].crime,
+            label: labels[i % labels.length],
           });
+          marker.addListener('click', function() {
+          infowindow.setContent("<div id='pop_up'> <b>CRIME: </b>"+locations[i].crime+"<br><b>STATUS: </b>"+locations[i].status+"</div>");
+          infowindow.open(map, marker);
+        });
+          return marker;
         });
 
+
+        var contentString = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
+            '<div id="bodyContent">'+
+            '</div>'+
+            '</div>';
+
+        var infowindow = new google.maps.InfoWindow({
+          content: contentString
+        });
+
+
+
+//        console.log(titleText);
         // Add a marker clusterer to manage the markers.
         var markerCluster = new MarkerClusterer(map, markers,
             {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+
+
+
+
       }
       var locations = [
-        {lat: 18.975, lng: 72.825833},
-        {lat: 28.666667, lng: 77.216667},
-        {lat: 12.983333, lng: 77.583333},
-        {lat: 17.375278, lng: 78.474444},
-        {lat: 23.033333, lng: 72.616667},
-        {lat: 13.083333, lng: 80.283333},
-        {lat: 22.569722, lng: 88.369722},
-        {lat: 20.966667, lng: 72.9},
-        {lat: 18.533333, lng: 73.866667},
-        {lat: 24.583333, lng: 86.85},
-        {lat: 26.85, lng: 80.916667},
-        {lat: 26.466667, lng: 80.35},
-        {lat: 23.3, lng: 82.3},
-        {lat: 22.716667, lng: 75.833333},
-        {lat: 19.2, lng: 72.966667},
-        {lat: 23.266667, lng: 77.4},
-        {lat: 17.7, lng: 83.3},
-        {lat: 18.6279288, lng: 73.8009829},
-        {lat: 23.3, lng: 82.666667},
-        {lat: 22.3, lng: 73.2},
-        {lat: 28.666667, lng: 77.433333},
-        {lat: 30.9, lng: 75.85},
-        {lat: 27.183333, lng: 78.016667}
+        {lat: 18.975, lng: 72.825833, crime: 'burglary', status:'pending'},
+        {lat: 28.666667, lng: 77.216667, crime: 'car break', status:'pending'},
+        {lat: 12.983333, lng: 77.583333, crime: 'car break', status:'pending'},
+        {lat: 17.375278, lng: 78.474444, crime: 'fraud', status:'pending'},
+        {lat: 23.033333, lng: 72.616667, crime: 'fraud', status:'resolved'},
+        {lat: 13.083333, lng: 80.283333, crime: 'rape', status:'resolved'},
+        {lat: 22.569722, lng: 88.369722, crime: 'burglary', status:'pending'},
+        {lat: 20.966667, lng: 72.9, crime: 'rape', status:'resolved'},
+        {lat: 18.533333, lng: 73.866667, crime: 'car break', status:'resolved'},
+        {lat: 24.583333, lng: 86.85, crime: 'rape', status:'resolved'},
+        {lat: 26.85, lng: 80.916667, crime: 'assault', status:'pending'},
+        {lat: 26.466667, lng: 80.35, crime: 'fraud', status:'resolved'},
+        {lat: 23.3, lng: 82.3, crime: 'rape', status:'moved to court'},
+        {lat: 22.716667, lng: 75.833333, crime: 'burglary', status:'pending'},
+        {lat: 19.2, lng: 72.966667, crime: 'assault', status:'pending'},
+        {lat: 23.266667, lng: 77.4, crime: 'car break', status:'pending'},
+        {lat: 17.7, lng: 83.3, crime: 'fraud', status:'moved to court'},
+        {lat: 18.6279288, lng: 73.8009829, crime: 'burglary', status:'pending'},
+        {lat: 23.3, lng: 82.666667, crime: 'burglary', status:'moved to court'},
+        {lat: 22.3, lng: 73.2, crime: 'rape', status:'moved to court'},
+        {lat: 28.666667, lng: 77.433333, crime: 'assault', status:'moved to court'},
+        {lat: 30.9, lng: 75.85, crime: 'fraud', status:'moved to court'},
+        {lat: 27.183333, lng: 78.016667, crime: 'burglary', status:'moved to court'}
       ]
     </script>
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
