@@ -10,6 +10,17 @@ $(document).ready(function(){
     $("select").change(function(){
         $(this).find("option:selected").each(function(){
             var optionValue = $(this).attr("value");
+            if(optionValue=="goa" || optionValue=="assam")
+            {
+                 var element = document.getElementById("Crime");
+                 element.value = "none";
+            }
+            if(optionValue=="rape" || optionValue=="kidnap")
+            {
+                 var element = document.getElementById("State");
+                 element.value = "none";
+            }
+            console.log(optionValue)
             if(optionValue){
                 $(".box").not("." + optionValue).hide();
                 $("." + optionValue).show();
@@ -23,15 +34,27 @@ $(document).ready(function(){
 </head>
 <body>
     <div>
-        <select>
-            <option>Choose State</option>
+        <select id="State">
+            <option value="none">Choose State</option>
             <option value="total">Overall</option>
             <option value="goa">Goa</option>
             <option value="assam">Assam</option>
         </select>
+
+        <select id="Crime">
+            <option value="none">Choose Crime</option>
+            <option value="total">Overall</option>
+            <option value="rape">Rape</option>
+            <option value="kidnap">Kidnapping and Abduction</option>
+        </select>
     </div>
+
     <div class="total box" id="chart-total">{{total | safe}}</div>
     <div class="goa box" id="chart-goa">{{goa | safe}}</div>
     <div class="assam box" id="chart-assam">{{assam | safe}}</div>
+    <div class="rape box" id="chart-rape">{{rape | safe}}</div>
+    <div class="kidnap box" id="chart-kidnap">{{kidnap | safe}}</div>
+
+
 </body>
 </html>

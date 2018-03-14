@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
@@ -11,7 +12,7 @@ class USER(models.Model):
   def __str__(self):
       return self.NAME
 
-class FIR_REPORT(model.Model):
+class FIR_REPORT(models.Model):
   CRIME_TYPE = models.CharField(max_length=100)
   LOCATION_LAT = models.IntegerField()
   LOCATION_LONG = models.IntegerField()
