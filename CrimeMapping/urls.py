@@ -23,5 +23,7 @@ urlpatterns = [
     url(r'^viewMap/$', map_render),
     url(r'^prediction/$', predict_graph, name='predict_graph'),
     url(r'^register/$', request_page, name='request_page'),
+    url(r'^most_prominent_city/$',prominent_city, name='most_prominent_city'),
+    url(r'^most_prominent_crime/$', prominent_crime, name='most_prominent_crime'),
 
 ]

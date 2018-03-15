@@ -26,7 +26,6 @@ def request_page(request):
         #   for i in somevar:
         #     report = FIR_REPORT.objects.filter(CRIME_TYPE__in = somevar)
         #     reports = json_serializer.serialize(report, ensure_ascii=False)
-        print somevar
         if not somevar:
             if not date_end and date_start:
                 reports = json_serializer.serialize(FIR_REPORT.objects.all(), ensure_ascii=False)

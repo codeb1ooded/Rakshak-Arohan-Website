@@ -53,10 +53,15 @@
                 <option value="rape">Rape</option>
                 <option value="kidnap">Kidnapping and Abduction</option>
             </select>
+
             <input type="submit" name="mybtn" value="Select">
+            <div><a href = "{%url 'most_prominent_city'%}">Most prominent cities</a></div>
+            <div><a href = "{%url 'most_prominent_crime'%}">Most prominent crimes</a></div>
+
         </form>
     </div>
     <div class="total box" id="chart-1">{{total | safe}}</div>
+
 
 
 
