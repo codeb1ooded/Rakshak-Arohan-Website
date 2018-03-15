@@ -14,17 +14,20 @@ class USER(models.Model):
   def __str__(self):
       return self.NAME
 
-class FIR_REPORT(model.Model):
+class FIR_REPORT(models.Model):
   CRIME_TYPE = models.CharField(max_length=100)
-  LOCATION_LAT = models.IntegerField()
-  LOCATION_LONG = models.IntegerField()
-  CRIME_DES = models.CharField(max_length=1000)
-  PERSON_COMPLAINT = models.ForeignKey(max_length=100)
+  LAT = models.FloatField()
+  LNG = models.FloatField()
+  CRIME_DESCRIPTION = models.CharField(max_length=1000)
+  PERSON_COMPLAINT = models.ForeignKey(USER,on_delete=models.CASCADE)
   COMPLAINT_BY = models.CharField(max_length=100)
-  DATE_CRIME = models.DateField(_(u"Conversation Date"), blank=True)
-  TIME_CRIME = models.TimeField(_(u"Conversation Time"), blank=True)
+  DATE_CRIME = models.DateField((u"Conversation Date"), blank=True)
+  TIME_CRIME = models.TimeField((u"Conversation Time"), blank=True)
   FIR_LOC = models.CharField(max_length=100)
-  COMPLAINT_TIME = models.TimeField(_(u"Conversation Time"), blank=True)
+  COMPLAINT_TIME = models.TimeField((u"Conversation Time"), blank=True)
+  PHONE=models.CharField(max_length=100)
+  STATUS = models.CharField(default='Pending',max_length=100)
+
 
   def __str__(self):
       return self.CRIME_TYPE
