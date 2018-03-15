@@ -17,11 +17,14 @@ from django.conf.urls import url
 from django.contrib import admin
 from maps.views import *
 from prediction.views import *
+from crimeReporting.views import fir_reg
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^viewMap/$', map_render),
     url(r'^prediction/$',my_view),
+    url(r'^firReg/$',fir_reg),
     url(r'^register/$', request_page, name='request_page'),
 
 ]

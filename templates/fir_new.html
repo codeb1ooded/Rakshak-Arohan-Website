@@ -1,0 +1,12 @@
+
+{% block content %}
+
+<form method="POST" class="post-form">{% csrf_token %}
+  <table>{{form.as_table}}</table>
+<button type="Submit" class="save btn btn-default">
+  Save
+</button>
+</form>
+
+{% endblock %}
+
