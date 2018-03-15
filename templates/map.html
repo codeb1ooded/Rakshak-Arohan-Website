@@ -1,5 +1,5 @@
-{% load staticfiles %}
 <!DOCTYPE html>
+{% load staticfiles %}
 <html>
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
@@ -8,56 +8,46 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <link rel="stylesheet" href="{% static 'css/map.css' %}" />
   </head>
-  <body>
-  <div id="filter" >
-    <form action="{% url 'request_page' %}" method="GET">
 
-      <input type="checkbox" name="crime" value="theft" class="box">THEFT<br>
-      <input type="checkbox" name="crime" value="kidnap" class="box">KIDNAPPING <br>
-      <input type="submit" value="Submit" name="mybtn" class="box button">
-    </form>
-  </div>
+  <body>
+    <div id="filter" >
+      <form action="{% url 'request_page' %}" method="GET">
+
+        <input type="checkbox" name="crime" value="theft" class="box">THEFT<br>
+        <input type="checkbox" name="crime" value="kidnap" class="box">KIDNAPPING <br>
+        <input type="submit" value="Submit" name="mybtn" class="box button">
+      </form>
+    </div>
+
     <div id="map"></div>
+
     <script>
       function initMap() {
-
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 4,
           center: {lat: 23.033333, lng: 80.616667}
         });
 
-        // Create an array of alphabetical characters used to label the markers.
         var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         var geocoder = new google.maps.Geocoder;
-
-        // Add some markers to the map.
-        // Note: The code uses the JavaScript Array.prototype.map() method to
-        // create an array of markers based on a given "locations" array.
-        // The map() method here has nothing to do with the Google Maps API.
         var markers = locations.map(function(location, i) {
-//            console.log(location.fields.LAT);
           var latlng = {lat: parseFloat(location.fields.LAT), lng: parseFloat(location.fields.LNG)};
           var latlng1 = {lat: location.fields.LAT, lng: location.fields.LNG};
-
           console.log(latlng);
           var marker =  new google.maps.Marker({
             position: latlng1,
             title : location.fields.CRIME_TYPE,
             label: labels[i % labels.length],
           });
-//          console.log(marker);
           marker.addListener('click', function() {
-              geocoder.geocode({'location': latlng}, function(results, status) {
-                console.log(results[0].formatted_address);
-
-          infowindow.setContent("<div id='pop_up'> <b>CRIME: </b>"+location.fields.CRIME_TYPE+"<br><b>STATUS: </b>"+location.fields.STATUS+"<br><b>AREA: </b>"+results[0].formatted_address+"</div>");
-          infowindow.open(map, marker);
+            geocoder.geocode({'location': latlng}, function(results, status) {
+              console.log(results[0].formatted_address);
+              infowindow.setContent("<div id='pop_up'> <b>CRIME: </b>"+location.fields.CRIME_TYPE+"<br><b>STATUS: </b>"+location.fields.STATUS+"<br><b>AREA: </b>"+results[0].formatted_address+"</div>");
+              infowindow.open(map, marker);
             });
           });
           return marker;
         });
-
-
         var contentString = '<div id="content">'+
             '<div id="siteNotice">'+
             '</div>'+
@@ -65,24 +55,21 @@
             '<div id="bodyContent">'+
             '</div>'+
             '</div>';
-
         var infowindow = new google.maps.InfoWindow({
           content: contentString
         });
-
         var markerCluster = new MarkerClusterer(map, markers,
             {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
       }
 
       var locations =JSON.parse( '{{ report|escapejs }}');
       console.log(typeof('{{ report|escapejs }}'))
+    </script>
 
-//      console.log(locations[0].fields)
-    </script>
-    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDA72RxHoUnAPfspsUxDgVykHK2ONPIckc&callback=initMap">
-    </script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDA72RxHoUnAPfspsUxDgVykHK2ONPIckc&callback=initMap"></script>
+
   </body>
+
 </html>

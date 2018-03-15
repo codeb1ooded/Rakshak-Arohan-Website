@@ -5,6 +5,11 @@ from django.contrib.auth.models import *
 import datetime
 # Create your models here.
 
+STATUS_CHOICES = (
+       ('pending','PENDING'),
+       ('moved', 'MOVED TO COURT'),
+       ('closed','CLOSED'),
+    )
 
 class USER(models.Model):
   USER_REF = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name="USER")
@@ -26,7 +31,7 @@ class FIR_REPORT(models.Model):
   FIR_LOC = models.CharField(max_length=100)
   COMPLAINT_TIME = models.TimeField((u"Conversation Time"), blank=True)
   PHONE=models.CharField(max_length=100)
-  STATUS = models.CharField(default='Pending',max_length=100)
+  STATUS = models.CharField(default='Pending',choices = STATUS_CHOICES,max_length=100)
 
 
   def __str__(self):
