@@ -5,55 +5,59 @@
     <script type="text/javascript" src="{% static 'fusioncharts/fusioncharts.js' %}"></script>
     <script type="text/javascript" src=" {% static 'fusioncharts/themes/fusioncharts.theme.fint.js' %}"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-    $("select").change(function(){
-        $(this).find("option:selected").each(function(){
-            var optionValue = $(this).attr("value");
-            if(optionValue=="goa" || optionValue=="assam")
-            {
-                 var element = document.getElementById("Crime");
-                 element.value = "none";
-            }
-            if(optionValue=="rape" || optionValue=="kidnap")
-            {
-                 var element = document.getElementById("State");
-                 element.value = "none";
-            }
-            console.log(optionValue)
-            if(optionValue){
-                $(".box").not("." + optionValue).hide();
-                $("." + optionValue).show();
-            } else{
-                $(".box").hide();
-            }
-        });
-    }).change();
-});
-</script>
+<!--<script type="text/javascript">-->
+<!--$(document).ready(function(){-->
+    <!--$("select").change(function(){-->
+        <!--$(this).find("option:selected").each(function(){-->
+            <!--var optionValue = $(this).attr("value");-->
+
+             <!--if(optionValue=="goa" || optionValue=="assam")-->
+            <!--{-->
+                 <!--var element = document.getElementById("Crime");-->
+                 <!--element.value = "none";-->
+            <!--}-->
+            <!--if(optionValue=="rape" || optionValue=="kidnap")-->
+            <!--{-->
+                 <!--var element = document.getElementById("State");-->
+                 <!--element.value = "none";-->
+            <!--}-->
+            <!--console.log(optionValue)-->
+            <!--if(optionValue){-->
+                <!--$(".box").not("." + optionValue).hide();-->
+                <!--$("." + optionValue).show();-->
+            <!--} else{-->
+                <!--$(".box").hide();-->
+            <!--}-->
+        <!--});-->
+    <!--}).change();-->
+<!--});-->
+<!--</script>-->
 </head>
 <body>
+
+
+<h3>filter: - <br><b>State </b>{{state}}<br><b>Crime </b>{{crime}}</h3>
+
     <div>
-        <select id="State">
-            <option value="none">Choose State</option>
-            <option value="total">Overall</option>
-            <option value="goa">Goa</option>
-            <option value="assam">Assam</option>
-        </select>
+        <form action="{% url 'predict_graph' %}" method="get">
 
-        <select id="Crime">
-            <option value="none">Choose Crime</option>
-            <option value="total">Overall</option>
-            <option value="rape">Rape</option>
-            <option value="kidnap">Kidnapping and Abduction</option>
-        </select>
+            <select name="state">
+                <option value="none">Choose State</option>
+                <option value="total" selected="selected">Overall</option>
+                <option value="goa">Goa</option>
+                <option value="assam">Assam</option>
+            </select>
+            <select name="crime">
+                <option value="none">Choose Crime</option>
+                <option value="total" selected="selected">Overall</option>
+                <option value="rape">Rape</option>
+                <option value="kidnap">Kidnapping and Abduction</option>
+            </select>
+            <input type="submit" name="mybtn" value="Select">
+        </form>
     </div>
+    <div class="total box" id="chart-1">{{total | safe}}</div>
 
-    <div class="total box" id="chart-total">{{total | safe}}</div>
-    <div class="goa box" id="chart-goa">{{goa | safe}}</div>
-    <div class="assam box" id="chart-assam">{{assam | safe}}</div>
-    <div class="rape box" id="chart-rape">{{rape | safe}}</div>
-    <div class="kidnap box" id="chart-kidnap">{{kidnap | safe}}</div>
 
 
 </body>

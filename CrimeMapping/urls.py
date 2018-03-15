@@ -21,7 +21,7 @@ from prediction.views import *
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^viewMap/$', map_render),
-    url(r'^prediction/$',my_view),
+    url(r'^prediction/$', predict_graph, name='predict_graph'),
     url(r'^register/$', request_page, name='request_page'),
 
 ]
