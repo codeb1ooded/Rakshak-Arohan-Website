@@ -7,6 +7,8 @@
     <title>Rakshak</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <link rel="stylesheet" href="{% static 'css/map.css' %}" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
   </head>
 
   <body>
@@ -15,8 +17,13 @@
 
         <input type="checkbox" name="crime" value="theft" class="box">THEFT<br>
         <input type="checkbox" name="crime" value="kidnap" class="box">KIDNAPPING <br>
+        Start Date: <input type="date" name="date_crime_start">
+        End Date :  <input type="date" name="date_crime_end">
+
         <input type="submit" value="Submit" name="mybtn" class="box button">
+
       </form>
+
     </div>
 
     <div id="map"></div>
@@ -65,6 +72,8 @@
       var locations =JSON.parse( '{{ report|escapejs }}');
       console.log(typeof('{{ report|escapejs }}'))
     </script>
+
+
 
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 

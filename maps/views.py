@@ -18,11 +18,27 @@ def request_page(request):
     json_serializer = serializers.get_serializer("json")()
     if (request.GET.get('mybtn')):
         somevar = (request.GET.getlist('crime'))
+        date_start = (request.GET.get('date_crime_start'))
+        date_end = (request.GET.get('date_crime_end'))
+        # if not somevar:
+        #     reports = json_serializer.serialize(FIR_REPORT.objects.all(), ensure_ascii=False)
+        # else:
+        #   for i in somevar:
+        #     report = FIR_REPORT.objects.filter(CRIME_TYPE__in = somevar)
+        #     reports = json_serializer.serialize(report, ensure_ascii=False)
+        print somevar
         if not somevar:
-            reports = json_serializer.serialize(FIR_REPORT.objects.all(), ensure_ascii=False)
+            if not date_end and date_start:
+                reports = json_serializer.serialize(FIR_REPORT.objects.all(), ensure_ascii=False)
+            else:
+                report = FIR_REPORT.objects.filter(DATE_CRIME__range=[date_start, date_end])
+                reports = json_serializer.serialize(report, ensure_ascii=False)
         else:
-          for i in somevar:
-            report = FIR_REPORT.objects.filter(CRIME_TYPE__in = somevar)
+            if not date_end and not date_start:
+                report = FIR_REPORT.objects.filter(CRIME_TYPE__in = somevar)
+
+            else:
+                report = FIR_REPORT.objects.filter(CRIME_TYPE__in = somevar,DATE_CRIME__range=[date_start, date_end])
             reports = json_serializer.serialize(report, ensure_ascii=False)
 
     context = {
