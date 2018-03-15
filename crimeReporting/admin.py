@@ -4,3 +4,4 @@ from .models import *
 
 admin.site.register(USER)
 admin.site.register(FIR_REPORT)
+admin.site.register(CRIME_TIMELINE)

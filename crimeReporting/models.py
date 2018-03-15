@@ -6,9 +6,13 @@ import datetime
 # Create your models here.
 
 STATUS_CHOICES = (
+       ('lodged','LODGED'),
        ('pending','PENDING'),
+       ('investigated','INVESTIGATED'),
+       ('evidence_collection','EVIDENCE COLLECTION'),
        ('moved', 'MOVED TO COURT'),
        ('closed','CLOSED'),
+
     )
 
 class USER(models.Model):
@@ -31,8 +35,14 @@ class FIR_REPORT(models.Model):
   FIR_LOC = models.CharField(max_length=100)
   COMPLAINT_TIME = models.TimeField((u"Conversation Time"), blank=True)
   PHONE=models.CharField(max_length=100)
-  STATUS = models.CharField(default='Pending',choices = STATUS_CHOICES,max_length=100)
+  STATUS = models.CharField(default='Lodged',choices = STATUS_CHOICES,max_length=100)
 
 
   def __str__(self):
       return self.CRIME_TYPE
+
+class CRIME_TIMELINE(models.Model):
+    CRIME_ID=models.ForeignKey(FIR_REPORT,on_delete=models.CASCADE)
+    UPDATED_BY=models.ForeignKey(USER,on_delete=models.CASCADE)
+    CURRENT_STATUS=models.CharField(default='Pending',choices = STATUS_CHOICES,max_length=100)
+    TIME_OF_UPDATE=models.TimeField()
