@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="es">
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Vertical timeline intervals</title>
+    <link rel="stylesheet" href="{% static 'css/status.css' %}" />
+  </head>
+  <body>
+    <div class="container">
+      <ul id = "outer_ul">
+        <li><span></span>
+          <div>
+            <div class="title">Codify</div>
+            <div class="info">Let&apos;s make coolest things in css</div>
+            <div class="type">Presentation</div>
+          </div> <span class="number"><span>10:00</span> <span>12:00</span></span>
+        </li>
+      </ul>
+    </div>
+  <script>
+$( document ).ready(function() {
+    var li = document.createElement("li");
+    var span = document.createElement("span");
+    li.appendChild(span);
+});
+  </script>
+  </body>
+</html>

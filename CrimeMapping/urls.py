@@ -17,7 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from maps.views import *
 from prediction.views import *
-
+from crimeReporting.views import *
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^viewMap/$', map_render),
@@ -25,5 +25,5 @@ urlpatterns = [
     url(r'^register/$', request_page, name='request_page'),
     url(r'^most_prominent_city/$',prominent_city, name='most_prominent_city'),
     url(r'^most_prominent_crime/$', prominent_crime, name='most_prominent_crime'),
-
+    url(r'^crime_status/(?crime_id=P<crime_id>\d+)/$', crime_status, name='crime_status')
 ]

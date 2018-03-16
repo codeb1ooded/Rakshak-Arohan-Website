@@ -3,7 +3,7 @@
 <html>
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
+    4444
     <title>Rakshak</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <link rel="stylesheet" href="{% static 'css/map.css' %}" />
@@ -13,14 +13,31 @@
 
   <body>
     <div id="filter" >
+
       <form action="{% url 'request_page' %}" method="GET">
+        <h3>FILTERS</h3>
+        <div style="float: left; width: 33%; margin-right:10px; ">
+          <h4>Crime Wise</h4>
+          <input type="checkbox" name="crime" value="theft" class="box">THEFT<br>
+          <input type="checkbox" name="crime" value="kidnap" class="box">KIDNAPPING <br>
+        </div>
+        <div  style="float: left; width: 17%; margin-left:10px;">
+          <h4>Date</h4>
+          Start Date: <input type="date" name="date_crime_start"><br>
+          End Date :  <input type="date" name="date_crime_end"><br>
+        </div>
+        <div style="float: left; width: 50%; margin-right:10px;">
+          <h4>Crime Status</h4>
+          <input type="checkbox" name="status" value="lodged" class="box">LODGED<br>
+          <input type="checkbox" name="status" value="pending" class="box"> PENDING<br>
+          <input type="checkbox" name="status" value="investigated" class="box">INVESTIGATED<br>
+          <input type="checkbox" name="status" value="evidence_collection" class="box">EVIDENCE COLLECTION<br>
+          <input type="checkbox" name="status" value="moved" class="box">MOVED TO COURT<br>
+          <input type="checkbox" name="status" value="closed" class="box">CLOSED<br>
+          <input type="submit" value="Submit" name="mybtn" class="box button">
+        </div>
 
-        <input type="checkbox" name="crime" value="theft" class="box">THEFT<br>
-        <input type="checkbox" name="crime" value="kidnap" class="box">KIDNAPPING <br>
-        Start Date: <input type="date" name="date_crime_start">
-        End Date :  <input type="date" name="date_crime_end">
 
-        <input type="submit" value="Submit" name="mybtn" class="box button">
 
       </form>
 
@@ -46,10 +63,16 @@
             title : location.fields.CRIME_TYPE,
             label: labels[i % labels.length],
           });
+          context = {
+            status_obj : location,
+          }
+
           marker.addListener('click', function() {
             geocoder.geocode({'location': latlng}, function(results, status) {
-              console.log(results[0].formatted_address);
-              infowindow.setContent("<div id='pop_up'> <b>CRIME: </b>"+location.fields.CRIME_TYPE+"<br><b>STATUS: </b>"+location.fields.STATUS+"<br><b>AREA: </b>"+results[0].formatted_address+"</div>");
+              console.log(location.pk)
+              var url="/crime_status/?crime_id="+location.pk;
+              console.log(url)
+              infowindow.setContent("<div id='pop_up'> <b>CRIME: </b>"+location.fields.CRIME_TYPE+"<br><b>STATUS: </b><a href="+url+">click</a><br><b>AREA: </b>"+results[0].formatted_address+"</div>");
               infowindow.open(map, marker);
             });
           });

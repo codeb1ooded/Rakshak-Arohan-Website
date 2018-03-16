@@ -1,7 +1,7 @@
 from django.db import models
 
 from django.contrib.auth.models import *
-
+from django.utils.timezone import now
 import datetime
 # Create your models here.
 
@@ -24,10 +24,11 @@ class USER(models.Model):
       return self.NAME
 
 class FIR_REPORT(models.Model):
+  ID= models.AutoField(null=False,primary_key=True)
   CRIME_TYPE = models.CharField(max_length=100)
   LAT = models.FloatField()
   LNG = models.FloatField()
-  CRIME_DESCRIPTION = models.CharField(max_length=1000)
+  CRIME_DESCRIPTION = models.CharField(null=True,max_length=1000,blank=True)
   PERSON_COMPLAINT = models.ForeignKey(USER,on_delete=models.CASCADE)
   COMPLAINT_BY = models.CharField(max_length=100)
   DATE_CRIME = models.DateField((u"Conversation Date"), blank=True)
@@ -39,10 +40,11 @@ class FIR_REPORT(models.Model):
 
 
   def __str__(self):
-      return self.CRIME_TYPE
+      return str(self.ID)
 
 class CRIME_TIMELINE(models.Model):
     CRIME_ID=models.ForeignKey(FIR_REPORT,on_delete=models.CASCADE)
     UPDATED_BY=models.ForeignKey(USER,on_delete=models.CASCADE)
     CURRENT_STATUS=models.CharField(default='Pending',choices = STATUS_CHOICES,max_length=100)
-    TIME_OF_UPDATE=models.TimeField()
+    TIME_OF_UPDATE=models.DateTimeField(default=now(), blank=True)
+    DESCRIPTION=models.CharField(null=True,default="Pending",max_length=1000,blank=True)
