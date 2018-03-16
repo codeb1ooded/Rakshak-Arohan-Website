@@ -82,9 +82,11 @@ body {
   height: 100%;
 }
 .container span.number span {
+
   position: absolute;
   font-size: 10px;
-  left: -35px;
+  left: -36px;
+  margin: -47px;
   font-weight: bold;
 }
 .container span.number span:first-child {

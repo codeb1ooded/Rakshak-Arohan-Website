@@ -58,7 +58,7 @@ def request_page(request):
 
 
 def map_render_filter(request):
-    json_serializer = serializers.get_serializr("json")()
+    json_serializer = serializers.get_serializer("json")()
     reports = json_serializer.serialize(FIR_REPORT.objects.all(), ensure_ascii=False)
     context = {
         'report' : reports,
@@ -66,6 +66,20 @@ def map_render_filter(request):
     return render(request, 'map.html',context)
 
 
-def crime_status(request,crime_id):
-    print(crime_id)
-    return render(request, 'status_report.html')
+def crime_status(request):
+    if request.method == 'GET':
+        crime_id = request.GET.get('crime_id')
+        print crime_id
+        detail=  FIR_REPORT.objects.filter(ID = crime_id)
+
+        report = CRIME_TIMELINE.objects.filter(CRIME_ID = crime_id)
+        print report
+        json_serializer = serializers.get_serializer("json")()
+        reports = json_serializer.serialize(report, ensure_ascii=False)
+        details= json_serializer.serialize(detail, ensure_ascii=False)
+        context = {
+            'reports' : reports,
+            'details' : details,
+        }
+    return render(request, 'status_report.html',context)
+
