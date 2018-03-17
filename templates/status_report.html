@@ -10,6 +10,20 @@ table, th, td {
 th, td {
     padding: 15px;
 }
+.first{
+     width:70%;
+     height:300px;
+     position:absolute;
+
+ }
+.second{
+
+    width:40%;
+    height:200px;
+	position: relative;
+    top: 315px;
+    padding-top:150px;
+}
 </style>
     <meta charset="UTF-8"/>
     <title>Vertical timeline intervals</title>
@@ -20,7 +34,7 @@ th, td {
   <!--<div>{{details | safe}}</div>-->
     <div class="container">
 
-  <div style="float:left; position: absolute;" id="tables">
+  <div class="first" id="tables">
 
     <table>
       <tr>
@@ -58,6 +72,7 @@ th, td {
       </tr>
     </table>
    </div>
+      <div>
       <ul id = "outer_ul" style="float: right;">
         <!--<li><span></span>-->
           <!--<div>-->
@@ -67,11 +82,27 @@ th, td {
           <!--</div> <span class="number"><span>10:00</span> <span>12:00</span></span>-->
         <!--</li>-->
       </ul>
-    </div>
+</div>
+
+
+  <div class="second">
+    {% block content %}
+<form method="GET" class="post-form" action="{% url 'update_crime'  %}">
+  <table>{{form.as_table}}
+  </table>
+<button type="Submit" class="save btn btn-default">
+  Update
+</button>
+</form>
+    {% endblock %}
+</div>
+      </div>
+
   <script>
     $( document ).ready(function() {
         var reports =JSON.parse( '{{ reports|escapejs }}');
         var details = JSON.parse( '{{ details|escapejs }}');
+        var users=JSON.parse( '{{ users|escapejs }}');
         var i;
         console.log(details);
 
@@ -98,16 +129,21 @@ th, td {
           var li = document.createElement("li");
           var div1 = document.createElement("div");
           var div = document.createElement("div");
+          var div4 = document.createElement("div");
           div1.classList.add('title');
           var div2 = document.createElement("div");
-          console.log(reports[i]);
           div1.innerHTML = reports[i].fields.CURRENT_STATUS;
           div2.classList.add('info');
           div2.innerHTML = reports[i].fields.DESCRIPTION;
-          console.log(reports[i].fields.TIME_OF_UPDATE);
+          var j;
+          for(j=0;j<users.length;j++)
+          {
+           if(reports[i].fields.UPDATED_BY==users[j].pk)
+              div4.innerHTML = users[j].fields.NAME;
+          }
+          div4.classList.add('type');
           var date=reports[i].fields.TIME_OF_UPDATE;
           date=date.split("T");
-          console.log(date[0] + " **** " + date[1]);
           time=date[1].split("Z");
           var div3 = document.createElement("div");
           var span = document.createElement("span");
@@ -124,6 +160,7 @@ th, td {
           div.appendChild(div1);
           div.appendChild(div2);
           div.appendChild(div3);
+          div.appendChild(div4);
           ul.appendChild(li);
           li.appendChild(span);
         }

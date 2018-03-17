@@ -10,8 +10,7 @@ def fir_reg(request):
     if request.method == "POST":
       form = FirRegistrationForm(request.POST)
       address = request.POST.get('address')
-      print "=" * 30
-      print address
+      print (address)
       if form.is_valid():
           # print "***********************"
           data = form.save(commit=False)
@@ -19,7 +18,7 @@ def fir_reg(request):
           data.FIR_LOC = address
           api_key = "AIzaSyDA72RxHoUnAPfspsUxDgVykHK2ONPIckc"
           api_response = requests.get('https://maps.googleapis.com/maps/api/geocode/json?address={0}&key={1}'.format(address, api_key))
-          print api_response
+          print (api_response)
           api_response_dict = api_response.json()
           if api_response_dict['status'] == 'OK':
               data.LAT = api_response_dict['results'][0]['geometry']['location']['lat']

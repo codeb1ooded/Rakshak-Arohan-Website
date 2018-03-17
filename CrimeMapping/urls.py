@@ -27,4 +27,5 @@ urlpatterns = [
     url(r'^most_prominent_crime/$', prominent_crime, name='most_prominent_crime'),
     url(r'^crime_status/$', crime_status, name='crime_status'),
     url(r'^firReg/$',fir_reg),
+    url(r'^update_crime',update_crime,name="update_crime")
 ]

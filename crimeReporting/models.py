@@ -16,7 +16,7 @@ STATUS_CHOICES = (
     )
 
 class USER(models.Model):
-  USER_REF = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name="USER")
+  USER_REF = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name="USER_REF")
   NAME = models.CharField(max_length=100)
   PASSWORD= models.CharField(max_length=6)
 
@@ -44,7 +44,7 @@ class FIR_REPORT(models.Model):
 
 class CRIME_TIMELINE(models.Model):
     CRIME_ID=models.ForeignKey(FIR_REPORT,on_delete=models.CASCADE)
-    UPDATED_BY=models.ForeignKey(USER,on_delete=models.CASCADE)
+    UPDATED_BY=models.ForeignKey(USER,on_delete=models.CASCADE,db_column="NAME")
     CURRENT_STATUS=models.CharField(default='Pending',choices = STATUS_CHOICES,max_length=100)
     TIME_OF_UPDATE=models.DateTimeField(default=now(), blank=True)
     DESCRIPTION=models.CharField(null=True,default="Pending",max_length=1000,blank=True)

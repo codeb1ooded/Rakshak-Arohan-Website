@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.core import serializers
 from crimeReporting.models import *
+from django import forms
+from .forms import *
 
-import ast
 # Create your views here.
 
 
@@ -65,21 +66,41 @@ def map_render_filter(request):
     }
     return render(request, 'map.html',context)
 
-
 def crime_status(request):
     if request.method == 'GET':
-        crime_id = request.GET.get('crime_id')
-        print crime_id
-        detail=  FIR_REPORT.objects.filter(ID = crime_id)
 
+        crime_id= request.GET.get('crime_id')
+        global detail
+        detail=  FIR_REPORT.objects.filter(ID = crime_id)
         report = CRIME_TIMELINE.objects.filter(CRIME_ID = crime_id)
-        print report
         json_serializer = serializers.get_serializer("json")()
         reports = json_serializer.serialize(report, ensure_ascii=False)
         details= json_serializer.serialize(detail, ensure_ascii=False)
+        users = json_serializer.serialize(USER.objects.all(), ensure_ascii = False)
+        form = UPDATE_FORM()
         context = {
-            'reports' : reports,
-            'details' : details,
+            'reports': reports,
+            'details': details,
+            'users': users,
+            'form': form
         }
-    return render(request, 'status_report.html',context)
+        return render(request, 'status_report.html', context)
+
+
+def update_crime(request):
+    if request.method == 'GET':
+        #crime_id = request.GET.get('crime_id')
+        form = UPDATE_FORM(request.GET)
+        if form.is_valid():
+            data = form.save(commit=False)
+            data.CRIME_ID = detail[0]
+            var=USER.objects.filter(NAME='AISHNA')
+            data.UPDATED_BY = var[0]
+            #request.session.get('username')
+            data.save()
+            return render(request, 'done.html')
+
+    return render(request, 'done.html')
+
+
 
