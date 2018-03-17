@@ -17,10 +17,9 @@ def fir_reg(request):
           api_response = requests.get('https://maps.googleapis.com/maps/api/geocode/json?address={0}&key={1}'.format(address, api_key))
           api_response_dict = api_response.json()
           if api_response_dict['status'] == 'OK':
-              LAT = api_response_dict['results'][0]['geometry']['location']['lat']
-              LNG = api_response_dict['results'][0]['geometry']['location']['lng']
-              print 'Latitude:', latitude
-              print 'Longitude:', longitude
+              data.LAT = api_response_dict['results'][0]['geometry']['location']['lat']
+              data.LNG = api_response_dict['results'][0]['geometry']['location']['lng']
+              data.save()
               
           return render(request, 'done.html')
     else:
