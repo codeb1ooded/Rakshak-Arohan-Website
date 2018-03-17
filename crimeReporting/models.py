@@ -31,10 +31,10 @@ class FIR_REPORT(models.Model):
   CRIME_DESCRIPTION = models.CharField(null=True,max_length=1000,blank=True)
   PERSON_COMPLAINT = models.ForeignKey(USER,on_delete=models.CASCADE)
   COMPLAINT_BY = models.CharField(max_length=100)
-  DATE_CRIME = models.DateField((u"Conversation Date"), blank=True)
-  TIME_CRIME = models.TimeField((u"Conversation Time"), blank=True)
+  DATE_CRIME = models.DateField()
+  TIME_CRIME = models.TimeField()
   FIR_LOC = models.CharField(max_length=100)
-  COMPLAINT_TIME = models.TimeField((u"Conversation Time"), blank=True)
+  COMPLAINT_TIME = models.TimeField()
   PHONE=models.CharField(max_length=100)
   STATUS = models.CharField(default='Lodged',choices = STATUS_CHOICES,max_length=100)
 

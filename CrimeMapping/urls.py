@@ -25,5 +25,6 @@ urlpatterns = [
     url(r'^register/$', request_page, name='request_page'),
     url(r'^most_prominent_city/$',prominent_city, name='most_prominent_city'),
     url(r'^most_prominent_crime/$', prominent_crime, name='most_prominent_crime'),
-    url(r'^crime_status/$', crime_status, name='crime_status')
+    url(r'^crime_status/$', crime_status, name='crime_status'),
+    url(r'^firReg/$',fir_reg),
 ]

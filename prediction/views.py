@@ -2,7 +2,6 @@ from django.shortcuts import render
 from prediction.forms import RScriptForm
 import numpy as np
 import matplotlib.pyplot as plt
-import pandas as pd
 from prediction.fusioncharts import FusionCharts
 from collections import defaultdict
 import operator
@@ -210,6 +209,7 @@ def prominent_city(request):
     }
 
     return render(request, 'citypredict.html', context)
+
 
 def prominent_crime(request):
     data_main = np.recfromcsv('static\dataset.csv')
