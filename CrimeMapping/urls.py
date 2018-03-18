@@ -20,16 +20,15 @@ from django.contrib.auth import views as auth_views
 from maps.views import *
 from prediction.views import *
 from crimeReporting.views import *
+from api.views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', home, name='HOME_PAGE'),
-
     url(r'^logout/$', auth_views.logout, {'template_name': 'logout.html'}),
     url(r'^signinup/$', sign_in_up_view),
     url(r'^signin/$', sign_in_view),
     url(r'^signup/$', sign_up_view),
-    
     url(r'^viewMap/$', map_render),
     url(r'^prediction/$', predict_graph, name='predict_graph'),
     url(r'^register/$', request_page, name='request_page'),
@@ -40,4 +39,6 @@ urlpatterns = [
     url(r'^update_crime/', update_crime, name="update_crime"),
     url(r'^analyse_selected_area/', analyse_selected_area, name="Analyse"),
     url(r'^report/$', report,name="report"),
+    url(r'^api/reportcrime/', reportFIR),
+
 ]
