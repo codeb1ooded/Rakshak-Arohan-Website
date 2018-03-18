@@ -20,6 +20,7 @@ from django.contrib.auth import views as auth_views
 from maps.views import *
 from prediction.views import *
 from crimeReporting.views import *
+from api.views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -39,4 +40,6 @@ urlpatterns = [
     url(r'^firReg/$', fir_reg),
     url(r'^update_crime/', update_crime, name="update_crime"),
     url(r'^analyse_selected_area/', analyse_selected_area, name="Analyse"),
+
+    url(r'^api/reportcrime/', reportFIR),
 ]
