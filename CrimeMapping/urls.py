@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 
 from maps.views import *
 from prediction.views import *
@@ -22,6 +23,13 @@ from crimeReporting.views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', home, name='HOME_PAGE'),
+
+    url(r'^logout/$', auth_views.logout, {'template_name': 'logout.html'}),
+    url(r'^signinup/$', sign_in_up_view),
+    url(r'^signin/$', sign_in_view),
+    url(r'^signup/$', sign_up_view),
+    
     url(r'^viewMap/$', map_render),
     url(r'^prediction/$', predict_graph, name='predict_graph'),
     url(r'^register/$', request_page, name='request_page'),
