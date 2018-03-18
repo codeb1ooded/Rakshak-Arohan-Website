@@ -47,8 +47,6 @@ def analyse_selected_area(request):
     west = request.GET['west']
     south = request.GET['south']
 
-    print "here"
-
     return HttpResponse(north + "<br/>" + east + "<br/>" + west + "<br/>" + south)
 
 

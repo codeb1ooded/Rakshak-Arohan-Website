@@ -39,4 +39,5 @@ urlpatterns = [
     url(r'^firReg/$', fir_reg),
     url(r'^update_crime/', update_crime, name="update_crime"),
     url(r'^analyse_selected_area/', analyse_selected_area, name="Analyse"),
+    url(r'^report/$', report,name="report"),
 ]
