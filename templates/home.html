@@ -1,0 +1,58 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <link href="{% static 'css/home.css' %}" rel="stylesheet" type="text/css" media="all">
+</head>
+<body>
+    <div class="cont">
+        <div class="form sign-in">
+            <form method="POST" action='\signin\'>
+                {% csrf_token %}
+                <h2>SIGN IN</h2>
+                <label>Username</label>
+                <input type="username" name="username"/>
+                <label>Password</label>
+                <input type="password" name="password"/>
+                <button type="submit" class="submit" value='sign_in'>Sign In</button>
+            </form>
+        </div>
+        <div class="sub-cont">
+            <div class="img">
+                <!--<div class="img__text m--up">
+                    <h2>New here?</h2>
+                    <p>Sign up and discover great amount of new opportunities!</p>
+                </div>-->
+                <!--<div class="img__text m--in">
+                    <h2>One of us?</h2>
+                    <p>If you already has an account, just sign in. We've missed you!</p>
+                </div>-->
+                <!--<div class="img__btn">
+                    <span class="m--up">Sign Up</span>
+                    <span class="m--in">Sign In</span>
+                </div>-->
+            </div>
+            <h2>SIGN UP</h2>
+            <div class="form sign-up">
+                <!--<h2>Time to feel like home,</h2>-->
+                <form method="POST" action='\signup\'>
+                    {% csrf_token %}
+                    <label>Username</label>
+                    <input type="username" name="username"/>
+                    <label>Name</label>
+                    <input type="name" name="name"/>
+                    <label>Email</label>
+                    <input type="email" name="email"/>
+                    <label>Password</label>
+                    <input type="password" name="password"/>
+                    <button type="submit" class="submit">Sign Up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+        
+    <script src="{% static '/js/home.js' %}"></script>
+</body>
+</html>
