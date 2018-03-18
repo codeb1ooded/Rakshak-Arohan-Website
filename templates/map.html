@@ -35,48 +35,68 @@
           <input type="checkbox" name="status" value="closed" class="box">CLOSED<br>
           <input type="submit" value="Submit" name="mybtn" class="box button">
         </div>
-
-
-
       </form>
 
+      <div onclick="start_selection()">
+         <button type="button">Click to select an area!</button>
+      </div>
+      <div id="analyse_selected_area" style="display: none;" onclick="request_server()">
+         <button type="button">Click to analyse selected area!</button>
+      </div>
     </div>
 
     <div id="map"></div>
 
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDA72RxHoUnAPfspsUxDgVykHK2ONPIckc&callback=initMap"></script>
+
     <script>
-      function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
+    var map, rectangle;
+    var user_lat = 23.033333, user_long = 80.616667;
+    var analyse_selected_area_button = document.getElementById("analyse_selected_area");
+    var xhttp = new XMLHttpRequest();
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    }
+
+    function showPosition(position) {
+        user_lat = position.coords.latitude;
+        user_long = position.coords.longitude;
+    }
+
+    function initMap() {
+
+        map = new google.maps.Map(document.getElementById('map'), {
           zoom: 4,
-          center: {lat: 23.033333, lng: 80.616667}
+          center: {lat: user_lat, lng: user_long}
         });
 
         var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         var geocoder = new google.maps.Geocoder;
         var markers = locations.map(function(location, i) {
-          var latlng = {lat: parseFloat(location.fields.LAT), lng: parseFloat(location.fields.LNG)};
-          var latlng1 = {lat: location.fields.LAT, lng: location.fields.LNG};
-          console.log(latlng);
-          var marker =  new google.maps.Marker({
-            position: latlng1,
-            title : location.fields.CRIME_TYPE,
-            label: labels[i % labels.length],
-          });
-          context = {
-            status_obj : location,
-          }
-
-          marker.addListener('click', function() {
-            geocoder.geocode({'location': latlng}, function(results, status) {
-              console.log(location.pk)
-              var url="/crime_status/?crime_id="+location.pk;
-              console.log(url)
-              infowindow.setContent("<div id='pop_up'> <b>CRIME: </b>"+location.fields.CRIME_TYPE+"<br><b>STATUS: </b><a href="+url+">click</a><br><b>AREA: </b>"+results[0].formatted_address+"</div>");
-              infowindow.open(map, marker);
+            var latlng = {lat: parseFloat(location.fields.LAT), lng: parseFloat(location.fields.LNG)};
+            var latlng1 = {lat: location.fields.LAT, lng: location.fields.LNG};
+            console.log(latlng);
+            var marker =  new google.maps.Marker({
+                position: latlng1,
+                title : location.fields.CRIME_TYPE,
+                label: labels[i % labels.length],
             });
-          });
-          return marker;
+            context = {status_obj : location,}
+
+            marker.addListener('click', function() {
+                geocoder.geocode({'location': latlng}, function(results, status) {
+                    console.log(location.pk)
+                    var url="/crime_status/?crime_id="+location.pk;
+                    console.log(url)
+                    infowindow.setContent("<div id='pop_up'> <b>CRIME: </b>"+location.fields.CRIME_TYPE+"<br><b>STATUS: </b><a href="+url+">click</a><br><b>AREA: </b>"+results[0].formatted_address+"</div>");
+                    infowindow.open(map, marker);
+                });
+            });
+            return marker;
         });
+
         var contentString = '<div id="content">'+
             '<div id="siteNotice">'+
             '</div>'+
@@ -84,22 +104,59 @@
             '<div id="bodyContent">'+
             '</div>'+
             '</div>';
-        var infowindow = new google.maps.InfoWindow({
-          content: contentString
-        });
+        var infowindow = new google.maps.InfoWindow({content: contentString});
         var markerCluster = new MarkerClusterer(map, markers,
             {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-      }
+    }
 
-      var locations =JSON.parse( '{{ report|escapejs }}');
-      console.log(typeof('{{ report|escapejs }}'))
+    function start_selection(){
+        analyse_selected_area.style.display = "block";
+        show_rectangle();
+    }
+
+    var north_lat = user_lat + 5, south_lat = user_lat - 5, east_long = user_long + 5, west_long = user_long - 5;
+    function show_rectangle(){
+        var bounds = {
+            north: north_lat,
+            south: south_lat,
+            east: east_long,
+            west: west_long
+        };
+        rectangle = new google.maps.Rectangle({ // Define a rectangle and set its editable property to true.
+            bounds: bounds,
+            editable: true
+        });
+        rectangle.setMap(map);
+        rectangle.addListener('bounds_changed', showNewRect); // Add an event listener on the rectangle.
+    }
+
+    // Show the new coordinates for the rectangle in an info window.
+    /** @this {google.maps.Rectangle} */
+    function showNewRect(event) {
+        var ne = rectangle.getBounds().getNorthEast();
+        var sw = rectangle.getBounds().getSouthWest();
+
+        var contentString = '<b>Rectangle moved.</b><br>' +
+            'New north-east corner: ' + ne.lat() + ', ' + ne.lng() + '<br>' +
+            'New south-west corner: ' + sw.lat() + ', ' + sw.lng();
+
+        north_lat = ne.lat();
+        south_lat = sw.lat();
+        east_long = ne.lng();
+        west_long = sw.lng();
+        console.log(ne);
+        console.log(sw);
+        console.log(contentString);
+    }
+
+    var locations =JSON.parse( '{{ report|escapejs }}');
+    console.log(typeof('{{ report|escapejs }}'));
+
+    function request_server(){
+        window.location.href = "../analyse_selected_area/?north="+north_lat+"&south="+south_lat+"&east="+east_long+"&west="+west_long;
+    }
+
     </script>
-
-
-
-    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDA72RxHoUnAPfspsUxDgVykHK2ONPIckc&callback=initMap"></script>
 
   </body>
 

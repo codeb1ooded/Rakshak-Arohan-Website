@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+
 from maps.views import *
 from prediction.views import *
 from crimeReporting.views import *
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^viewMap/$', map_render),
@@ -26,6 +28,7 @@ urlpatterns = [
     url(r'^most_prominent_city/$',prominent_city, name='most_prominent_city'),
     url(r'^most_prominent_crime/$', prominent_crime, name='most_prominent_crime'),
     url(r'^crime_status/$', crime_status, name='crime_status'),
-    url(r'^firReg/$',fir_reg),
-    url(r'^update_crime',update_crime,name="update_crime")
+    url(r'^firReg/$', fir_reg),
+    url(r'^update_crime/', update_crime, name="update_crime"),
+    url(r'^analyse_selected_area/', analyse_selected_area, name="Analyse"),
 ]

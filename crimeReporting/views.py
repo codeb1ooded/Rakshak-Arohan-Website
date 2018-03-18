@@ -1,9 +1,9 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+import requests
+
 from .models import USER, FIR_REPORT
 from .forms import FirRegistrationForm
-import requests
-# from googlemaps import GoogleMaps
-# Create your views here.
 
 
 def fir_reg(request):
@@ -29,3 +29,14 @@ def fir_reg(request):
     else:
       form = FirRegistrationForm()
     return render(request, 'fir_new.html', {'form': form})
+
+
+def analyse_selected_area(request):
+    north = request.GET['north']
+    east = request.GET['east']
+    west = request.GET['west']
+    south = request.GET['south']
+
+    print "here"
+
+    return HttpResponse(north + "<br/>" + east + "<br/>" + west + "<br/>" + south)
