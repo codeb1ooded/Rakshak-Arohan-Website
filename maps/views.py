@@ -5,10 +5,12 @@ from django import forms
 from .forms import *
 from datetime import datetime
 from dateutil.parser import parse
+from django.contrib.auth.decorators import login_required
 import json
 # Create your views here.
 from prediction.fusioncharts import FusionCharts
 
+@login_required(login_url="/signinup/")
 def map_render(request):
     json_serializer = serializers.get_serializer("json")()
     reports = json_serializer.serialize(FIR_REPORT.objects.all(), ensure_ascii=False)
@@ -19,6 +21,7 @@ def map_render(request):
     # request_page(request)
     return render(request, 'map.html',context)
 
+@login_required(login_url="/signinup/")
 def request_page(request):
     reports=[]
     json_serializer = serializers.get_serializer("json")()
@@ -60,6 +63,7 @@ def request_page(request):
     return render(request, 'map.html',context)
 
 
+
 def map_render_filter(request):
     json_serializer = serializers.get_serializer("json")()
     reports = json_serializer.serialize(FIR_REPORT.objects.all(), ensure_ascii=False)
@@ -68,6 +72,8 @@ def map_render_filter(request):
     }
     return render(request, 'map.html',context)
 
+
+@login_required(login_url="/signinup/")
 def crime_status(request):
     if request.method == 'GET':
 
@@ -88,7 +94,7 @@ def crime_status(request):
         }
         return render(request, 'status_report.html', context)
 
-
+@login_required(login_url="/signinup/")
 def update_crime(request):
     if request.method == 'GET':
         #crime_id = request.GET.get('crime_id')
@@ -106,7 +112,7 @@ def update_crime(request):
 
 
 
-
+@login_required(login_url="/signinup/")
 def report(request):
 
     report = FIR_REPORT.objects.all()
