@@ -226,8 +226,9 @@ def report(request):
     for i in crimedata:
         data_outer = {}
         data_outer['data'] = []
+        data_outer['seriesname'] = str(i)
         dict={}
-        data = []
+        # data = []
         if i in dict_monday.keys():
             dict["value"] = str(dict_monday[i])
         else:
