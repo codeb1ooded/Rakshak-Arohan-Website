@@ -93,8 +93,10 @@ def sign_in_view(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-
-            return HttpResponseRedirect("/viewMap/")
+            if 'next' in request.POST:
+              return redirect(request.POST.get('next'))
+            else:
+              return render(request, 'map.html', {'form':form})
         else:
             messages.error(request, "Looks like a user with that username or password doesn't exist!")
             return HttpResponseRedirect('/')

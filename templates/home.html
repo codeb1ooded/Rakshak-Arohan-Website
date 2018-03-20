@@ -427,8 +427,13 @@
 <br><br>
 <input type="password" placeholder="Password" name="password"/ >
 <br><br>
+{% if request.GET.next %}
+  <input type="hidden" name="next" value="{{ request.GET.next }}">
+{% endif %}
 <button type="submit" value="Login" class="submit" value='sign_in'>LOGIN</button>
 </form>
+
+
 
 </div>
 
