@@ -117,7 +117,7 @@ def report(request):
         "caption": "Product Comparison",
         "showlabels": "1",
         "showvalues": "0",
-        "numberprefix": "$",
+        "numberprefix": "",
         "showsum": "1",
         "decimals": "0",
         "useroundedges": "1",
@@ -160,7 +160,7 @@ def report(request):
 
     json_serializer = serializers.get_serializer("json")()
     reports = json_serializer.serialize(report, ensure_ascii=False)
-    print(reports)
+    # print(reports)
     final={}
     dict_monday = {}
     dict_tuesday = {}
@@ -173,9 +173,11 @@ def report(request):
     for i in reports:
         date = i["fields"]["DATE_CRIME"]
         date=datetime.strptime(date, '%Y-%m-%d')
-
-        print (type(date))
+        # print (type(date))
         day = date.weekday()
+
+        # print day
+
         if day ==0:
              if i["fields"]["CRIME_TYPE"] in dict_monday:
                  dict_monday[i["fields"]["CRIME_TYPE"]]=dict_monday[i["fields"]["CRIME_TYPE"]]+1
@@ -212,51 +214,51 @@ def report(request):
             else:
                 dict_sunday[i["fields"]["CRIME_TYPE"]] = 1
 
-    print(dict_sunday)
-    print(dict_monday)
-    print(dict_tuesday)
-    print(dict_wednesday)
-    print(dict_thursday)
-    print(dict_friday)
-    print(dict_saturday)
-    crimedata=['rape','kidnap','theft']
+    # print(dict_sunday)
+    # print(dict_monday)
+    # print(dict_tuesday)
+    # print(dict_wednesday)
+    # print(dict_thursday)
+    # print(dict_friday)
+    # print(dict_saturday)
+    crimedata=['rape','kidnap','theft','murder']
     dataSource['dataset'] = []
     for i in crimedata:
         data_outer = {}
-        data_outer['seriesname']= i
         data_outer['data'] = []
         dict={}
         data = []
-        if i in dict_monday:
+        if i in dict_monday.keys():
             dict["value"] = str(dict_monday[i])
         else:
             dict["value"] = "0"
-        data.append(dict)
+        data_outer['data'].append(dict)
         dict = {}
         if i in dict_tuesday.keys():
             dict["value"] = str(dict_tuesday[i])
         else:
             dict["value"]= "0"
-        data.append(dict)
-        print(data)
+        data_outer['data'].append(dict)
+        # print "*" * 30
+        # print(data)
         dict = {}
         if i in dict_wednesday.keys():
             dict["value"] = str(dict_wednesday[i])
         else:
             dict["value"] = str(0)
-        data.append(dict)
+        data_outer['data'].append(dict)
         dict = {}
         if i in dict_thursday.keys():
             dict['value'] = str(dict_thursday[i])
         else:
             dict["value"] = "0"
-        data.append(dict)
+        data_outer['data'].append(dict)
         dict = {}
         if i in dict_friday.keys():
             dict["value"] = str(dict_friday[i])
         else:
             dict["value"] = "0"
-        data.append(dict)
+        data_outer['data'].append(dict)
         dict = {}
         if i in dict_saturday.keys():
             dict["value"] = str(dict_saturday[i])
@@ -269,11 +271,11 @@ def report(request):
         else:
             dict["value"] = "0"
         data_outer['data'].append(dict)
-        print (type(str(data)))
+        # print (type(str(data)))
         # data_outer['data']=str(data)
 
         dataSource['dataset'].append(data_outer)
-    print (dataSource)
+    # print (dataSource)
     column2D = FusionCharts("stackedcolumn2d", "ex10", "500", "300", "chart-1", "json", dataSource)
     context = {
         'data' : dataSource,
