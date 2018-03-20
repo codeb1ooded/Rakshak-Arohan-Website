@@ -224,9 +224,9 @@ def report(request):
     for i in crimedata:
         data_outer = {}
         data_outer['seriesname']= i
-        data=[]
+        data_outer['data'] = []
         dict={}
-
+        data = []
         if i in dict_monday:
             dict["value"] = str(dict_monday[i])
         else:
@@ -247,7 +247,7 @@ def report(request):
         data.append(dict)
         dict = {}
         if i in dict_thursday.keys():
-            dict["value"] = str(dict_thursday[i])
+            dict['value'] = str(dict_thursday[i])
         else:
             dict["value"] = "0"
         data.append(dict)
@@ -262,15 +262,15 @@ def report(request):
             dict["value"] = str(dict_saturday[i])
         else:
             dict["value"] = "0"
-        data.append(dict)
+        data_outer['data'].append(dict)
         dict = {}
         if i in dict_sunday.keys():
             dict["value"] = str(dict_sunday[i])
         else:
             dict["value"] = "0"
-        data.append(dict)
+        data_outer['data'].append(dict)
         print (type(str(data)))
-        data_outer['data']=str(data)
+        # data_outer['data']=str(data)
 
         dataSource['dataset'].append(data_outer)
     print (dataSource)
