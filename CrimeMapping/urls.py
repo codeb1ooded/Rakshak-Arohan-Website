@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^signinup/$', sign_in_up_view),
     url(r'^signin/$', sign_in_view),
     url(r'^signup/$', sign_up_view),
+
     url(r'^viewMap/$', map_render),
     url(r'^prediction/$', predict_graph, name='predict_graph'),
     url(r'^register/$', request_page, name='request_page'),
@@ -39,6 +40,8 @@ urlpatterns = [
     url(r'^update_crime/', update_crime, name="update_crime"),
     url(r'^analyse_selected_area/', analyse_selected_area, name="Analyse"),
     url(r'^report/$', report,name="report"),
-    url(r'^api/reportcrime/', reportFIR),
 
+    # API urls
+    url(r'^api/reportcrime/', reportFIR),
+    url(r'^api/all_reports/', all_reports_markers),
 ]

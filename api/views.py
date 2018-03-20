@@ -17,6 +17,7 @@ def get_user(username):
     except:
         return None
 
+
 ''' JSON format
 crimetype
 latitude
@@ -59,3 +60,42 @@ def reportFIR(request):
 					   		   STATUS = _status)
     query_report_fir.save()
     return JsonResponse({"status" : "success"})
+
+
+'''
+No JSON Input
+Json Output: array of given Json Object
+{
+crime_type
+latitude
+longitude
+crime_description
+complaint_by
+date_crime
+time_crime
+fir_location
+complaint_time
+phone
+status
+}
+'''
+def all_reports_markers(request):
+    all_reports = FIR_REPORT.objects.all()
+    all_reports_array = []
+    for report in all_reports:
+        report_json = {
+                'crime_type': report.CRIME_TYPE,
+                'latitude': report.LAT,
+                'longitude': report.LNG,
+                'crime_description': report.CRIME_DESCRIPTION,
+                'complaint_by': report.COMPLAINT_BY,
+                'date_crime': report.DATE_CRIME,
+                'time_crime': report.TIME_CRIME,
+                'fir_location': report.FIR_LOC,
+                'complaint_time': report.COMPLAINT_TIME,
+                'phone': report.PHONE,
+                'status': report.STATUS
+        }
+        all_reports_array.append(report_json)
+    print JsonResponse({"all_reports" : all_reports_array})
+    return JsonResponse({"all_reports" : all_reports_array})
