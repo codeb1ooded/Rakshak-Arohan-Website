@@ -1,7 +1,10 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 
+from django.contrib import messages
+
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.views.generic import *
 from django.contrib.auth.models import User
 from django.http import *
@@ -15,7 +18,7 @@ from crimeReporting.forms import *
 from .models import USER, FIR_REPORT
 from .forms import FirRegistrationForm
 
-
+@login_required(login_url="/signinup/")
 def fir_reg(request):
     if request.method == "POST":
       form = FirRegistrationForm(request.POST)
@@ -40,7 +43,7 @@ def fir_reg(request):
       form = FirRegistrationForm()
     return render(request, 'fir_new.html', {'form': form})
 
-
+@login_required(login_url="/signinup/")
 def analyse_selected_area(request):
     north = request.GET['north']
     east = request.GET['east']
@@ -57,7 +60,7 @@ def home(request):
     else:
         return render(request, 'home.html')
 
-
+@login_required(login_url="/signinup/")
 def news_feed(request):
   if not request.user.is_authenticated():
       return HttpResponseRedirect('/')
@@ -71,9 +74,9 @@ def news_feed(request):
 
 
 def sign_in_up_view(request):
-    signin_form = UserAuthenticationForm()
-    singnup_form = UserRegistrationForm()
-    return render(request, 'home.html', {'signin' : signin_form, 'signup':singnup_form})
+  signin_form = UserAuthenticationForm()
+  singnup_form = UserRegistrationForm()
+  return render(request, 'home.html', {'signin' : signin_form, 'signup':singnup_form})
 
 
 def sign_in_view(request):
@@ -85,10 +88,15 @@ def sign_in_view(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect('/')
+            if 'next' in request.POST:
+              return redirect(request.POST.get('next'))
+            else:
+              return render(request, 'map.html', {'form':form})
         else:
-            raise forms.ValidationError('Looks like a username with that email or password is incorrect!!')
-    return render(request, template_name, {'form' : form})
+            messages.error(request, "Looks like a user with that username or password doesn't exist!")
+            return HttpResponseRedirect('/')
+    messages.error(request, "You have not filled valid details, please try again!")
+    return HttpResponseRedirect('/')
 
 
 def sign_up_view(request):
@@ -104,7 +112,9 @@ def sign_up_view(request):
             user = authenticate(username = username, password = password)
             create_user(user, name)
             login(request, user)
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect("/viewMap/")
         else:
-            raise forms.ValidationError('Looks like a username with that email or password already exists')
-    return render(request, template_name, {'form' : form})
+            messages.error(request, "Looks like a username with that email or password already exists!")
+            return HttpResponseRedirect('/')
+    messages.error(request, "You have not filled valid details, please try again!")
+    return HttpResponseRedirect('/')

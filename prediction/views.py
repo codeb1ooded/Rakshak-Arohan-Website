@@ -3,7 +3,7 @@ from prediction.forms import RScriptForm
 import numpy as np
 from prediction.fusioncharts import FusionCharts
 from collections import defaultdict
-import operator
+from django.contrib.auth.decorators import login_required
 # def my_view(request):
 #     context={}
 #     total=total_view(request)
@@ -93,7 +93,7 @@ import operator
 #     return column2D.render()
 #
 
-
+@login_required(login_url="/signinup/")
 def predict_graph(request):
 
     if (request.GET.get('mybtn')):
@@ -161,6 +161,7 @@ def callLinearRegression(x,y):
 #2. State wise crime in future years (crime rate vs year)
 #3. crime rate vs year (filter crime)
 
+@login_required(login_url="/signinup/")
 def prominent_city(request):
     data_main = np.recfromcsv('static\dataset.csv')
     #x-->year
@@ -209,7 +210,7 @@ def prominent_city(request):
 
     return render(request, 'citypredict.html', context)
 
-
+@login_required(login_url="/signinup/")
 def prominent_crime(request):
     data_main = np.recfromcsv('static\dataset.csv')
     #x-->year
