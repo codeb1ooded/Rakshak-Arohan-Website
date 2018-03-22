@@ -44,4 +44,5 @@ urlpatterns = [
     # API urls
     url(r'^api/reportcrime/', reportFIR),
     url(r'^api/all_reports/', all_reports_markers),
+    url(r'^api/neighbourhood/', neighbourhood),
 ]
