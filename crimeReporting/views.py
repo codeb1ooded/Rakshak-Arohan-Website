@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-
+import requests
 from django.contrib import messages
 
 from django.contrib.auth import authenticate, login
@@ -9,12 +9,8 @@ from django.views.generic import *
 from django.contrib.auth.models import User
 from django.http import *
 from django.conf import settings
-
 from database.functions import *
-
 from crimeReporting.forms import *
-
-
 from .models import USER, FIR_REPORT
 from .forms import FirRegistrationForm
 

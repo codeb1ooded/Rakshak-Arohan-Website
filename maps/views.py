@@ -6,7 +6,7 @@ from .forms import *
 from datetime import datetime
 from dateutil.parser import parse
 import json
-
+import datetime as DT
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 from prediction.fusioncharts import FusionCharts
@@ -65,6 +65,7 @@ def request_page(request):
 
 
 def map_render_filter(request):
+
     json_serializer = serializers.get_serializer("json")()
     reports = json_serializer.serialize(FIR_REPORT.objects.all(), ensure_ascii=False)
     context = {
@@ -113,13 +114,28 @@ def update_crime(request):
 
 @login_required(login_url="/signinup/")
 def report(request):
-
-    report = FIR_REPORT.objects.all()
+    today = DT.date.today()
+    week_ago = today - DT.timedelta(days=7)
+    print (week_ago)
+    report = FIR_REPORT.objects.filter(DATE_CRIME__range=[week_ago, today])
     dataSource = {}
+    pieSource={}
+    pieSource['chart']={
+        "caption": "Crime Summary",
+        "showpercentageinlabel": "0",
+        "showPercentInTooltip": "0",
+        "decimals": "1",
+        "showvalues": "1",
+        "showlabels": "1",
+        "showlegend": "1",
+        "showborder": "0",
+        "enableSmartLabels": "1",
+
+    }
     dataSource['chart'] = {
         "theme": "fint",
         "palette": "2",
-        "caption": "Product Comparison",
+        "caption": "Weekly reports",
         "showlabels": "1",
         "showvalues": "0",
         "numberprefix": "",
@@ -219,13 +235,6 @@ def report(request):
             else:
                 dict_sunday[i["fields"]["CRIME_TYPE"]] = 1
 
-    # print(dict_sunday)
-    # print(dict_monday)
-    # print(dict_tuesday)
-    # print(dict_wednesday)
-    # print(dict_thursday)
-    # print(dict_friday)
-    # print(dict_saturday)
     crimedata=['rape','kidnap','theft','murder']
     dataSource['dataset'] = []
     for i in crimedata:
@@ -283,80 +292,36 @@ def report(request):
         dataSource['dataset'].append(data_outer)
     # print (dataSource)
     column2D = FusionCharts("stackedcolumn2d", "ex10", "500", "300", "chart-1", "json", dataSource)
+
+    ################PIECHART
+    data=[]
+    inner_data = {}
+    crime_data=[]
+    for i in reports:
+
+        crime=i["fields"]["CRIME_TYPE"]
+
+        if crime in crime_data:
+            val=inner_data[crime]+1
+            inner_data[crime]=val
+
+        else:
+            crime_data.append(crime)
+            inner_data[crime] = 1
+
+    for i in inner_data.keys():
+        data1={}
+        data1['label']=i
+        data1['value']=inner_data[i]
+        data.append(data1)
+
+    pieSource['data']=data
+    piechart=FusionCharts("pie2d", "ex11", "100%", "300", "chart-2", "json", pieSource)
+
     context = {
         'data' : dataSource,
         'total': column2D.render(),
+        'piechart': piechart.render(),
     }
 
     return render(request, 'report.html', context)
-
-#EXPECTED OUTPUT
-#https://jsfiddle.net/15zbv887/331/
-'''
-FusionCharts.ready(function() {
-    var revenueChart = new FusionCharts({
-        type: 'stackedcolumn2d',
-        renderAt: 'chart-container',
-        width: '500',
-        height: '300',
-        dataFormat: 'json',
-        dataSource: {
-            "chart": {
-                "theme": "fint",
-        "palette": "2",
-        "caption": "Product Comparison",
-        "showlabels": "1",
-        "showvalues": "0",
-        "numberprefix": "$",
-        "showsum": "1",
-        "decimals": "0",
-        "useroundedges": "1",
-        "legendborderalpha": "0",
-        "showborder": "0"
-            },
-            "categories": [
-                {
-                     "category": [
-                {
-                    "label": "Monday",
-                    "stepSkipped": false,
-                    "appliedSmartLabel": true
-                },
-                {
-                    "label": "Tuesday",
-                    "stepSkipped": false,
-                    "appliedSmartLabel": true
-                },
-                {
-                    "label": "Wednesday",
-                    "stepSkipped": false,
-                    "appliedSmartLabel": true
-                },
-                {
-                    "label": "Thursday",
-                    "stepSkipped": false,
-                    "appliedSmartLabel": true
-                },
-                {
-                    "label": "Friday",
-                    "stepSkipped": false,
-                    "appliedSmartLabel":true
-                },
-                {
-                    "label": "Saturday",
-                    "stepSkipped": false,
-                    "appliedSmartLabel": true
-                },
-                {
-                    "label": "Sunday",
-                    "stepSkipped": false,
-                    "appliedSmartLabel": true
-                }
-            ]
-                }
-            ],
-            "dataset": [{'seriesname': 'rape', 'data': [{'value': '1'}, {'value': '0'}, {'value': '1'}, {'value': '0'}, {'value': '0'}, {'value': '0'}, {'value': '0'}]}, {'seriesname': 'kidnap', 'data': [{'value': '0'}, {'value': '0'}, {'value': '1'}, {'value': '0'}, {'value': '0'}, {'value': '0'}, {'value': '0'}]}, {'seriesname': 'theft', 'data': [{'value': '1'}, {'value': '0'}, {'value': '3'}, {'value': '0'}, {'value': '0'}, {'value': '1'}, {'value': '0'}]}],
-        }
-    }).render();
-});
-'''

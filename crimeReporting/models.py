@@ -33,7 +33,8 @@ class FIR_REPORT(models.Model):
     DATE_CRIME = models.DateField()
     TIME_CRIME = models.TimeField()
     FIR_LOC = models.CharField(max_length=100)
-    COMPLAINT_TIME = models.TimeField()
+    COMPLAINT_TIME = models.TimeField(default=now())
+    COMPLAINT_DATE = models.DateField(default=now())
     PHONE = models.CharField(max_length=100)
     STATUS = models.CharField(default='Lodged',choices = STATUS_CHOICES,max_length=100)
 
@@ -47,3 +48,17 @@ class CRIME_TIMELINE(models.Model):
     CURRENT_STATUS=models.CharField(default='Pending',choices = STATUS_CHOICES,max_length=100)
     TIME_OF_UPDATE=models.DateTimeField(default=now(), blank=True)
     DESCRIPTION=models.CharField(null=True,default="Pending",max_length=1000,blank=True)
+
+class INFORMATION_FILING_APP(models.Model):
+    name=models.CharField(max_length=100)
+    aadharcard=models.CharField(max_length=100)
+    phone=models.CharField(max_length=100)
+    crimetype=models.CharField(max_length=100)
+    latitude=models.FloatField()
+    longitude=models.FloatField()
+    crime_description=models.CharField(max_length=100)
+    date_crime=models.DateField()
+    time_crime=models.TimeField()
+    complaint_time=models.TimeField()
+    complaint_date=models.DateField()
+

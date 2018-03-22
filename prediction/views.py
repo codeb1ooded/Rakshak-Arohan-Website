@@ -4,6 +4,7 @@ import numpy as np
 from prediction.fusioncharts import FusionCharts
 from collections import defaultdict
 from django.contrib.auth.decorators import login_required
+import operator
 # def my_view(request):
 #     context={}
 #     total=total_view(request)
