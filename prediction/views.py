@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from prediction.forms import RScriptForm
 import numpy as np
-import matplotlib.pyplot as plt
 from prediction.fusioncharts import FusionCharts
 from collections import defaultdict
 import operator
