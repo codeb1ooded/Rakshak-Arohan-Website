@@ -40,7 +40,8 @@ urlpatterns = [
     url(r'^update_crime/', update_crime, name="update_crime"),
     url(r'^analyse_selected_area/', analyse_selected_area, name="Analyse"),
     url(r'^report/$', report,name="report"),
-
+    url(r'^receive_alert/$', receive_alert,name="receive_alert"),
+    url(r'^send_to_FIR/$', send_to_FIR, name="send_to_FIR"),
     # API urls
     url(r'^api/reportcrime/', reportFIR),
     url(r'^api/all_reports/', all_reports_markers),

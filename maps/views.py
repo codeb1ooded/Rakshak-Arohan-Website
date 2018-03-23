@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.core import serializers
+from django.template.defaulttags import IfNode
+
 from crimeReporting.models import *
 from django import forms
 from .forms import *
@@ -325,3 +327,13 @@ def report(request):
     }
 
     return render(request, 'report.html', context)
+
+
+
+def receive_alert(request):
+    posts = INFORMATION_FILING_APP.objects.all()
+    print(posts)
+    return render(request, "report_alert.html", {'posts': posts})
+
+def send_to_FIR(request):
+    return render(request, 'done.html')

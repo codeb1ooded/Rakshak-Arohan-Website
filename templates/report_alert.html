@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>-->
+<script src="https://maps.googleapis.com/maps/api/js?sensor=false&callback=initialise"></script>
+
+     <link href="{% static 'css/table.css' %}" rel="stylesheet">
+    <style>
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+body{
+    background: url("https://buidln.clipdealer.com/002/451/248//previews/1--2451248-blue%20puzzle%20in%20conceptual%20form%20for%20your%20text%20or%20background.jpg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+
+</style>
+</head>
+<body>
+ <div class="container">
+
+  <div class="first" id="tables">
+    <table>
+        <thead>
+      <tr>
+          <th></th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Date Crime</th>
+        <th>Complainee</th>
+          <th>Phone No</th>
+        <th>Location</th>
+      </tr>
+        </thead>
+     <tbody class="table-hover">
+    {% for post in posts %}
+
+       <tr style="text-align: center">
+           <td id="myBtn">Verify</td>
+          <td>{{ post.crimetype }}</td>
+          <td>{{ post.crime_description}}</td>
+          <td>{{ post.date_crime}}: {{post.time_crime}}</td>
+          <td>{{ post.name}}</td>
+          <td>{{ post.phone}}</td>
+          <td>{{ post.location}}</td>
+
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+  </div>
+ </div>
+      <!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <form action="{%url 'send_to_FIR' %}">
+        <input type="submit" value="Submit">
+    </form>
+  </div>
+
+</div>
+
+<script>
+
+// Get the modal
+var modal = document.getElementById('myModal');
+var mod = document.getElementsByClassName('modal-content')
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal
+btn.onclick = function() {
+    modal.style.display = "block";
+    modal.innerhtml =
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+ <!--<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>-->
+     <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDA72RxHoUnAPfspsUxDgVykHK2ONPIckc&signed_in=true&libraries=places" async defer></script>-->
+
+</body>
+</html>
