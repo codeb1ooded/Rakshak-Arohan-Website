@@ -291,7 +291,7 @@ def report(request):
 
         dataSource['dataset'].append(data_outer)
     # print (dataSource)
-    column2D = FusionCharts("stackedcolumn2d", "ex10", "500", "300", "chart-1", "json", dataSource)
+    column2D = FusionCharts("stackedbar2d","ex10", "500", "300", "chart-1", "json", dataSource)
 
     ################PIECHART
     data=[]

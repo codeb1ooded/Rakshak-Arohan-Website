@@ -56,7 +56,7 @@
 
 
    <script>
-    var map, bounds,donut;
+    var map, bounds,donut,marker1;
 
     var user_lat = 20.5937, user_long = 78.9629;
 
@@ -135,7 +135,7 @@
          function drawCircle(point, radius, dir) {
       var d2r = Math.PI / 180;   // degrees to radians
       var r2d = 180 / Math.PI;   // radians to degrees
-      var earthsradius = 3963; // 3963 is the radius of the earth in miles
+      var earthsradius = 396300; // 3963 is the radius of the earth in miles
 
          var points = 32;
 
@@ -167,7 +167,9 @@
       };
         bounds = new google.maps.LatLngBounds();
         if(donut){
-           donut.setMap(null);
+            marker1.setMap(null);
+             donut.setMap(null);
+
         }
         donut = new google.maps.Polyline({
                        path: drawCircle(new google.maps.LatLng(lat,lng), 100, 1),
@@ -179,10 +181,17 @@
                              }],
                        strokeWeight: 2,
                        fillColor: "#FF0000",
-                       fillOpacity: 0.35
-           });
+                       fillOpacity: 0.35,
 
+           });
+            var myCenter = new google.maps.LatLng(lat,lng);
+           marker1 = new google.maps.Marker({
+    position: myCenter,
+    animation: google.maps.Animation.BOUNCE
+  });
+  marker1.setMap(map);
            donut.setMap(map);
+
 
         map.fitBounds(bounds);
 
