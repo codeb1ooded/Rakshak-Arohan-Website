@@ -4,7 +4,7 @@
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <title>Rakshak</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/map.css' %}" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
@@ -34,6 +34,10 @@
      .active{
       line-height: 100em;
      } 
+     .btn{
+      background-color: #000;
+     }
+     
    </style>
   <body>
 
@@ -69,8 +73,6 @@
                     <h3>FILTERS</h3><br>
                 </div>
                 <div class="box-content">
-                    
-
                         <button style="margin-right:30px;" type="button" class="btn" onclick=" return crimeWise()"><i class="fas fa-address-card fa-2x"></i><br/>Crime Wise</button>
 
                         <div id="crimeW" style="display:none; width: 50%; margin-right:20px;">
