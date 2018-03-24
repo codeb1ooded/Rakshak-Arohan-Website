@@ -363,6 +363,7 @@ def send_to_FIR(request):
         s=FIR_REPORT(CRIME_TYPE=type,LAT=posts[0].latitude,LNG=posts[0].longitude,CRIME_DESCRIPTION=posts[0].crime_description,PERSON_COMPLAINT=var[0],COMPLAINT_BY=posts[0].name,DATE_CRIME=posts[0].date_crime,TIME_CRIME=posts[0].time_crime,FIR_LOC="Delhi",COMPLAINT_TIME=posts[0].complaint_time,COMPLAINT_DATE=posts[0].complaint_date,PHONE=posts[0].phone)
         s.save()
         posts[0].delete()
+        print "*"*30
         print posts
         T.sleep(2)
     return receive_alert(request)
