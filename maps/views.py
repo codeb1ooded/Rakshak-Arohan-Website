@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.core import serializers
 from django.template.defaulttags import IfNode
-
+import time as T
 from crimeReporting.models import *
 from django import forms
 from .forms import *
@@ -334,8 +334,35 @@ def report(request):
 
 def receive_alert(request):
     posts = INFORMATION_FILING_APP.objects.all()
-    print(posts)
     return render(request, "report_alert.html", {'posts': posts})
 
 def send_to_FIR(request):
-    return render(request, 'done.html')
+    if request.method == 'GET':
+        type = request.GET['typeC']
+        phone = request.GET['phone']
+        date = request.GET['date']
+        time = request.GET['time']
+        print type + " " + phone + " " + date + " " + time
+        time=time.split(" ")
+        if 'p' in time[1]:
+            time=time[0]+" PM"
+        else:
+            time=time[0]+" AM"
+        print time
+        in_time = datetime.strptime(time, "%I:%M %p")
+        out_time = datetime.strftime(in_time, "%H:%M")
+        date=date.split(",")
+        date=date[0]+date[1]
+        date=datetime.strptime(date,"%B %d %Y")
+        print date
+        print out_time
+        time1=out_time+":00"
+        time2=out_time+":59"
+        var = USER.objects.filter(NAME='AISHNA')
+        posts=INFORMATION_FILING_APP.objects.filter(crimetype=type,phone=phone,date_crime=date,time_crime__range=[time1,time2])
+        s=FIR_REPORT(CRIME_TYPE=type,LAT=posts[0].latitude,LNG=posts[0].longitude,CRIME_DESCRIPTION=posts[0].crime_description,PERSON_COMPLAINT=var[0],COMPLAINT_BY=posts[0].name,DATE_CRIME=posts[0].date_crime,TIME_CRIME=posts[0].time_crime,FIR_LOC="Delhi",COMPLAINT_TIME=posts[0].complaint_time,COMPLAINT_DATE=posts[0].complaint_date,PHONE=posts[0].phone)
+        s.save()
+        posts[0].delete()
+        print posts
+        T.sleep(2)
+    return receive_alert(request)
