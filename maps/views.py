@@ -118,15 +118,23 @@ def update_crime(request):
 
 @login_required(login_url="/signinup/")
 def report(request):
-    today = DT.date.today()
-    week_ago = today - DT.timedelta(days=7)
-    print (week_ago)
+    week_ago = request.GET.get('date_crime_start')
+    today = request.GET.get('date_crime_end')
+    # print week_ago + " " + today
+    if not week_ago:
+        today = DT.date.today()
+        week_ago = today - DT.timedelta(days=7)
+        print (week_ago)
     report = FIR_REPORT.objects.filter(DATE_CRIME__range=[week_ago, today])
     dataSource = {}
     pieSource={}
     pieSource['chart']={
         "caption": "Crime Summary",
         "showpercentageinlabel": "0",
+        "exportenabled": "1",
+        "exportatclient": "1",
+        "exporthandler": "http://export.api3.fusioncharts.com",
+        "html5exporthandler": "http://export.api3.fusioncharts.com",
         "showPercentInTooltip": "0",
         "decimals": "1",
         "showvalues": "1",
@@ -139,6 +147,10 @@ def report(request):
     dataSource['chart'] = {
         "theme": "fint",
         "palette": "2",
+        "exportenabled": "1",
+        "exportatclient": "1",
+        "exporthandler": "http://export.api3.fusioncharts.com",
+        "html5exporthandler": "http://export.api3.fusioncharts.com",
         "caption": "Weekly reports",
         "showlabels": "1",
         "showvalues": "0",
@@ -239,7 +251,7 @@ def report(request):
             else:
                 dict_sunday[i["fields"]["CRIME_TYPE"]] = 1
 
-    crimedata=['rape','kidnap','theft','murder']
+    crimedata=['rape','kidnap','theft','murder','assault']
     dataSource['dataset'] = []
     for i in crimedata:
         data_outer = {}
@@ -367,3 +379,20 @@ def send_to_FIR(request):
         print posts
         T.sleep(2)
     return receive_alert(request)
+
+def send_email(toaddr,id):
+	text = "Hi!\nHow are you?\nHere is the link to activate your account:\nhttp://shreya07.pythonanywhere.com/register_activate/activation/?id=%s" %(id)
+	# Record the MIME types of both parts - text/plain and text/html.
+	part1 = MIMEText(text, 'plain')
+	msg = MIMEMultipart('alternative')
+	msg.attach(part1)
+	subject="Activate your account at SealDeal"
+	msg="""\From: %s\nTo: %s\nSubject: %s\n\n%s""" %("sealdeal16@gmail.com",toaddr,subject,msg.as_string())
+	#Use gmail's smtp server to send email. However, you need to turn on the setting "lesssecureapps" following this link:
+	#https://www.google.com/settings/security/lesssecureapps
+	server = smtplib.SMTP('smtp.gmail.com:587')
+	server.ehlo()
+	server.starttls()
+	server.login("sealdeal16@gmail.com","tcsproject")
+	server.sendmail("sealdeal16@gmail.com",[toaddr],msg)
+	server.quit()

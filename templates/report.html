@@ -32,6 +32,14 @@
     </header>
   </div>
 
+    <form action="{% url 'report'%}" method="get">
+<div id="dateW" style="width: 50%; margin-left:10px;">
+                          <br>
+                          Start Date: <input type="date" name="date_crime_start"><br>
+                          End Date :  <input type="date" name="date_crime_end"><br>
+    <input type="submit" value="submit">
+</div>
+</form>
 <div id="chart-1">{{total | safe }}</div>
 <div id="chart-2">{{piechart | safe }}</div>
 <script src="{% static '/js/nav_menu.js' %}"></script>

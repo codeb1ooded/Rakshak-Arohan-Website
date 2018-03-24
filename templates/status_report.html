@@ -29,6 +29,10 @@ th, td {
     <title>Vertical timeline intervals</title>
     <link rel="stylesheet" href="{% static 'css/status.css' %}" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
+   <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
+
+
   </head>
   <body>
   <!--<div>{{details | safe}}</div>-->
@@ -80,22 +84,41 @@ th, td {
 
 
   <div class="second">
+    <div>
+
+<i style="font-size: 20pt" class="fas fa-envelope-square" onclick="sendMail()"></i>
+</div>
     {% block content %}
 <form method="GET" class="post-form" action="{% url 'update_crime'  %}">
   <table>{{form.as_table}}
+
   </table>
 <button type="Submit" class="save btn btn-default">
   Update
 </button>
 </form>
+    <button onclick="upload()">Try it</button></form>
+  <div id="uploadFile"></div>
     {% endblock %}
 </div>
       </div>
-
   <script>
+    var reports,details;
+    function  sendMail() {
+
+
+
+        var data="CRIME REPORT%0A%0ACRIME TYPE="+details[0].fields.CRIME_TYPE+"%0AFIR LOC="+details[0].fields.FIR_LOC+"%0ACRIME DESCRIPTION="+details[0].fields.CRIME_DESCRIPTION+"%0ACOMPLAINT_BY= "+details[0].fields.COMPLAINT_BY+"%0ADATE_CRIME="+details[0].fields.DATE_CRIME+"%0ATIME_CRIME"+details[0].fields.TIME_CRIME;
+        window.open('mailto:sho@gmail.com?subject=Crime%20Report&body='+data);
+
+
+//window.open('mailto:test@example.com?subject=subject&body=body');
+    }
+
+
     $( document ).ready(function() {
-        var reports =JSON.parse( '{{ reports|escapejs }}');
-        var details = JSON.parse( '{{ details|escapejs }}');
+        reports =JSON.parse( '{{ reports|escapejs }}');
+        details = JSON.parse( '{{ details|escapejs }}');
         var users=JSON.parse( '{{ users|escapejs }}');
         var i;
         console.log(details);
@@ -159,6 +182,15 @@ th, td {
           li.appendChild(span);
         }
     });
+
+function upload() {
+
+    var x = document.createElement("INPUT");
+    x.setAttribute("type", "file");
+    var y = document.getElementById("uploadFile");
+    if(!document.getElementById("uploadFile").hasChildNodes())
+      y.appendChild(x);
+}
   </script>
   </body>
 </html>
