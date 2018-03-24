@@ -10,56 +10,105 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
     <link href="{% static 'css/layout.css' %}" rel="stylesheet" type="text/css" media="all">
     <link href="{% static 'css/nav_menu.css' %}" rel='stylesheet' type='text/css'>
-  </head>
+   <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
+   <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
+   <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+   
+   <link rel="stylesheet" href="{% static 'css/style3.css' %}">
+   <style>
+     .icon-bar a {
+         
+       
+         padding: 12px;
+         transition: all 0.3s ease;
+         color: white;
+     }
 
+     .change {
+      color: blue;
+     }
+     .icon-bar a + a {
+        padding-left: 3em;
+      
+     }
+     .active{
+      line-height: 100em;
+     } 
+   </style>
   <body>
 
-      <div>
-      <header class="main_h sticky">
-          <div class="row">
-              <a class="logo" href="../"><span style="font-size:25px; margin-left: -250px;"> Crime Mapping </span><span style="margin-left:25px;"> </span></a>
-              <div class="mobile-toggle"><span></span><span></span><span></span></div>
-              <nav style="margin-right: -200px;">   
-                <ul>
-                  <li><a href="/">Home</a></li>
-                  <li><a href="../dashboard/">Dashboard</a></li>
-                  {% if is_logged_in %}
-                      <li><a href="../logout/">Log Out</a></li>
-                  {% else %}
-                      <li><a href="../">Sign In/Up </a></li>
-                  {% endif %}
-                  <li><a href="../user/?username={{username}}"> <figure class="avatar"><img src="{% static 'images/avatar.png' %}" alt=""></figure></a></li>
-              </ul>   
-            </nav>
-          </div>
-      </header>
-    </div>
+    <nav class="navbar navbar-inverse" role="navigation" style="margin-top: -50px;" >
+      <div class="container">
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="top-navbar-1">
+          <ul class="nav navbar-nav navbar-right icon-bar" style="margin-bottom: 13px; margin-right:-130px;">
+            
+           <a href="#"> <i class="fas fa-home fa-2x "></i></a>
+            <a href="#"><i class="fa fa-envelope fa-2x"></i></a> 
+            <a href="#"><i class="fa fa-globe fa-2x "></i></a>
+            {% if is_logged_in %}
+                <a href="../logout/"><i class="fas fa-sign-out-alt fa-2x"></i></a>
+            {% else %}
+                <li><a href="../">Sign In/Up </a></li>
+            {% endif %}
+            
+          </ul>
+        </div>
+      </div>
+    </nav>
 
+      
 
-
-    <div id="filter" style="margin-top: 80px;">
+    <div id="filter" style=" float: left; margin-top: 20px; margin-left: 20px; margin-right:20px;">
 
       <form action="{% url 'request_page' %}" method="GET">
-        <h3>FILTERS</h3>
-        <div style="float: left; width: 50%; margin-right:10px; ">
-          <h4>Crime Wise</h4>
-          <input type="checkbox" name="crime" value="theft" class="box">THEFT<br>
-          <input type="checkbox" name="crime" value="kidnap" class="box">KIDNAPPING <br>
-        </div>
-        <div  style="float: left; width: 50%; margin-left:10px;">
-          <h4>Date</h4>
-          Start Date: <input type="date" name="date_crime_start"><br>
-          End Date :  <input type="date" name="date_crime_end"><br>
-        </div>
-        <div style="float: left; width: 50%; margin-right:10px;">
-          <h4>Crime Status</h4>
-          <input type="checkbox" name="status" value="lodged" class="box">LODGED<br>
-          <input type="checkbox" name="status" value="pending" class="box"> PENDING<br>
-          <input type="checkbox" name="status" value="investigated" class="box">INVESTIGATED<br>
-          <input type="checkbox" name="status" value="evidence_collection" class="box">EVIDENCE COLLECTION<br>
-          <input type="checkbox" name="status" value="moved" class="box">MOVED TO COURT<br>
-          <input type="checkbox" name="status" value="closed" class="box">CLOSED<br>
-          <input type="submit" value="Submit" name="mybtn" class="box button">
+        
+            <div class="box">
+                <div class="box-header">
+                    <i class="icon-bookmark"></i>
+                    <h3>FILTERS</h3><br>
+                </div>
+                <div class="box-content">
+                    
+
+                        <button style="margin-right:30px;" type="button" class="btn" onclick=" return crimeWise()"><i class="fas fa-address-card fa-2x"></i><br/>Crime Wise</button>
+
+                        <div id="crimeW" style="display:none; width: 50%; margin-right:20px;">
+                          <br>
+                          <input type="checkbox" name="crime" value="theft" class="box">THEFT<br>
+                          <input style="margin-right:50px;" type="checkbox" name="crime" value="kidnap" class="box">KIDNAPPING <br>
+                        </div>
+
+                        <br><br>
+                  
+                        <button class="btn" type="button" onclick="dateWise()"><i class="fas fa-calendar-alt fa-2x" ></i><br/>Date Wise</button>
+                        <div id="dateW" style="display:none; width: 50%; margin-left:10px;">
+                          <br>
+                          Start Date: <input type="date" name="date_crime_start"><br>
+                          End Date :  <input type="date" name="date_crime_end"><br>
+                        </div>
+
+                        <br><br>
+                        <button class="btn" type="button" onclick="crimeStatus()"><i class="fas fa-chart-line fa-2x" ></i></i><br/>Crime Status</button>
+
+                        <div id="crimeS" style="display:none; width: 50%; margin-right:10px;">
+                          <br>
+                          <input type="checkbox" name="status" value="lodged" class="box">LODGED<br>
+                          <input type="checkbox" name="status" value="pending" class="box"> PENDING<br>
+                          <input type="checkbox" name="status" value="investigated" class="box">INVESTIGATED<br>
+                          <input type="checkbox" name="status" value="evidence_collection" class="box">EVIDENCE COLLECTION<br>
+                          <input type="checkbox" name="status" value="moved" class="box">MOVED TO COURT<br>
+                          <input type="checkbox" name="status" value="closed" class="box">CLOSED<br>
+                          <input type="submit" value="Submit" name="mybtn" class="box button">
+                        </div>
+
+                        <br><br>
+                        <button class="btn"><i class="fas fa-crosshairs fa-2x"></i><br/>Area Selection</button>
+                        <br><br>
+
+                        <input type="submit" value="Submit" name="mybtn" class="box button">   
+                        <br><br>
+            </div>
         </div>
       </form>
 
@@ -237,10 +286,31 @@ function initialize() {
    initAutocomplete();
 
 }
+
+function crimeWise(){
+
+  document.getElementById('crimeW').style.display = "block";
+
+}
+
+function dateWise(){
+  document.getElementById('dateW').style.display = "block";
+
+}
+
+function crimeStatus(){
+  document.getElementById('crimeS').style.display = "block";
+
+}
     </script>
      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDA72RxHoUnAPfspsUxDgVykHK2ONPIckc&signed_in=true&libraries=places&callback=initialize" async defer></script>
 
-     <script src="{% static '/js/nav_menu.js' %}"></script>
+
+     <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+     <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
+     <script src="{% static 'js/wow.min.js' %}"></script>
+
+     
   </body>
 
 </html>
