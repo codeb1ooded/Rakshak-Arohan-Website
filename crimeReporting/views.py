@@ -16,10 +16,15 @@ from .forms import FirRegistrationForm
 
 @login_required(login_url="/signinup/")
 def fir_reg(request):
+    is_logged_in = request.user.is_authenticated()
+    context = {
+        'is_logged_in' : is_logged_in,
+    }
     if request.method == "POST":
       form = FirRegistrationForm(request.POST)
       address = request.POST.get('address')
       print (address)
+      
       if form.is_valid():
           # print "***********************"
           data = form.save(commit=False)
@@ -37,7 +42,7 @@ def fir_reg(request):
           return render(request, 'done.html')
     else:
       form = FirRegistrationForm()
-    return render(request, 'fir_new.html', {'form': form})
+    return render(request, 'fir_new.html', {'form': form, 'is_logged_in': is_logged_in,})
 
 @login_required(login_url="/signinup/")
 def analyse_selected_area(request):
@@ -50,23 +55,10 @@ def analyse_selected_area(request):
 
 
 def home(request):
-    is_logged_in = request.user.is_authenticated
-    if is_logged_in:
-        return news_feed(request)
-    else:
-        return render(request, 'home.html')
-
-@login_required(login_url="/signinup/")
-def news_feed(request):
-  if not request.user.is_authenticated():
-      return HttpResponseRedirect('/')
-
-  is_logged_in = request.user.is_authenticated
-
-  context = {
-          'is_logged_in': is_logged_in,
-      }
-  return render(request, "done.html", context)
+  if request.user.is_authenticated():
+    return HttpResponseRedirect("/viewMap/")
+  else:
+    return render(request, 'home.html')
 
 
 def sign_in_up_view(request):
@@ -87,7 +79,7 @@ def sign_in_view(request):
             if 'next' in request.POST:
               return redirect(request.POST.get('next'))
             else:
-              return render(request, 'map.html', {'form':form})
+              return HttpResponseRedirect("/viewMap/")
         else:
             messages.error(request, "Looks like a user with that username or password doesn't exist!")
             return HttpResponseRedirect('/')

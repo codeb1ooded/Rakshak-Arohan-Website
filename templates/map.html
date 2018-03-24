@@ -8,10 +8,36 @@
     <link rel="stylesheet" href="{% static 'css/map.css' %}" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+    <link href="{% static 'css/layout.css' %}" rel="stylesheet" type="text/css" media="all">
+    <link href="{% static 'css/nav_menu.css' %}" rel='stylesheet' type='text/css'>
   </head>
 
   <body>
-    <div id="filter" >
+
+      <div>
+      <header class="main_h sticky">
+          <div class="row">
+              <a class="logo" href="../"><span style="font-size:25px; margin-left: -250px;"> Crime Mapping </span><span style="margin-left:25px;"> </span></a>
+              <div class="mobile-toggle"><span></span><span></span><span></span></div>
+              <nav style="margin-right: -200px;">   
+                <ul>
+                  <li><a href="/">Home</a></li>
+                  <li><a href="../dashboard/">Dashboard</a></li>
+                  {% if is_logged_in %}
+                      <li><a href="../logout/">Log Out</a></li>
+                  {% else %}
+                      <li><a href="../">Sign In/Up </a></li>
+                  {% endif %}
+                  <li><a href="../user/?username={{username}}"> <figure class="avatar"><img src="{% static 'images/avatar.png' %}" alt=""></figure></a></li>
+              </ul>   
+            </nav>
+          </div>
+      </header>
+    </div>
+
+
+
+    <div id="filter" style="margin-top: 80px;">
 
       <form action="{% url 'request_page' %}" method="GET">
         <h3>FILTERS</h3>
@@ -213,6 +239,8 @@ function initialize() {
 }
     </script>
      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDA72RxHoUnAPfspsUxDgVykHK2ONPIckc&signed_in=true&libraries=places&callback=initialize" async defer></script>
+
+     <script src="{% static '/js/nav_menu.js' %}"></script>
   </body>
 
 </html>

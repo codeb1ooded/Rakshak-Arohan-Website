@@ -4,12 +4,37 @@
     <title>Filters</title>
     <script type="text/javascript" src="{% static 'fusioncharts/fusioncharts.js' %}"></script>
     <script type="text/javascript" src=" {% static 'fusioncharts/themes/fusioncharts.theme.fint.js' %}"></script>
+    <link href="{% static 'css/layout.css' %}" rel="stylesheet" type="text/css" media="all">
+    <link href="{% static 'css/nav_menu.css' %}" rel='stylesheet' type='text/css'>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="{% static '/js/nav_menu.js' %}"></script>
 <head>
     <meta charset="UTF-8">
 
 </head>
 <body>
+
+    <div style="margin-bottom: 70px;">
+    <header class="main_h sticky">
+        <div class="row">
+            <a class="logo" href="../"><span style="font-size:25px; margin-left: -250px;"> Crime Mapping </span><span style="margin-left:25px;"> </span></a>
+            <div class="mobile-toggle"><span></span><span></span><span></span></div>
+            <nav style="margin-right: -200px;">   
+              <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="../dashboard/">Dashboard</a></li>
+                {% if is_logged_in %}
+                    <li><a href="../logout/">Log Out</a></li>
+                {% else %}
+                    <li><a href="../">Sign In/Up </a></li>
+                {% endif %}
+                <li><a href="../user/?username={{username}}"> <figure class="avatar"><img src="{% static 'images/avatar.png' %}" alt=""></figure></a></li>
+            </ul>   
+          </nav>
+        </div>
+    </header>
+  </div>
+
 <h1>MOST PROMINENT CRIMES</h1>
 <div id="chart-1">{{total |safe}}</div>
 </body>

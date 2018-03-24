@@ -15,10 +15,12 @@ from prediction.fusioncharts import FusionCharts
 
 @login_required(login_url="/signinup/")
 def map_render(request):
+    is_logged_in = request.user.is_authenticated()
     json_serializer = serializers.get_serializer("json")()
     reports = json_serializer.serialize(FIR_REPORT.objects.all(), ensure_ascii=False)
     context = {
         'report' : reports,
+        'is_logged_in' : is_logged_in,
     }
 
     # request_page(request)
