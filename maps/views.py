@@ -333,11 +333,12 @@ def report(request):
 
     pieSource['data']=data
     piechart=FusionCharts("pie2d", "ex11", "100%", "300", "chart-2", "json", pieSource)
-
+    is_logged_in=request.user.is_authenticated()
     context = {
         'data' : dataSource,
         'total': column2D.render(),
         'piechart': piechart.render(),
+        'is_logged_in': is_logged_in,
     }
 
     return render(request, 'report.html', context)

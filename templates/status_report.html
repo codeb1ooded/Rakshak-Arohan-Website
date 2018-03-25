@@ -2,6 +2,9 @@
 {% load staticfiles %}
 <html lang="es">
   <head>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style3.css' %}">
+    
     <style>
 table, th, td {
     border: 1px solid black;
@@ -24,6 +27,36 @@ th, td {
     top: 315px;
     padding-top:150px;
 }
+
+
+  .icon-bar a {
+      
+    
+      padding: 12px;
+      transition: all 0.3s ease;
+      color: white;
+  }
+
+  .icon-bar a + a {
+     padding-left: 3em;
+   
+  }
+  .icon-bar a + a {
+     padding-left: 3em;
+   
+  }
+  .active{
+   line-height: 100em;
+  } 
+  .btn{
+   background-color: #000;
+  }
+  .change{
+   color : red;
+  }
+
+  
+
 </style>
     <meta charset="UTF-8"/>
     <title>Vertical timeline intervals</title>
@@ -34,7 +67,32 @@ th, td {
 
 
   </head>
+  
   <body>
+    <nav class="navbar navbar-inverse" role="navigation" style="margin-top: -70px;">
+             <div class="container">
+               <!-- Collect the nav links, forms, and other content for toggling -->
+               <div class="collapse navbar-collapse" id="top-navbar-1">
+                 <ul class="nav navbar-nav navbar-right icon-bar" style="margin-bottom: 13px; margin-right:-245px;">
+                   
+               
+                  <a href="/viewMap/" id="home"> <i class="fas fa-home fa-2x"  style="margin-left:-2700px;"></i></a>
+                  <div class="ic" style="float:left;">
+
+                   <div id="receive_app" style="float:left; padding-right:30px;">
+                     <a href="{% url 'receive_alert' %}"><i class="fas fa-exclamation-circle fa-2x change"></i></a> 
+                   </div>
+
+                   <a href="#"><i class="fa fa-globe fa-2x "></i></a>
+                  
+                       <a href="../logout/"><i class="fas fa-sign-out-alt fa-2x"></i></a>
+                   
+                 </div>
+                   
+                 </ul>
+               </div>
+             </div>
+           </nav>
   <!--<div>{{details | safe}}</div>-->
     <div class="container">
 

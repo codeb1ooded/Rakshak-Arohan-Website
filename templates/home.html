@@ -421,11 +421,13 @@
 
 <form method="POST" action='\signin\'>
 {% csrf_token %}
-   <h2 align="left">LOGIN</h2>
+   <div style="float:left; padding-left:60px;">
+        <h2 alig="left">LOGIN</h2>
+   </div>
    <br><br><br>
-<input type="username" placeholder="Username" name="username"/>
+<input type="username" style="height:30px; width:60%;" placeholder="Username" name="username"/>
 <br><br>
-<input type="password" placeholder="Password" name="password"/ >
+<input style="height:30px; width:60%;" type="password" placeholder="Password" name="password"/ >
 <br><br>
 {% if request.GET.next %}
   <input type="hidden" name="next" value="{{ request.GET.next }}">
@@ -443,15 +445,17 @@
 <a href="#" onclick="ocultar_login_sign_up()"><i class="material-icons">&#xE5C4;</i></a>
 <form method="POST" action='\signup\'>
 {% csrf_token %}
+<div style="float:left; padding-left:50px;">
      <h2 alig="left">SIGN UP</h2>
+</div>
      <br><br><br>
-<input type="text" placeholder="Name" name="name"/>
+<input type="text" style="height:30px; width:60%;"  placeholder="Name" name="name"/>
 <br><br>
-<input type="username" placeholder="Username" name="username"/>
+<input type="username" style="height:30px; width:60%;" placeholder="Username" name="username"/>
 <br><br>
-<input type="text" placeholder="Email" name="email"/>
+<input type="text" style="height:30px; width:60%;" placeholder="Email" name="email"/>
 <br><br>
-<input type="password" placeholder="Password" name="password"/ >
+<input type="password" style="height:30px; width:60%;" placeholder="Password" name="password"/ >
 <br><br>
 <button class="btn_sign_up" onclick="cambiar_sign_up()">SIGN UP</button>
 </form>
