@@ -5,73 +5,11 @@
     <script type="text/javascript" src="{% static 'fusioncharts/fusioncharts.js' %}"></script>
     <script type="text/javascript" src=" {% static 'fusioncharts/themes/fusioncharts.theme.fint.js' %}"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style3.css' %}">
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-        <link rel="stylesheet" href="{% static 'css/style3.css' %}">
-        <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
-        <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
 <head>
     <meta charset="UTF-8">
 
 </head>
-<style>
-  .icon-bar a {
-      
-    
-      padding: 12px;
-      transition: all 0.3s ease;
-      color: white;
-  }
-
-  .icon-bar a + a {
-     padding-left: 3em;
-   
-  }
-  .icon-bar a + a {
-     padding-left: 3em;
-   
-  }
-  .active{
-   line-height: 100em;
-  } 
-  .btn{
-   background-color: #000;
-  }
-  .change{
-   color : red;
-  }
-
-  
-</style>
 <body>
-  <nav class="navbar navbar-inverse" role="navigation" style="margin-top: -50px;">
-           <div class="container">
-             <!-- Collect the nav links, forms, and other content for toggling -->
-             <div class="collapse navbar-collapse" id="top-navbar-1">
-               <ul class="nav navbar-nav navbar-right icon-bar" style="margin-bottom: 13px; margin-right:-130px;">
-                 
-             
-                <a href="/viewMap/" id="home"> <i class="fas fa-home fa-2x"  style="margin-left:-2700px;"></i></a>
-                <div class="ic" style="float:left;">
-
-                 <div id="receive_app" style="float:left; padding-right:30px;">
-                   <a href="{% url 'receive_alert' %}"><i class="fas fa-exclamation-circle fa-2x change"></i></a> 
-                 </div>
-
-                 <a href="#"><i class="fa fa-globe fa-2x "></i></a>
-                 {% if is_logged_in %}
-                     <a href="../logout/"><i class="fas fa-sign-out-alt fa-2x"></i></a>
-                 {% else %}
-                     <a href="../"><i class="fas fa-user-plus fa-2x"></i></a>
-                 {% endif %}
-               </div>
-                 
-               </ul>
-             </div>
-           </div>
-         </nav>
-
 <h1>MOST PROMINENT CRIME CITIES</h1>
 <div id="chart-1">{{total |safe}}</div>
 </body>
