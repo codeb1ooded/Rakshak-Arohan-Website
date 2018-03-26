@@ -94,7 +94,7 @@ def all_reports_markers(request):
                 'status': report.STATUS
         }
         all_reports_array.append(report_json)
-    print (JsonResponse({"all_reports" : all_reports_array}))
+
     return JsonResponse({"all_reports" : all_reports_array})
 
 
@@ -105,5 +105,21 @@ longitude
 def neighbourhood(request):
     _lat = float(request.GET['latitude'])
     _long = float(request.GET['longitude'])
-    neghbourhood_reports = FIR_REPORT.objects.all()
-    return JsonResponse({"neghbourhood" : neghbourhood_reports})
+    neighbourhood_reports = FIR_REPORT.objects.all()
+    json_neighbourhood = []
+    for report in neighbourhood_reports:
+        report_json = {
+                'crime_type': report.CRIME_TYPE,
+                'latitude': report.LAT,
+                'longitude': report.LNG,
+                'crime_description': report.CRIME_DESCRIPTION,
+                'complaint_by': report.COMPLAINT_BY,
+                'date_crime': report.DATE_CRIME,
+                'time_crime': report.TIME_CRIME,
+                'fir_location': report.FIR_LOC,
+                'complaint_time': report.COMPLAINT_TIME,
+                'phone': report.PHONE,
+                'status': report.STATUS
+        }
+        json_neighbourhood.append(report_json)
+    return JsonResponse({"neghbourhood" : json_neighbourhood})

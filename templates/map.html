@@ -12,9 +12,11 @@
     <link href="{% static 'css/nav_menu.css' %}" rel='stylesheet' type='text/css'>
    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
+
    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-   
+
    <link rel="stylesheet" href="{% static 'css/style3.css' %}">
+  
    <style>
      .icon-bar a {
          
@@ -24,8 +26,9 @@
          color: white;
      }
 
-     .change {
-      color: blue;
+     .icon-bar a + a {
+        padding-left: 3em;
+      
      }
      .icon-bar a + a {
         padding-left: 3em;
@@ -37,33 +40,48 @@
      .btn{
       background-color: #000;
      }
+     .change{
+      color : red;
+     }
+
      
    </style>
   <body>
 
-    <nav class="navbar navbar-inverse" role="navigation" style="margin-top: -50px;" >
+
+
+    
+    <nav class="navbar navbar-inverse" role="navigation" style="margin-top: -50px;">
       <div class="container">
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="top-navbar-1">
           <ul class="nav navbar-nav navbar-right icon-bar" style="margin-bottom: 13px; margin-right:-130px;">
             
-           <a href="#"> <i class="fas fa-home fa-2x "></i></a>
-            <a href="#"><i class="fa fa-envelope fa-2x"></i></a> 
-            <a href="#"><i class="fa fa-bell fa-2x "></i></a>
-            {% if is_logged_in %}
+        
+           <a href="/viewMap/" id="home"> <i class="fas fa-home fa-2x"  style="margin-left:-2700px;"></i></a>
+           <div class="ic" style="float:left;">
+
+            <div id="receive_app" style="float:left; padding-right:30px;">
+              <a href="{% url 'receive_alert' %}"><i class="fas fa-exclamation-circle fa-2x change"></i></a> 
+            </div>
+
+            <a href="#"><i class="fa fa-globe fa-2x "></i></a>
+           
                 <a href="../logout/"><i class="fas fa-sign-out-alt fa-2x"></i></a>
-            {% else %}
-                <li><a href="../">Sign In/Up </a></li>
-            {% endif %}
+            
+            
+          </div>
             
           </ul>
         </div>
       </div>
     </nav>
 
+    
+
       
 
-    <div id="filter" style=" float: left; margin-top: 20px; margin-left: 20px; margin-right:20px;">
+    <div id="filter" style=" float: left; margin-top: 20px; margin-left: 20px; ">
 
       <form action="{% url 'request_page' %}" method="GET">
         
@@ -73,27 +91,30 @@
                     <h3>FILTERS</h3><br>
                 </div>
                 <div class="box-content">
-                        <button style="margin-right:30px;" type="button" class="btn" onclick=" return crimeWise()"><i class="fas fa-address-card fa-2x"></i><br/>Crime Wise</button>
-
-                        <div id="crimeW" style="display:none; width: 50%; margin-right:20px;">
-                          <br>
-                          <input type="checkbox" name="crime" value="theft" class="box">THEFT<br>
-                          <input style="margin-right:50px;" type="checkbox" name="crime" value="kidnap" class="box">KIDNAPPING <br>
-                        </div>
-
-                        <br><br>
-                  
                         <button class="btn" type="button" onclick="dateWise()"><i class="fas fa-calendar-alt fa-2x" ></i><br/>Date Wise</button>
-                        <div id="dateW" style="display:none; width: 50%; margin-left:10px;">
+                        <div id="dateW"  style="display:none; width: auto; margin-right: 15px;">
                           <br>
                           Start Date: <input type="date" name="date_crime_start"><br>
                           End Date :  <input type="date" name="date_crime_end"><br>
                         </div>
 
                         <br><br>
-                        <button class="btn" type="button" onclick="crimeStatus()"><i class="fas fa-chart-line fa-2x" ></i></i><br/>Crime Status</button>
 
-                        <div id="crimeS" style="display:none; width: 50%; margin-right:10px;">
+
+                        <button type="button" class="btn" onclick=" return crimeWise()"><i class="fas fa-address-card fa-2x"></i><br/>Crime Wise</button>
+
+                        <div id="crimeW" style="display:none; width: 100%;">
+                          <br>
+                          <input type="checkbox" name="crime" value="theft">THEFT<br>
+                          <input style="margin-left: -5px;" type="checkbox" name="crime" value="kidnap" >KIDNAP<br>
+                        </div>
+
+                        <br><br>
+                  
+                        
+                        <button class="btn" style="margin-top:10px;" type="button" onclick="crimeStatus()"><i class="fas fa-chart-line fa-2x"></i><br>Crime Status</button>
+
+                          <div id="crimeS" style="display:none; width: auto; margin-left:10px; margin-right: 10px;">
                           <br>
                           <input type="checkbox" name="status" value="lodged" class="box">LODGED<br>
                           <input type="checkbox" name="status" value="pending" class="box"> PENDING<br>
@@ -105,21 +126,31 @@
                         </div>
 
                         <br><br>
-                        <button class="btn"><i class="fas fa-crosshairs fa-2x"></i><br/>Area Selection</button>
+
+                        <button style="margin-bottom:-70px; margin-top:-10px;" onclick="areaSelection()" type="button" class="btn"><i class="fas fa-crosshairs fa-2x" style="margin-right:10px;"></i><br/>Area Selection</button>
                         <br><br>
 
-                        <input type="submit" value="Submit" name="mybtn" class="box button">   
+                        <div id="locationField" style="display:none; margin-top:40px;">
+                          <input id="autocomplete" placeholder="Enter your address" type="text" name="address"></input>
+                        </div>
+                        <br><br>
+
+                        <button style="width:auto; margin-right:10px;" onclick="reportCrime()" type="button" class="btn"><i class="fas fa-flag fa-2x"></i></i><br/>Report Crime</button>
+                        <br><br>
+
+                        <div id="report" style="display:none; margin-left:-0.5px;">
+                          <a href="{% url 'report' %}">Report</a>
+                        </div>
+
+                        <input style="margin-left:-10px; margin-top:20px;" type="submit" value="Submit" name="mybtn" class="box button">   
                         <br><br>
             </div>
         </div>
       </form>
 
-      <div id="receive_app">
-      <a href="{% url 'receive_alert' %}">Receive alert</a>
-    </div>
-      <div id="locationField">
-      <input id="autocomplete" placeholder="Enter your address" type="text" name="address"></input>
-    </div>
+    
+
+    
 
       <!--<div onclick="start_selection()">
          <button type="button">Click to select an area!</button>
@@ -130,9 +161,7 @@
     </div>
 
     <div id="map"></div>
-    <div id="report">
-      <a href="{% url 'report' %}">Report</a>
-    </div>
+    
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 
 
@@ -199,12 +228,8 @@
       };
 
       function initAutocomplete() {
-          var options={
-              types: ['(cities)'],
-              componentRestrictions:{country:"ind"}
-          };
           var input = document.getElementById('autocomplete');
-        var autocomplete = new google.maps.places.Autocomplete(input,options);
+        var autocomplete = new google.maps.places.Autocomplete(input);
         google.maps.event.addListener(autocomplete, 'place_changed', function () {
             var place = autocomplete.getPlace();
 
@@ -230,8 +255,8 @@
 
 
          var extp = new Array();
-         if (dir==1)	{var start=0;var end=points+1} // one extra here makes sure we connect the
-         else		{var start=points+1;var end=0}
+         if (dir==1)  {var start=0;var end=points+1} // one extra here makes sure we connect the
+         else   {var start=points+1;var end=0}
          for (var i=start; (dir==1 ? i < end : i > end); i=i+dir)
          {
             var theta = Math.PI * (i / (points/2));
@@ -295,19 +320,57 @@ function initialize() {
 
 function crimeWise(){
 
-  document.getElementById('crimeW').style.display = "block";
+  var div = document.getElementById('crimeW');
+     if (div.style.display !== 'none') {
+         div.style.display = 'none';
+     }
+     else 
+         div.style.display = 'block';
 
 }
 
 function dateWise(){
-  document.getElementById('dateW').style.display = "block";
+  //document.getElementById('dateW').style.display = "block";
+
+  var div = document.getElementById('dateW');
+     if (div.style.display !== 'none') {
+         div.style.display = 'none';
+     }
+     else 
+         div.style.display = 'block';
 
 }
 
 function crimeStatus(){
-  document.getElementById('crimeS').style.display = "block";
+  var div = document.getElementById('crimeS');
+     if (div.style.display !== 'none') {
+         div.style.display = 'none';
+     }
+     else 
+         div.style.display = 'block';
 
 }
+
+function areaSelection(){
+  var div = document.getElementById('locationField');
+     if (div.style.display !== 'none') {
+         div.style.display = 'none';
+     }
+     else 
+         div.style.display = 'block';
+
+}
+
+function reportCrime(){
+  var div = document.getElementById('report');
+     if (div.style.display !== 'none') {
+         div.style.display = 'none';
+     }
+     else 
+         div.style.display = 'block';
+
+}
+
     </script>
      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDA72RxHoUnAPfspsUxDgVykHK2ONPIckc&signed_in=true&libraries=places&callback=initialize" async defer></script>
 
