@@ -94,7 +94,7 @@ def all_reports_markers(request):
                 'status': report.STATUS
         }
         all_reports_array.append(report_json)
-    print (JsonResponse({"all_reports" : all_reports_array}))
+
     return JsonResponse({"all_reports" : all_reports_array})
 
 
@@ -122,5 +122,4 @@ def neighbourhood(request):
                 'status': report.STATUS
         }
         json_neighbourhood.append(report_json)
-    print JsonResponse({"neghbourhood" : json_neighbourhood})
     return JsonResponse({"neghbourhood" : json_neighbourhood})
