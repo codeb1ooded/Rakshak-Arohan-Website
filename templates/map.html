@@ -4,153 +4,45 @@
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <title>Rakshak</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <link rel="stylesheet" href="{% static 'css/map.css' %}" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
-    <link href="{% static 'css/layout.css' %}" rel="stylesheet" type="text/css" media="all">
-    <link href="{% static 'css/nav_menu.css' %}" rel='stylesheet' type='text/css'>
-   <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
-   <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
+  </head>
 
-   <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-
-   <link rel="stylesheet" href="{% static 'css/style3.css' %}">
-  
-   <style>
-     .icon-bar a {
-         
-       
-         padding: 12px;
-         transition: all 0.3s ease;
-         color: white;
-     }
-
-     .icon-bar a + a {
-        padding-left: 3em;
-      
-     }
-     .icon-bar a + a {
-        padding-left: 3em;
-      
-     }
-     .active{
-      line-height: 100em;
-     } 
-     .btn{
-      background-color: #000;
-     }
-     .change{
-      color : red;
-     }
-
-     
-   </style>
   <body>
-
-
-
-    
-    <nav class="navbar navbar-inverse" role="navigation" style="margin-top: -50px;">
-      <div class="container">
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="top-navbar-1">
-          <ul class="nav navbar-nav navbar-right icon-bar" style="margin-bottom: 13px; margin-right:-130px;">
-            
-        
-           <a href="/viewMap/" id="home"> <i class="fas fa-home fa-2x"  style="margin-left:-2700px;"></i></a>
-           <div class="ic" style="float:left;">
-
-            <div id="receive_app" style="float:left; padding-right:30px;">
-              <a href="{% url 'receive_alert' %}"><i class="fas fa-exclamation-circle fa-2x change"></i></a> 
-            </div>
-
-            <a href="#"><i class="fa fa-globe fa-2x "></i></a>
-           
-                <a href="../logout/"><i class="fas fa-sign-out-alt fa-2x"></i></a>
-            
-            
-          </div>
-            
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-    
-
-      
-
-    <div id="filter" style=" float: left; margin-top: 20px; margin-left: 20px; ">
+    <div id="filter" >
 
       <form action="{% url 'request_page' %}" method="GET">
-        
-            <div class="box">
-                <div class="box-header">
-                    <i class="icon-bookmark"></i>
-                    <h3>FILTERS</h3><br>
-                </div>
-                <div class="box-content">
-                        <button class="btn" type="button" onclick="dateWise()"><i class="fas fa-calendar-alt fa-2x" ></i><br/>Date Wise</button>
-                        <div id="dateW"  style="display:none; width: auto; margin-right: 15px;">
-                          <br>
-                          Start Date: <input type="date" name="date_crime_start"><br>
-                          End Date :  <input type="date" name="date_crime_end"><br>
-                        </div>
-
-                        <br><br>
-
-
-                        <button type="button" class="btn" onclick=" return crimeWise()"><i class="fas fa-address-card fa-2x"></i><br/>Crime Wise</button>
-
-                        <div id="crimeW" style="display:none; width: 100%;">
-                          <br>
-                          <input type="checkbox" name="crime" value="theft">THEFT<br>
-                          <input style="margin-left: -5px;" type="checkbox" name="crime" value="kidnap" >KIDNAP<br>
-                        </div>
-
-                        <br><br>
-                  
-                        
-                        <button class="btn" style="margin-top:10px;" type="button" onclick="crimeStatus()"><i class="fas fa-chart-line fa-2x"></i><br>Crime Status</button>
-
-                          <div id="crimeS" style="display:none; width: auto; margin-left:10px; margin-right: 10px;">
-                          <br>
-                          <input type="checkbox" name="status" value="lodged" class="box">LODGED<br>
-                          <input type="checkbox" name="status" value="pending" class="box"> PENDING<br>
-                          <input type="checkbox" name="status" value="investigated" class="box">INVESTIGATED<br>
-                          <input type="checkbox" name="status" value="evidence_collection" class="box">EVIDENCE COLLECTION<br>
-                          <input type="checkbox" name="status" value="moved" class="box">MOVED TO COURT<br>
-                          <input type="checkbox" name="status" value="closed" class="box">CLOSED<br>
-                          <input type="submit" value="Submit" name="mybtn" class="box button">
-                        </div>
-
-                        <br><br>
-
-                        <button style="margin-bottom:-70px; margin-top:-10px;" onclick="areaSelection()" type="button" class="btn"><i class="fas fa-crosshairs fa-2x" style="margin-right:10px;"></i><br/>Area Selection</button>
-                        <br><br>
-
-                        <div id="locationField" style="display:none; margin-top:40px;">
-                          <input id="autocomplete" placeholder="Enter your address" type="text" name="address"></input>
-                        </div>
-                        <br><br>
-
-                        <button style="width:auto; margin-right:10px;" onclick="reportCrime()" type="button" class="btn"><i class="fas fa-flag fa-2x"></i></i><br/>Report Crime</button>
-                        <br><br>
-
-                        <div id="report" style="display:none; margin-left:-0.5px;">
-                          <a href="{% url 'report' %}">Report</a>
-                        </div>
-
-                        <input style="margin-left:-10px; margin-top:20px;" type="submit" value="Submit" name="mybtn" class="box button">   
-                        <br><br>
-            </div>
+        <h3>FILTERS</h3>
+        <div style="float: left; width: 50%; margin-right:10px; ">
+          <h4>Crime Wise</h4>
+          <input type="checkbox" name="crime" value="theft" class="box">THEFT<br>
+          <input type="checkbox" name="crime" value="kidnap" class="box">KIDNAPPING <br>
+        </div>
+        <div  style="float: left; width: 50%; margin-left:10px;">
+          <h4>Date</h4>
+          Start Date: <input type="date" name="date_crime_start"><br>
+          End Date :  <input type="date" name="date_crime_end"><br>
+        </div>
+        <div style="float: left; width: 50%; margin-right:10px;">
+          <h4>Crime Status</h4>
+          <input type="checkbox" name="status" value="lodged" class="box">LODGED<br>
+          <input type="checkbox" name="status" value="pending" class="box"> PENDING<br>
+          <input type="checkbox" name="status" value="investigated" class="box">INVESTIGATED<br>
+          <input type="checkbox" name="status" value="evidence_collection" class="box">EVIDENCE COLLECTION<br>
+          <input type="checkbox" name="status" value="moved" class="box">MOVED TO COURT<br>
+          <input type="checkbox" name="status" value="closed" class="box">CLOSED<br>
+          <input type="submit" value="Submit" name="mybtn" class="box button">
         </div>
       </form>
 
-    
-
-    
+      <div id="receive_app">
+      <a href="{% url 'receive_alert' %}">Receive alert</a>
+    </div>
+      <div id="locationField">
+      <input id="autocomplete" placeholder="Enter your address" type="text" name="address"></input>
+    </div>
 
       <!--<div onclick="start_selection()">
          <button type="button">Click to select an area!</button>
@@ -161,49 +53,40 @@
     </div>
 
     <div id="map"></div>
-    
+    <div id="report">
+      <a href="{% url 'report' %}">Report</a>
+    </div>
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 
 
    <script>
     var map, bounds,donut,marker1;
-
     var user_lat = 20.5937, user_long = 78.9629;
-
     function initMap() {
-
         map = new google.maps.Map(document.getElementById('map'), {
           zoom: 4,
           center: {lat: user_lat, lng: user_long}
         });
-
-
-
         var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         var geocoder = new google.maps.Geocoder;
         var markers = locations.map(function(location, i) {
             var latlng = {lat: parseFloat(location.fields.LAT), lng: parseFloat(location.fields.LNG)};
             var latlng1 = {lat: location.fields.LAT, lng: location.fields.LNG};
-
             var marker =  new google.maps.Marker({
                 position: latlng1,
                 title : location.fields.CRIME_TYPE,
                 label: labels[i % labels.length],
             });
             context = {status_obj : location,}
-
             marker.addListener('click', function() {
                 geocoder.geocode({'location': latlng}, function(results, status) {
-
                     var url="/crime_status/?crime_id="+location.pk;
-
                     infowindow.setContent("<div id='pop_up'> <b>CRIME: </b>"+location.fields.CRIME_TYPE+"<br><b>STATUS: </b><a href="+url+">click</a><br><b>AREA: </b>"+results[0].formatted_address+"</div>");
                     infowindow.open(map, marker);
                 });
             });
             return marker;
         });
-
         var contentString = '<div id="content">'+
             '<div id="siteNotice">'+
             '</div>'+
@@ -215,7 +98,6 @@
         var markerCluster = new MarkerClusterer(map, markers,
             {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
     }
-
     var locations =JSON.parse( '{{ report|escapejs }}');
      var placeSearch, autocomplete;
       var componentForm = {
@@ -226,37 +108,31 @@
         country: 'long_name',
         postal_code: 'short_name'
       };
-
       function initAutocomplete() {
+          var options={
+              componentRestrictions:{country:"ind"}
+          };
+
           var input = document.getElementById('autocomplete');
-        var autocomplete = new google.maps.places.Autocomplete(input);
+        var autocomplete = new google.maps.places.Autocomplete(input,options);
         google.maps.event.addListener(autocomplete, 'place_changed', function () {
             var place = autocomplete.getPlace();
-
             console.log(place.geometry.location.lat());
             console.log(place.geometry.location.lng());
             circleMake(place.geometry.location.lat(),place.geometry.location.lng());
-
         });
-
-
         }
-
          function drawCircle(point, radius, dir) {
       var d2r = Math.PI / 180;   // degrees to radians
       var r2d = 180 / Math.PI;   // radians to degrees
       var earthsradius = 396300; // 3963 is the radius of the earth in miles
-
          var points = 32;
-
          // find the raidus in lat/lon
          var rlat = (radius / earthsradius) * r2d;
          var rlng = rlat / Math.cos(point.lat() * d2r);
-
-
          var extp = new Array();
-         if (dir==1)  {var start=0;var end=points+1} // one extra here makes sure we connect the
-         else   {var start=points+1;var end=0}
+         if (dir==1)	{var start=0;var end=points+1} // one extra here makes sure we connect the
+         else		{var start=points+1;var end=0}
          for (var i=start; (dir==1 ? i < end : i > end); i=i+dir)
          {
             var theta = Math.PI * (i / (points/2));
@@ -268,7 +144,6 @@
          // alert(extp.length);
          return extp;
    }
-
         function circleMake(lat,lng){
           var lineSymbol = {
         path: 'M 0,-1 0,1',
@@ -279,7 +154,6 @@
         if(donut){
             marker1.setMap(null);
              donut.setMap(null);
-
         }
         donut = new google.maps.Polyline({
                        path: drawCircle(new google.maps.LatLng(lat,lng), 100, 1),
@@ -292,7 +166,6 @@
                        strokeWeight: 2,
                        fillColor: "#FF0000",
                        fillOpacity: 0.35,
-
            });
             var myCenter = new google.maps.LatLng(lat,lng);
            marker1 = new google.maps.Marker({
@@ -301,85 +174,14 @@
   });
   marker1.setMap(map);
            donut.setMap(map);
-
-
         map.fitBounds(bounds);
-
         }
-
-
-
-
-
-
 function initialize() {
    initMap();
    initAutocomplete();
-
 }
-
-function crimeWise(){
-
-  var div = document.getElementById('crimeW');
-     if (div.style.display !== 'none') {
-         div.style.display = 'none';
-     }
-     else 
-         div.style.display = 'block';
-
-}
-
-function dateWise(){
-  //document.getElementById('dateW').style.display = "block";
-
-  var div = document.getElementById('dateW');
-     if (div.style.display !== 'none') {
-         div.style.display = 'none';
-     }
-     else 
-         div.style.display = 'block';
-
-}
-
-function crimeStatus(){
-  var div = document.getElementById('crimeS');
-     if (div.style.display !== 'none') {
-         div.style.display = 'none';
-     }
-     else 
-         div.style.display = 'block';
-
-}
-
-function areaSelection(){
-  var div = document.getElementById('locationField');
-     if (div.style.display !== 'none') {
-         div.style.display = 'none';
-     }
-     else 
-         div.style.display = 'block';
-
-}
-
-function reportCrime(){
-  var div = document.getElementById('report');
-     if (div.style.display !== 'none') {
-         div.style.display = 'none';
-     }
-     else 
-         div.style.display = 'block';
-
-}
-
     </script>
      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDA72RxHoUnAPfspsUxDgVykHK2ONPIckc&signed_in=true&libraries=places&callback=initialize" async defer></script>
-
-
-     <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
-     <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
-     <script src="{% static 'js/wow.min.js' %}"></script>
-
-     
   </body>
 
 </html>

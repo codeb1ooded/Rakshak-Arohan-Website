@@ -2,9 +2,6 @@
 {% load staticfiles %}
 <html lang="es">
   <head>
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style3.css' %}">
-    
     <style>
 table, th, td {
     border: 1px solid black;
@@ -17,46 +14,14 @@ th, td {
      width:70%;
      height:300px;
      position:absolute;
-
  }
 .second{
-
     width:40%;
     height:200px;
 	position: relative;
     top: 315px;
     padding-top:150px;
 }
-
-
-  .icon-bar a {
-      
-    
-      padding: 12px;
-      transition: all 0.3s ease;
-      color: white;
-  }
-
-  .icon-bar a + a {
-     padding-left: 3em;
-   
-  }
-  .icon-bar a + a {
-     padding-left: 3em;
-   
-  }
-  .active{
-   line-height: 100em;
-  } 
-  .btn{
-   background-color: #000;
-  }
-  .change{
-   color : red;
-  }
-
-  
-
 </style>
     <meta charset="UTF-8"/>
     <title>Vertical timeline intervals</title>
@@ -67,32 +32,7 @@ th, td {
 
 
   </head>
-  
   <body>
-    <nav class="navbar navbar-inverse" role="navigation" style="margin-top: -70px;">
-             <div class="container">
-               <!-- Collect the nav links, forms, and other content for toggling -->
-               <div class="collapse navbar-collapse" id="top-navbar-1">
-                 <ul class="nav navbar-nav navbar-right icon-bar" style="margin-bottom: 13px; margin-right:-245px;">
-                   
-               
-                  <a href="/viewMap/" id="home"> <i class="fas fa-home fa-2x"  style="margin-left:-2700px;"></i></a>
-                  <div class="ic" style="float:left;">
-
-                   <div id="receive_app" style="float:left; padding-right:30px;">
-                     <a href="{% url 'receive_alert' %}"><i class="fas fa-exclamation-circle fa-2x change"></i></a> 
-                   </div>
-
-                   <a href="#"><i class="fa fa-globe fa-2x "></i></a>
-                  
-                       <a href="../logout/"><i class="fas fa-sign-out-alt fa-2x"></i></a>
-                   
-                 </div>
-                   
-                 </ul>
-               </div>
-             </div>
-           </nav>
   <!--<div>{{details | safe}}</div>-->
     <div class="container">
 
@@ -163,24 +103,16 @@ th, td {
   <script>
     var reports,details;
     function  sendMail() {
-
-
-
         var data="CRIME REPORT%0A%0ACRIME TYPE="+details[0].fields.CRIME_TYPE+"%0AFIR LOC="+details[0].fields.FIR_LOC+"%0ACRIME DESCRIPTION="+details[0].fields.CRIME_DESCRIPTION+"%0ACOMPLAINT_BY= "+details[0].fields.COMPLAINT_BY+"%0ADATE_CRIME="+details[0].fields.DATE_CRIME+"%0ATIME_CRIME"+details[0].fields.TIME_CRIME;
         window.open('mailto:sho@gmail.com?subject=Crime%20Report&body='+data);
-
-
 //window.open('mailto:test@example.com?subject=subject&body=body');
     }
-
-
     $( document ).ready(function() {
         reports =JSON.parse( '{{ reports|escapejs }}');
         details = JSON.parse( '{{ details|escapejs }}');
         var users=JSON.parse( '{{ users|escapejs }}');
         var i;
         console.log(details);
-
         var f1=document.getElementById("field-1");
         f1.innerHTML=details[0].fields.CRIME_TYPE;
         f1=document.getElementById("field-2");
@@ -195,10 +127,6 @@ th, td {
         f1.innerHTML=details[0].fields.TIME_CRIME;
         f1=document.getElementById("field-7");
         f1.innerHTML=details[0].fields.PHONE;
-
-
-
-
         for(i=0;i<reports.length;i++){
           var ul = document.getElementById("outer_ul")
           var li = document.createElement("li");
@@ -230,7 +158,6 @@ th, td {
           span.appendChild(span1);
 //          span.appendChild(span2);
           div3.classList.add('type');
-
           li.appendChild(div);
           div.appendChild(div1);
           div.appendChild(div2);
@@ -240,9 +167,7 @@ th, td {
           li.appendChild(span);
         }
     });
-
 function upload() {
-
     var x = document.createElement("INPUT");
     x.setAttribute("type", "file");
     var y = document.getElementById("uploadFile");
