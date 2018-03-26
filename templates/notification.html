@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+<style>
+    .button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: blue;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.button1 {
+    background-color: white;
+    color: blue;
+    border: 2px solid white;
+    font-style: italic;
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 15px;
+}
+</style>
+</head>
+<body>
+
+ <div class="first" id="tables">
+    <table>
+        <thead>
+      <tr>
+          <th>Id</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Date Crime</th>
+        <th>Complainee</th>
+          <th>Phone No</th>
+        <th>Location</th>
+      </tr>
+        </thead>
+     <tbody class="table-hover">
+    {% for post in data %}
+
+       <tr style="text-align: center">
+            <form action="{% url 'crime_status' %}" method="GET">
+                <td><input type="submit" value="{{post.ID}}" id="crime_id" name = "crime_id" class="button button1"></td>
+                          <td id="1" name = "type">{{ post.CRIME_TYPE }}</td>
+            </form>
+          <td id="2" name = "desc">{{ post.CRIME_DESCRIPTION}}</td>
+          <td id="3" name = "date">{{ post.DATE_CRIME |date:"SHORT_DATE_FORMAT"}}: {{post.time_crime }}</td>
+          <td id="4" name = "crime_name">{{ post.PERSON_COMPLAINT}}</td>
+          <td id="5" name = "phone">{{ post.PHONE}}</td>
+          <td id="6" name = "loc">{{ post.FIR_LOC}}</td>
+
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+
+<!--<div id="snackbar">VERIFIED! FIR lodged successfully !!</div>-->
+
+  </div>
+</body>
+</html>
