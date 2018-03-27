@@ -8,6 +8,25 @@
     <link rel="stylesheet" href="{% static 'css/map.css' %}" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+ <style>
+   a.notif {
+  position: relative;
+  display: block;
+  height: 50px;
+  width: 50px;
+  background: url('http://i.imgur.com/evpC48G.png');
+  background-size: contain;
+  text-decoration: none;
+  float:right
+}
+.num {
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  color: #fff;
+}
+ </style>
+
   </head>
 
   <body>
@@ -39,8 +58,11 @@
 
       <div id="receive_app">
       <a href="{% url 'receive_alert' %}">Receive alert</a>
+
+
       <div id="notifications">
-      <a href="{% url 'notifications' %}">Push notifications</a>
+         <a href="{% url 'notifications' %}" class="notif"><span class="num">20</span></a>
+
     </div>
     </div>
       <div id="locationField">
