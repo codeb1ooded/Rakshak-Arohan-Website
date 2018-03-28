@@ -27,7 +27,7 @@ class FIR_REPORT(models.Model):
     CRIME_TYPE = models.CharField(max_length=100)
     LAT = models.FloatField()
     LNG = models.FloatField()
-    CRIME_DESCRIPTION = models.CharField(null=True,max_length=1000,blank=True)
+    
     PERSON_COMPLAINT = models.ForeignKey(USER, on_delete=models.CASCADE, null=True, blank=True)
     COMPLAINT_BY = models.CharField(max_length=100)
     DATE_CRIME = models.DateField()
@@ -37,6 +37,7 @@ class FIR_REPORT(models.Model):
     COMPLAINT_DATE = models.DateField(default=now())
     PHONE = models.CharField(max_length=100)
     STATUS = models.CharField(default='Lodged',choices = STATUS_CHOICES,max_length=100)
+    CRIME_DESCRIPTION = models.CharField(null=True,max_length=1000,blank=True)
 
     def __str__(self):
         return str(self.ID)
