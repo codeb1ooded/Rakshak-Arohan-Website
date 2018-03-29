@@ -121,8 +121,52 @@ def neighbourhood(request):
                 'time_crime': report.TIME_CRIME,
                 'fir_location': report.FIR_LOC,
                 'complaint_time': report.COMPLAINT_TIME,
+                'complaint_date': report.COMPLAINT_DATE,
                 'phone': report.PHONE,
                 'status': report.STATUS
         }
         json_neighbourhood.append(report_json)
     return JsonResponse({"neghbourhood" : json_neighbourhood})
+
+''' Input: phone
+Json Output: array of given Json Object
+{
+id
+crime_type
+latitude
+longitude
+crime_description
+complaint_by
+date_crime
+time_crime
+fir_location
+complaint_time
+complaint_date
+phone
+status
+}
+Sample http request: http://127.0.0.1:8000/api/reported_crimes/?phone=01154789546
+Sample output: {"reported_crimes": [{"status": "investigated", "complaint_time": "18:05:43", "phone": "01154789546", "crime_description": "raped and found dead", "id": 3, "crime_type": "rape", "complaint_date": "2018-03-22", "longitude": 77.1824, "time_crime": "18:05:41", "fir_location": "Rajendra Nagar", "latitude": 28.63, "date_crime": "2018-03-14", "complaint_by": "ABCD"}, {"status": "lodged", "complaint_time": "14:20:08", "phone": "01154789546", "crime_description": "Boy kidnapped", "id": 11, "crime_type": "kidnap", "complaint_date": "2018-03-22", "longitude": 81.046777, "time_crime": "14:20:01", "fir_location": "Telangana", "latitude": 17.276105, "date_crime": "2018-03-20", "complaint_by": "ABCD"}]}
+'''
+def reported_crimes(request):
+    _phone = request.GET['phone']
+    reported_crimes = FIR_REPORT.objects.filter(PHONE = _phone)
+    json_reported_crimes = []
+    for report in reported_crimes:
+        report_json = {
+                'id': report.ID,
+                'crime_type': report.CRIME_TYPE,
+                'latitude': report.LAT,
+                'longitude': report.LNG,
+                'crime_description': report.CRIME_DESCRIPTION,
+                'complaint_by': report.COMPLAINT_BY,
+                'date_crime': report.DATE_CRIME,
+                'time_crime': report.TIME_CRIME,
+                'fir_location': report.FIR_LOC,
+                'complaint_time': report.COMPLAINT_TIME,
+                'complaint_date': report.COMPLAINT_DATE,
+                'phone': report.PHONE,
+                'status': report.STATUS
+        }
+        json_reported_crimes.append(report_json)
+    return JsonResponse({"reported_crimes" : json_reported_crimes})
