@@ -14,12 +14,11 @@ STATUS_CHOICES = (
     )
 
 class USER(models.Model):
-  USER_REF = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name="USER")
-  NAME = models.CharField(max_length=100)
+    USER_REF = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name="USER")
+    NAME = models.CharField(max_length=100)
 
-
-  def __str__(self):
-      return self.NAME
+    def __str__(self):
+        return self.NAME
 
 
 class FIR_REPORT(models.Model):
@@ -27,7 +26,6 @@ class FIR_REPORT(models.Model):
     CRIME_TYPE = models.CharField(max_length=100)
     LAT = models.FloatField()
     LNG = models.FloatField()
-    
     PERSON_COMPLAINT = models.ForeignKey(USER, on_delete=models.CASCADE, null=True, blank=True)
     COMPLAINT_BY = models.CharField(max_length=100)
     DATE_CRIME = models.DateField()
@@ -40,7 +38,7 @@ class FIR_REPORT(models.Model):
     CRIME_DESCRIPTION = models.CharField(null=True,max_length=1000,blank=True)
 
     def __str__(self):
-        return str(self.ID)
+        return str(self.ID) + self.CRIME_TYPE
 
 
 class CRIME_TIMELINE(models.Model):
@@ -49,6 +47,9 @@ class CRIME_TIMELINE(models.Model):
     CURRENT_STATUS=models.CharField(default='Pending',choices = STATUS_CHOICES,max_length=100)
     TIME_OF_UPDATE=models.DateTimeField(default=now(), blank=True)
     DESCRIPTION=models.CharField(null=True,default="Pending",max_length=1000,blank=True)
+
+    def __str__(self):
+        return self.UPDATED_BY.NAME + " " + self.CURRENT_STATUS
 
 
 class INFORMATION_FILING_APP(models.Model):
@@ -65,3 +66,5 @@ class INFORMATION_FILING_APP(models.Model):
     complaint_time = models.TimeField()
     complaint_date = models.DateField()
 
+    def __str__(self):
+        return self.name + self.crimetype

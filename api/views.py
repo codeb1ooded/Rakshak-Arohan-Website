@@ -128,6 +128,7 @@ def neighbourhood(request):
         json_neighbourhood.append(report_json)
     return JsonResponse({"neghbourhood" : json_neighbourhood})
 
+
 ''' Input: phone
 Json Output: array of given Json Object
 {
@@ -170,3 +171,30 @@ def reported_crimes(request):
         }
         json_reported_crimes.append(report_json)
     return JsonResponse({"reported_crimes" : json_reported_crimes})
+
+
+''' Input: id (denotes id of crime)
+Json Output: array of given Json Object
+{
+updated_by
+current_status
+time
+description
+}
+Sample http request: http://127.0.0.1:8000/api/timeline/?id=3
+Sample output: {"timeline": [{"description": "Pending", "updated_by": "AISHNA", "current_status": "pending", "time": "2018-03-16T17:45:59Z"}, {"description": "Pending", "updated_by": "AISHNA", "current_status": "lodged", "time": "2018-02-14T19:07:58Z"}]}
+'''
+def timeline(request):
+    _fir_id = int(request.GET['id'])
+    _fir = FIR_REPORT.objects.filter(ID = _fir_id)[0]
+    timeline = CRIME_TIMELINE.objects.filter(CRIME_ID = _fir).order_by('-TIME_OF_UPDATE')
+    json_timeline = []
+    for status in timeline:
+        json_status = {
+                'updated_by': status.UPDATED_BY.NAME,
+                'current_status': status.CURRENT_STATUS,
+                'time': status.TIME_OF_UPDATE,
+                'description': status.DESCRIPTION
+        }
+        json_timeline.append(json_status)
+    return JsonResponse({"timeline" : json_timeline})

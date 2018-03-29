@@ -48,4 +48,5 @@ urlpatterns = [
     url(r'^api/all_reports/', all_reports_markers),
     url(r'^api/neighbourhood/', neighbourhood),
     url(r'^api/reported_crimes/', reported_crimes),
+    url(r'^api/timeline/', timeline),
 ]
