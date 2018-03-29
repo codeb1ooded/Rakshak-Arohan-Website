@@ -66,7 +66,6 @@ ul.navbar-nav {
 .navbar-brand {
 	width: 102px;
 	height: 60px;
-	background: url(../img/logo.png) left center no-repeat;
 	text-indent: -99999px;
 }
 .navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand { margin-left: 0; }
@@ -110,32 +109,32 @@ footer { padding: 40px 0 45px 0; background: #f8f8f8; }
 @media (min-width: 768px) and (max-width: 991px) {
 
 	.section-description p { padding: 0; }
-	
+
 	.features-box .features-box-icon { font-size: 50px; line-height: 50px; }
 
 }
 
 @media (max-width: 767px) {
-	
+
 	.navbar.navbar-no-bg { background: #444; }
 	.navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand { margin-left: 15px; }
 	.navbar-collapse { border: 0; }
 	.navbar-inverse .navbar-toggle { margin-top: 13px; border-color: transparent; }
 	.navbar-inverse ul.navbar-nav li a { padding-top: 10px; padding-bottom: 10px; }
 	.navbar-inverse ul.navbar-nav li a:hover, .navbar-inverse ul.navbar-nav li a:focus { border: 0; }
-	
+
 	.section-description p { padding: 0; }
-	
+
 	.top-content { padding: 50px 0 80px 0; }
 	.top-content .text { padding-top: 20px; }
-	
+
 	.features-box { text-align: center; }
 	.features-box h3 { margin-top: 5px; padding-top: 10px; }
 
 }
 
 @media (max-width: 415px) {
-	
+
 	h1, h2 { font-size: 36px; }
 
 }
@@ -150,10 +149,10 @@ only screen and (     -o-min-device-pixel-ratio: 2/1),
 only screen and (        min-device-pixel-ratio: 2),
 only screen and (                min-resolution: 192dpi),
 only screen and (                min-resolution: 2dppx) {
-	
+
 	/* logo */
     .navbar-brand {
-    	background-image: url(../img/logo@2x.png) !important; background-repeat: no-repeat !important; background-size: 102px 32px !important;
+    	
     }
-	
+
 }
