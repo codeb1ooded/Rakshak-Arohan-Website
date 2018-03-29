@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.contrib.auth.models import User
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.db import models
 
 from datetime import *
+import json
+import simplejson
 
 from crimeReporting.models import *
+from safest_route import *
 
 def get_user(username):
     inbuilt_user = User.objects.filter(username=username)
@@ -198,3 +201,11 @@ def timeline(request):
         }
         json_timeline.append(json_status)
     return JsonResponse({"timeline" : json_timeline})
+
+
+''' JSON input: origin, destination'''
+def safest_route(request):
+    origin = request.GET['origin']
+    destination = request.GET['destination']
+    safest_path = get_route(origin, destination)
+    return HttpResponse(simplejson.dumps(safest_path), content_type='application/json')
