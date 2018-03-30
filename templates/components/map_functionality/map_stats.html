@@ -4,9 +4,10 @@
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 
      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDA72RxHoUnAPfspsUxDgVykHK2ONPIckc&signed_in=true&libraries=places&callback=initialize" async defer></script>
+
    <script>
-       window.addEventListener('load', function(){
-            var map, bounds,donut,marker1;
+
+          var map, bounds,donut,marker1;
             var user_lat = 20.5937, user_long = 78.9629;
             function initMap() {
                 map = new google.maps.Map(document.getElementById('map'), {
@@ -44,7 +45,8 @@
                 var markerCluster = new MarkerClusterer(map, markers,
                     {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
             }
-            var locations =JSON.parse( '{{ report|escapejs }}');
+
+             var locations =JSON.parse('{{ report|escapejs }}');
              var placeSearch, autocomplete;
               var componentForm = {
                 street_number: 'short_name',
@@ -126,7 +128,7 @@
            initMap();
            initAutocomplete();
         }
-       });
+
 
 
 

@@ -25,7 +25,7 @@ def map_render(request):
 
     # request_page(request)
     # return render(request, 'map.html',context)
-    return render(request, 'dashboards/wall_map_dashboard.html')
+    return render(request, 'dashboards/wall_map_dashboard.html', context)
 
 @login_required(login_url="/signinup/")
 def request_page(request):
