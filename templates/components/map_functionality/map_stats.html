@@ -4,17 +4,44 @@
 {% endblock %}
 
 <div class="row map-reports" id="report">
-      <a href="{% url 'report' %}">Report</a>
-        <p>{{l}}</p>
 
-        <div class="row">
-            <div class="report-stat">
-                <span class="report-stat__number">5238</span>
-                <span class="report_stat__name">Some Stat</span>
+        <div class="row ministry-logo">
+
+            <div class="col-8 offset-2">
+                <img src="{% static 'images/assam_police.png'%}">
             </div>
 
 
+
         </div>
+
+        <div class="row">
+            <div class="report-stat coral-blue-color col-8 offset-2">
+                <span class="report-stat__number">5238</span>
+                <span class="report_stat__name">Total Crimes</span>
+            </div>
+
+            <div class="report-stat warning-red-color col-8 offset-2">
+                <span class="report-stat__number">Name  Number</span>
+                <span class="report_stat__name">Highest Crime</span>
+            </div>
+
+            <!--<div class="report-stat coral-blue-color col-8 offset-2">-->
+                <!--<span class="report-stat__number">5238</span>-->
+                <!--<span class="report_stat__name"></span>-->
+            <!--</div>-->
+
+        </div>
+
+        <div id="other-dashboard-link-container" class="row">
+
+            <a href="{% url 'fir_reg' %}" class="offset-2 col-8">Compaint Registration</a>
+
+            <a href="{% url 'report' %}" class="offset-2 col-8 badge badge-primary">Reports</a>
+            <a href="{% url 'predict_graph' %}" class="offset-2 col-8 badge badge-warning">Predictions</a>
+
+        </div>
+
 
     </div>
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>

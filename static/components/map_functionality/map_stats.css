@@ -1,0 +1,85 @@
+.report-stat{
+    border: 2px solid grey;
+    padding: 5px 10px 5px 10px;
+    margin-top: 15px;
+    /*width: 160px;*/
+    text-align: left;
+}
+
+
+.report-stat .report-stat__number, .report-stat .report-stat__name{
+    display: block;
+}
+
+
+.report-stat .report-stat__number{
+
+    font-size: 2.3rem;
+
+}
+
+.report-stat .report-stat__name{
+}
+
+
+
+.coral-blue-color{
+    color: #38b7e7;
+    border-color: #38b7e7;
+}
+
+.light-green-color{
+    color: rgb(72, 198, 114);
+    border-color: rgb(72, 198, 114);
+}
+
+.warning-red-color{
+    color: red;
+    border-color: red;
+}
+
+
+#other-dashboard-link-container{
+    margin-top: 25px;
+}
+
+#other-dashboard-link-container a{
+
+    margin-top: 10px;
+    padding: 2px;
+    text-align: center;
+
+}
+
+#other-dashboard-link-container a:nth-child(1){
+    background-color: rgb(231, 109, 72);
+    padding: 10px 0;
+    color: white;
+    box-shadow: 2px 3px 8px 4px lightgrey;
+    margin-top: 55px;
+}
+
+#other-dashboard-link-container a:nth-child(2){
+    margin-top: 35px;
+    color: white;
+    height: 30px;
+    line-height: 25px;
+}
+
+
+#other-dashboard-link-container a:nth-child(3){
+    color: white;
+    height: 30px;
+    line-height: 25px;
+}
+
+
+#other-dashboard-link-container a:nth-child(4){
+    background-color: rgb(188, 64, 91);
+}
+
+.ministry-logo{
+    margin-top: 15px;
+}
+
+

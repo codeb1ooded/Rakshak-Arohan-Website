@@ -36,7 +36,7 @@ urlpatterns = [
     url(r'^most_prominent_city/$',prominent_city, name='most_prominent_city'),
     url(r'^most_prominent_crime/$', prominent_crime, name='most_prominent_crime'),
     url(r'^crime_status/$', crime_status, name='crime_status'),
-    url(r'^firReg/$', fir_reg),
+    url(r'^firReg/$', fir_reg, name="fir_reg"),
     url(r'^update_crime/', update_crime, name="update_crime"),
     url(r'^report/$', report,name="report"),
     url(r'^receive_alert/$', receive_alert,name="receive_alert"),
