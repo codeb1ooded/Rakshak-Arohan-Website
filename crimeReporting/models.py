@@ -13,9 +13,16 @@ STATUS_CHOICES = (
        ('closed','CLOSED'),
     )
 
+class POLICE_STATION(models.Model):
+    POLICE_STATION_LAT = models.FloatField()
+    POLICE_STATION_LNG = models.FloatField()
+    POLICE_ADDRESS=models.CharField(max_length=100)
+
 class USER(models.Model):
     USER_REF = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name="USER")
     NAME = models.CharField(max_length=100)
+    LAT=models.ForeignKey(POLICE_STATION, on_delete=models.CASCADE, null=True, blank=True,related_name="LAT")
+    LNG = models.ForeignKey(POLICE_STATION, on_delete=models.CASCADE, null=True, blank=True,related_name="LNG")
 
     def __str__(self):
         return self.NAME
@@ -53,6 +60,7 @@ class CRIME_TIMELINE(models.Model):
 
 
 class INFORMATION_FILING_APP(models.Model):
+    police_name=models.ForeignKey(USER,on_delete=models.CASCADE,db_column="NAME")
     name = models.CharField(max_length=100)
     aadharcard = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
