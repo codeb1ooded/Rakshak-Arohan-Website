@@ -44,7 +44,7 @@ urlpatterns = [
     url(r'^notifications/$',notifications,name="notifications"),
 
     # API urls
-    url(r'^api/reportcrime/', reportFIR),
+    url(r'^api/report_complaint/', reportComplaint),
     url(r'^api/all_reports/', all_reports_markers),
     url(r'^api/neighbourhood/', neighbourhood),
     url(r'^api/reported_crimes/', reported_crimes),
