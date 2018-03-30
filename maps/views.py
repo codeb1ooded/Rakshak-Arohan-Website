@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.core import serializers
 from django.template.defaulttags import IfNode
 import time as T
+from django.contrib.sessions.models import Session
 from crimeReporting.models import *
 from django import forms
 from .forms import *
@@ -12,11 +13,26 @@ import datetime as DT
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 from prediction.fusioncharts import FusionCharts
-
+from crimeReporting.views import *
+from crimeReporting import views
 @login_required(login_url="/signinup/")
 def map_render(request):
     is_logged_in = request.user.is_authenticated()
     json_serializer = serializers.get_serializer("json")()
+    h=INFORMATION_FILING_APP.objects.filter(isVerify = "1")
+    # print(request.session.get('username'))
+
+    var = USER.objects.filter(USER_REF=views.varuser)
+    #var1=POLICE_STATION.objects.filter(var)
+    print (var)
+    for i in h:
+        print(i)
+        s = FIR_REPORT(CRIME_TYPE=i.crimetype, LAT=i.latitude, LNG=i.longitude,
+                       CRIME_DESCRIPTION=i.crime_description, PERSON_COMPLAINT=i.police_name,
+                       DATE_CRIME=i.date_crime, TIME_CRIME=i.time_crime,
+                       COMPLAINT_TIME=i.complaint_time, COMPLAINT_DATE=i.complaint_date
+                       )
+        s.save()
     reports = json_serializer.serialize(FIR_REPORT.objects.all(), ensure_ascii=False)
     context = {
         'report' : reports,
@@ -108,7 +124,7 @@ def update_crime(request):
             data.CRIME_ID = detail[0]
             var=USER.objects.filter(NAME='Mr. Vivek Venkat')
             data.UPDATED_BY = var[0]
-            #request.session.get('username')
+            print(request.session.get('username'))
             data.save()
             return render(request, 'done.html')
 

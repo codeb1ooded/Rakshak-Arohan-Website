@@ -36,10 +36,10 @@ class FIR_REPORT(models.Model):
     PERSON_COMPLAINT = models.ForeignKey(USER, on_delete=models.CASCADE, null=True, blank=True)
     DATE_CRIME = models.DateField()
     TIME_CRIME = models.TimeField()
-    FIR_LOC = models.CharField(max_length=100)
+    FIR_LOC = models.ForeignKey(POLICE_STATION,on_delete=models.CASCADE,null=True, blank=True)
     COMPLAINT_TIME = models.TimeField(default=now())
     COMPLAINT_DATE = models.DateField(default=now())
-    PHONE = models.CharField(max_length=100)
+    PHONE = models.CharField(max_length=100,null=True)
     STATUS = models.CharField(default='Lodged',choices = STATUS_CHOICES,max_length=100)
     CRIME_DESCRIPTION = models.CharField(null=True,max_length=1000,blank=True)
 
@@ -69,7 +69,7 @@ class INFORMATION_FILING_APP(models.Model):
     time_crime = models.TimeField()
     complaint_time = models.TimeField()
     complaint_date = models.DateField()
-    isFIR=models.BooleanField(default=False)
+    isVerify=models.CharField(default="1",max_length=100)
 
     def __str__(self):
-        return self.police_name + self.crimetype
+        return self.crimetype
