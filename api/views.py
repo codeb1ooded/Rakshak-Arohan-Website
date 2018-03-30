@@ -46,11 +46,13 @@ def reportComplaint(request):
     _time_crime = request.GET['time_crime']
     _complaint_time = request.GET['complaint_time']
     _complaint_date = request.GET['complaint_date']
-    _isFIR = request.GET['isFIR']
+    _isFIR = False
+    if request.GET['isFIR'] == 'true':
+        _isFIR = True
 
     police_name = get_user(_username)
 
-    query_report_fir = INFORMATION_FILING_APP( name = _name,
+    query_report_complaint = INFORMATION_FILING_APP( name = _name,
 							   crimetype = _crime_type,
                                latitude = _lat,
 					   		   longitude = _long,
@@ -61,7 +63,7 @@ def reportComplaint(request):
 					   		   complaint_time = _complaint_time,
 					   		   complaint_date = _complaint_date,
                                isFIR = _isFIR)
-    query_report_fir.save()
+    query_report_complaint.save()
     return JsonResponse({"status" : "success"})
 
 
