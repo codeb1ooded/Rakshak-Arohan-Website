@@ -21,7 +21,9 @@
           <p class="form-filter-header ">Filter Crimes</p>
 
 
-        <form>
+        <form action="{% url 'request_page'  %}" method="GET">
+
+
 
             <div class="form-field-group date-group">
                 <p class="form-filter-header text-light bg-dark">Select Date</p>
@@ -39,14 +41,14 @@
             <div class="form-field-group">
                 <p class="form-filter-header text-light bg-dark">Select Incident Type</p>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="theft" id="theft-filter">
+                    <input class="form-check-input" type="checkbox" value="theft" name="crime" id="theft-filter">
                     <label class="form-check-label" for="theft-filter">
                     Theft
                     </label>
 
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="kidnap" id="kidnapping-filter">
+                    <input class="form-check-input" type="checkbox" value="kidnap" name="crime" id="kidnapping-filter">
                     <label class="form-check-label" for="kidnapping-filter">
                     Kidnapping
                     </label>

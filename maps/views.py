@@ -66,7 +66,8 @@ def request_page(request):
     context = {
         'report': reports,
     }
-    return render(request, 'map.html',context)
+
+    return render(request, 'dashboards/wall_map_dashboard.html', context)
 
 
 def map_render_filter(request):
@@ -76,7 +77,7 @@ def map_render_filter(request):
     context = {
         'report' : reports,
     }
-    return render(request, 'map.html',context)
+    return render(request, 'dashboards/wall_map_dashboard.html', context)
 
 @login_required(login_url="/signinup/")
 def crime_status(request):
