@@ -1,11 +1,18 @@
-    <div class="row" id="report">
+{% load staticfiles %}
+{% block additional_styles %}
+    <link href="{% static 'components/map_functionality/map_stats.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+<div class="row map-reports" id="report">
       <a href="{% url 'report' %}">Report</a>
         <p>{{l}}</p>
 
         <div class="row">
             <div class="report-stat">
-                <span class="report-stat"></span>
+                <span class="report-stat__number">5238</span>
+                <span class="report_stat__name">Some Stat</span>
             </div>
+
 
         </div>
 
