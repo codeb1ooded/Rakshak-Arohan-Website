@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.db import models
+from django.views.decorators.csrf import csrf_exempt
 
 from datetime import *
 import json, uuid
@@ -210,12 +211,13 @@ def safest_route(request):
     return HttpResponse(simplejson.dumps(safest_path), content_type='application/json')
 
 
+@csrf_exempt
 def uploadImage(request):
     received_json_data = json.loads(request.body.decode("utf-8"))
-    print ("User: " + received_json_data['user'])
-    print ("Image: " + received_json_data['image'][0:10])
-    image=received_json_data['image']
-    unique_filename = 'media/'+str(uuid.uuid4())+".jpg"
+    #print "User: " + received_json_data['user']
+    print "Image: " + received_json_data['image'][0:10]
+    image = received_json_data['image']
+    unique_filename = 'media/' + str(uuid.uuid4()) + ".jpg"
     with open(unique_filename, "wb") as fh:
         fh.write(image.decode('base64'))
     return JsonResponse({"status":"recieved"})
