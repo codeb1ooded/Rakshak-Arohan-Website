@@ -34,7 +34,6 @@ class FIR_REPORT(models.Model):
     LAT = models.FloatField()
     LNG = models.FloatField()
     PERSON_COMPLAINT = models.ForeignKey(USER, on_delete=models.CASCADE, null=True, blank=True)
-    COMPLAINT_BY = models.CharField(max_length=100)
     DATE_CRIME = models.DateField()
     TIME_CRIME = models.TimeField()
     FIR_LOC = models.CharField(max_length=100)
@@ -61,9 +60,6 @@ class CRIME_TIMELINE(models.Model):
 
 class INFORMATION_FILING_APP(models.Model):
     police_name=models.ForeignKey(USER,on_delete=models.CASCADE,db_column="NAME")
-    name = models.CharField(max_length=100)
-    aadharcard = models.CharField(max_length=100)
-    phone = models.CharField(max_length=100)
     crimetype = models.CharField(max_length=100)
     latitude = models.FloatField()
     longitude = models.FloatField()
@@ -73,6 +69,7 @@ class INFORMATION_FILING_APP(models.Model):
     time_crime = models.TimeField()
     complaint_time = models.TimeField()
     complaint_date = models.DateField()
+    isFIR=models.BooleanField(default=False)
 
     def __str__(self):
-        return self.name + self.crimetype
+        return self.police_name + self.crimetype
