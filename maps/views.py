@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.core import serializers
+from django.contrib.auth.models import User
 from django.template.defaulttags import IfNode
 import time as T
-from django.contrib.sessions.models import Session
 from crimeReporting.models import *
 from django import forms
 from .forms import *
@@ -13,34 +13,43 @@ import datetime as DT
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 from prediction.fusioncharts import FusionCharts
-from crimeReporting.views import *
-from crimeReporting import views
+from django.contrib.sessions.models import Session
+from django.contrib.auth.models import User
+
+session_key = 'wqj18iw4pdc2y35jccoza6e25kssf39k'
 @login_required(login_url="/signinup/")
 def map_render(request):
     is_logged_in = request.user.is_authenticated()
     json_serializer = serializers.get_serializer("json")()
-    h=INFORMATION_FILING_APP.objects.filter(isVerify = "1")
-    # print(request.session.get('username'))
+    session = Session.objects.get(session_key=session_key)
+    session_data = session.get_decoded()
 
-    var = USER.objects.filter(USER_REF=views.varuser)
-    #var1=POLICE_STATION.objects.filter(var)
-    print (var)
-    for i in h:
-        print(i)
-        s = FIR_REPORT(CRIME_TYPE=i.crimetype, LAT=i.latitude, LNG=i.longitude,
-                       CRIME_DESCRIPTION=i.crime_description, PERSON_COMPLAINT=i.police_name,
-                       DATE_CRIME=i.date_crime, TIME_CRIME=i.time_crime,
-                       COMPLAINT_TIME=i.complaint_time, COMPLAINT_DATE=i.complaint_date
-                       )
-        s.save()
+    uid = session_data.get('_auth_user_id')
+    user = User.objects.get(id=uid)
+    abc=USER.objects.filter(USER_REF=user)
+    var = json_serializer.serialize(USER.objects.filter(USER_REF=user), ensure_ascii=False)
+    abc=json.loads(var)
+    var = json_serializer.serialize(POLICE_STATION.objects.filter(pk=abc[0]["fields"]["LAT"]), ensure_ascii=False)
+    check=abc[0]["fields"]["LAT"]
+    l=[]
+    var1 = json.loads(json_serializer.serialize(FIR_REPORT.objects.all()))
+    for i in var1:
+        user=json.loads(json_serializer.serialize(USER.objects.filter(pk=i["fields"]["PERSON_COMPLAINT"])))
+        if user[0]["fields"]["LAT"]==check:
+            l.append(i)
+    print(l)
+
     reports = json_serializer.serialize(FIR_REPORT.objects.all(), ensure_ascii=False)
     context = {
         'report' : reports,
         'is_logged_in' : is_logged_in,
+        'sessions':var,
+        'report_data': l
     }
 
     # request_page(request)
-    return render(request, 'map.html',context)
+    # return render(request, 'map.html',context)
+    return render(request, 'dashboards/wall_map_dashboard.html', context)
 
 @login_required(login_url="/signinup/")
 def request_page(request):
@@ -77,21 +86,40 @@ def request_page(request):
                     report = FIR_REPORT.objects.filter(CRIME_TYPE__in=somevar,STATUS__in=status_var,DATE_CRIME__range=[date_start, date_end])
 
         reports = json_serializer.serialize(report, ensure_ascii=False)
+    session = Session.objects.get(session_key=session_key)
+    session_data = session.get_decoded()
 
+    uid = session_data.get('_auth_user_id')
+    user = User.objects.get(id=uid)
+    print(user)
+    var = USER.objects.filter(USER_REF=user)
+    print(var)
     context = {
         'report': reports,
+        'sessions': var,
     }
-    return render(request, 'map.html',context)
+
+    return render(request, 'dashboards/wall_map_dashboard.html', context)
 
 
 def map_render_filter(request):
 
     json_serializer = serializers.get_serializer("json")()
     reports = json_serializer.serialize(FIR_REPORT.objects.all(), ensure_ascii=False)
+    session = Session.objects.get(session_key=session_key)
+    session_data = session.get_decoded()
+
+    uid = session_data.get('_auth_user_id')
+    user = User.objects.get(id=uid)
+    print(user)
+    var = USER.objects.filter(USER_REF=user)
+    print(var)
     context = {
         'report' : reports,
+        'sessions':var,
+
     }
-    return render(request, 'map.html',context)
+    return render(request, 'dashboards/wall_map_dashboard.html', context)
 
 @login_required(login_url="/signinup/")
 def crime_status(request):
@@ -105,11 +133,20 @@ def crime_status(request):
         reports = json_serializer.serialize(report, ensure_ascii=False)
         details= json_serializer.serialize(detail, ensure_ascii=False)
         users = json_serializer.serialize(USER.objects.all(), ensure_ascii = False)
+        session = Session.objects.get(session_key=session_key)
+        session_data = session.get_decoded()
+
+        uid = session_data.get('_auth_user_id')
+        user = User.objects.get(id=uid)
+        print(user)
+        var = USER.objects.filter(USER_REF=user)
+        print(var)
         form = UPDATE_FORM()
         context = {
             'reports': reports,
             'details': details,
             'users': users,
+            'sessions':var,
             'form': form
         }
         return render(request, 'status_report.html', context)
@@ -124,7 +161,7 @@ def update_crime(request):
             data.CRIME_ID = detail[0]
             var=USER.objects.filter(NAME='Mr. Vivek Venkat')
             data.UPDATED_BY = var[0]
-            print(request.session.get('username'))
+            #request.session.get('username')
             data.save()
             return render(request, 'done.html')
 
@@ -409,3 +446,16 @@ def send_email(toaddr,id):
 	server.sendmail("sealdeal16@gmail.com",[toaddr],msg)
 	server.quit()
 '''
+
+def crime_statistics(request):
+    json_serializer = serializers.get_serializer("json")()
+    session = Session.objects.get(session_key=session_key)
+    session_data = session.get_decoded()
+    uid = session_data.get('_auth_user_id')
+    user = User.objects.get(id=uid)
+    abc = USER.objects.filter(USER_REF=user)
+    var = json_serializer.serialize(USER.objects.filter(USER_REF=user), ensure_ascii=False)
+    abc = json.loads(var)
+    print(abc[0]["fields"]["LAT"])
+    var1=json_serializer.serialize(FIR_REPORT.objects.filter(USER_REF=user))
+    print(var)

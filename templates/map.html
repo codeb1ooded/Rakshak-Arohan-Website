@@ -85,15 +85,18 @@
 
 
    <script>
+   console.log("%%%%%%%%%%");
     var map, bounds,donut,marker1;
     var user_lat = 20.5937, user_long = 78.9629;
     function initMap() {
+
         map = new google.maps.Map(document.getElementById('map'), {
           zoom: 4,
           center: {lat: user_lat, lng: user_long}
         });
         var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         var geocoder = new google.maps.Geocoder;
+        console.log('{{sessions | escapejs}}')
         var markers = locations.map(function(location, i) {
             var latlng = {lat: parseFloat(location.fields.LAT), lng: parseFloat(location.fields.LNG)};
             var latlng1 = {lat: location.fields.LAT, lng: location.fields.LNG};
@@ -124,6 +127,7 @@
             {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
     }
     var locations =JSON.parse( '{{ report|escapejs }}');
+    var sessions =JSON.parse( '{{ sessions|escapejs }}');
     console.log(locations);
      var placeSearch, autocomplete;
       var componentForm = {

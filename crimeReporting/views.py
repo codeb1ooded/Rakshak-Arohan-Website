@@ -74,8 +74,9 @@ def sign_in_view(request):
         username = userObj['username']
         password =  userObj['password']
         user = authenticate(username=username, password=password)
-        global varuser
-        varuser=user
+        print(user)
+        #global varuser
+        #varuser=user
         if user is not None:
 
             login(request, user)

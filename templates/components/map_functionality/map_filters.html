@@ -1,0 +1,70 @@
+{% load staticfiles %}
+{% block additional_styles %}
+    <link href="{% static 'components/map_functionality/map_filters.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+<div class="row" id="map-filters">
+
+
+    <!--TODO enable location filtering-->
+  <div id="locationField" class="d-none">
+  <input id="autocomplete" placeholder="Enter your address" type="text" name="address"></input>
+  </div>
+
+  <!--<div onclick="start_selection()">
+     <button type="button">Click to select an area!</button>
+  </div>-->
+ <!-- <div id="analyse_selected_area" onclick="circleMake()">
+     <button type="button">Click to analyse selected area!</button>
+  </div>-->
+    <div class="container-fluid">
+          <p class="form-filter-header ">Filter Crimes</p>
+
+
+        <form action="{% url 'request_page'  %}" method="GET">
+
+
+
+            <div class="form-field-group date-group">
+                <p class="form-filter-header text-light bg-dark">Select Date</p>
+                <div class="form-group">
+                    <label for="crime-start-date" class="col-md-2">From</label>
+                    <input type="date" class="form-control col-md-9" id="crime-start-date" name="date_crime_start"><br>
+                </div>
+                <div class="form-group">
+                    <label for="crime-end-date" class="col-md-2">To</label>
+                    <input type="date" class="form-control col-md-9" id="crime-end-date" name="date_crime_end"><br>
+                </div>
+
+            </div>
+
+            <div class="form-field-group">
+                <p class="form-filter-header text-light bg-dark">Select Incident Type</p>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="theft" name="crime" id="theft-filter">
+                    <label class="form-check-label" for="theft-filter">
+                    Theft
+                    </label>
+
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="kidnap" name="crime" id="kidnapping-filter">
+                    <label class="form-check-label" for="kidnapping-filter">
+                    Kidnapping
+                    </label>
+
+                </div>
+
+            </div>
+
+            <div class="text-center">
+                <input type="submit" value="Submit" name="mybtn" class="btn btn-info">
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+</div>

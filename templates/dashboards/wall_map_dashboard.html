@@ -1,0 +1,44 @@
+{% extends 'base_internal_dashboard_structure.html' %}
+{% load staticfiles %}
+
+{% block additional_styles %}
+
+    <link href="{% static 'dashboards/wall_map_dashboard.css' %}" rel="stylesheet" type="text/css">
+
+
+{% endblock %}
+
+
+{% block page_body %}
+    {% include "components/base_header.html" %}
+    <div class="container-fluid hundred-vh-height">
+
+        <div class="row" id="map-container">
+            <div class="col-lg-2">
+
+                {% include 'components/map_functionality/map_filters.html' %}
+
+            </div>
+            <div class="col-lg-8 no-padding">
+                {% include 'components/map_functionality/map_main.html'  %}
+
+            </div>
+            <div class="col-lg-2">
+
+                {% include 'components/map_functionality/map_stats.html' %}
+
+            </div>
+
+
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+{% block additional_scripts %}
+
+{% endblock %}
+
+
