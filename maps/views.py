@@ -16,14 +16,14 @@ from prediction.fusioncharts import FusionCharts
 from django.contrib.sessions.models import Session
 from django.contrib.auth.models import User
 
-session_key = 'wqj18iw4pdc2y35jccoza6e25kssf39k'
 @login_required(login_url="/signinup/")
 def map_render(request):
     is_logged_in = request.user.is_authenticated()
     json_serializer = serializers.get_serializer("json")()
-    session = Session.objects.get(session_key=session_key)
+    if not request.session.exists(request.session.session_key):
+        request.session.create()
+    session = Session.objects.get(session_key=request.session.session_key)
     session_data = session.get_decoded()
-
     uid = session_data.get('_auth_user_id')
     user = User.objects.get(id=uid)
     abc=USER.objects.filter(USER_REF=user)
@@ -32,19 +32,33 @@ def map_render(request):
     var = json_serializer.serialize(POLICE_STATION.objects.filter(pk=abc[0]["fields"]["LAT"]), ensure_ascii=False)
     check=abc[0]["fields"]["LAT"]
     l=[]
+
     var1 = json.loads(json_serializer.serialize(FIR_REPORT.objects.all()))
     for i in var1:
         user=json.loads(json_serializer.serialize(USER.objects.filter(pk=i["fields"]["PERSON_COMPLAINT"])))
         if user[0]["fields"]["LAT"]==check:
             l.append(i)
-    print(l)
-
+    total = len(l)
+    print(total)
+    types = []
+    for t in l:
+        types.append(t["fields"]["CRIME_TYPE"])
+    print (types)
+    cnt=0
+    maxvalue=max(types,key = types.count)
+    for i in types:
+        if i==maxvalue:
+            cnt=cnt+1
+    print(cnt)
     reports = json_serializer.serialize(FIR_REPORT.objects.all(), ensure_ascii=False)
     context = {
         'report' : reports,
         'is_logged_in' : is_logged_in,
         'sessions':var,
-        'report_data': l
+        'report_data': l,
+        'total':total,
+        'maxValue':maxvalue,
+        'countOfMax':cnt,
     }
 
     # request_page(request)

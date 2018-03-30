@@ -91,7 +91,8 @@
 
              var locations =JSON.parse('{{ report|escapejs }}');
              var sessions = JSON.parse('{{ sessions|escapejs }}');
-             console.log(sessions);
+             var data = JSON.parse('{{ report_data }}');
+             console.log(data);
              var placeSearch, autocomplete;
               var componentForm = {
                 street_number: 'short_name',
