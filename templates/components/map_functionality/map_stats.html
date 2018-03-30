@@ -78,7 +78,16 @@
               var user_lat = parseFloat(sessions[0].fields.POLICE_STATION_LAT)  , user_long = parseFloat(sessions[0].fields.POLICE_STATION_LNG);
                 map = new google.maps.Map(document.getElementById('map'), {
                   zoom: 14,
-                  center: {lat: user_lat, lng: user_long}
+                  center: {lat: user_lat, lng: user_long},
+                   styles: [
+                       {
+                          featureType: 'poi',
+                            stylers: [
+                              { visibility: "off" }
+                            ]
+                        }
+
+                   ]
                 });
                 circleMake(user_lat,user_long);
                 var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -187,9 +196,13 @@
                    });
                     var myCenter = new google.maps.LatLng(lat,lng);
                    marker1 = new google.maps.Marker({
-            position: myCenter,
-            animation: google.maps.Animation.BOUNCE
-          });
+                        icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+                        position: myCenter,
+                        animation: google.maps.Animation.DROP,
+                        label: "Selected Location"
+
+
+                    });
           marker1.setMap(map);
                    donut.setMap(map);
                 map.fitBounds(bounds);
