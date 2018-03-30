@@ -106,7 +106,7 @@ def update_crime(request):
         if form.is_valid():
             data = form.save(commit=False)
             data.CRIME_ID = detail[0]
-            var=USER.objects.filter(NAME='AISHNA')
+            var=USER.objects.filter(NAME='Mr. Vivek Venkat')
             data.UPDATED_BY = var[0]
             #request.session.get('username')
             data.save()
