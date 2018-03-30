@@ -10,7 +10,7 @@ import json
 import simplejson
 
 from crimeReporting.models import *
-from safest_route import *
+from api.safest_route import *
 
 def get_user(username):
     inbuilt_user = User.objects.filter(username=username)
