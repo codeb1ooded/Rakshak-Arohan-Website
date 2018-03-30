@@ -5,6 +5,8 @@ from prediction.fusioncharts import FusionCharts
 from collections import defaultdict
 from django.contrib.auth.decorators import login_required
 import operator
+import os
+from django.conf import settings
 # def my_view(request):
 #     context={}
 #     total=total_view(request)
@@ -102,7 +104,7 @@ def predict_graph(request):
         somevar1 = (request.GET.get('state'))
         totalvar=somevar1+somevar
         print (somevar)
-        data_main = np.recfromcsv('static\dataset.csv')
+        data_main = np.recfromcsv(os.path.join(settings.BASE_DIR, 'static/dataset.csv'))
         data = list(range(2001, 2013))
         data1 = data_main[totalvar]
         x = np.squeeze(np.array(data))
@@ -117,7 +119,8 @@ def predict_graph(request):
             'state': somevar1.upper()
              }
     else :
-        data_main = np.recfromcsv('static\dataset.csv')
+        # data_main = np.recfromcsv('static\dataset.csv')
+        data_main = np.recfromcsv(os.path.join(settings.BASE_DIR, 'static/dataset.csv'))
         data = list(range(2001, 2013))
         data1 = data_main['totaltotal']
         x = np.squeeze(np.array(data))
@@ -164,7 +167,8 @@ def callLinearRegression(x,y):
 
 @login_required(login_url="/signinup/")
 def prominent_city(request):
-    data_main = np.recfromcsv('static\dataset.csv')
+    # data_main = np.recfromcsv('static\dataset.csv')
+    data_main = np.recfromcsv(os.path.join(settings.BASE_DIR, 'static/dataset.csv'))
     #x-->year
     #y-->crime total
     data=list(range(2001,2013))
@@ -213,7 +217,8 @@ def prominent_city(request):
 
 @login_required(login_url="/signinup/")
 def prominent_crime(request):
-    data_main = np.recfromcsv('static\dataset.csv')
+    # data_main = np.recfromcsv('static\dataset.csv')
+    data_main = np.recfromcsv(os.path.join(settings.BASE_DIR, 'static/dataset.csv'))
     #x-->year
     #y-->crime total
     data=list(range(2001,2013))

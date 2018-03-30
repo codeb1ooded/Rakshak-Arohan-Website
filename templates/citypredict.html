@@ -1,16 +1,33 @@
-{% load staticfiles %}
 
-<html>
-    <title>Filters</title>
+<!--<html>-->
+    <!--<title>Filters</title>-->
+
+    <!--<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+
+<!--</head>-->
+<!--<body>-->
+
+<!--</body>-->
+<!--</html>-->
+{% extends 'base_internal_dashboard_structure.html' %}
+{% load staticfiles %}
+{% block additional_styles %}
+
+{% endblock %}
+
+{% block page_body %}
+    {% include "components/base_header.html" %}
+    <main class="container-fluid">
+        <h1>MOST PROMINENT CRIME CITIES</h1>
+        <div id="chart-1">{{total |safe}}</div>
+    </main>
+
+{% endblock %}
+
+
+{% block additional_scripts %}
     <script type="text/javascript" src="{% static 'fusioncharts/fusioncharts.js' %}"></script>
     <script type="text/javascript" src=" {% static 'fusioncharts/themes/fusioncharts.theme.fint.js' %}"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<head>
-    <meta charset="UTF-8">
-
-</head>
-<body>
-<h1>MOST PROMINENT CRIME CITIES</h1>
-<div id="chart-1">{{total |safe}}</div>
-</body>
-</html>
+{% endblock %}
