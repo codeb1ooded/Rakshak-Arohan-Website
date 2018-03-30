@@ -1,0 +1,14 @@
+{% load staticfiles %}
+{% block additional_styles %}
+    {{ block.super }}
+    <link href="{% static components/base_header.css %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+
+
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+    <img src="/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+    Bootstrap
+  </a>
+</nav>
