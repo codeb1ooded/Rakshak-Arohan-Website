@@ -1,0 +1,11 @@
+#main-nav{
+    color: white !important;
+    padding-top: 0;
+    padding-bottom: 0;
+    background-color: #50c2ad;
+}
+
+
+#main-nav a{
+    color: white;
+}
