@@ -128,7 +128,7 @@ def predict_graph(request):
         y = np.delete(y, (0), axis=0)
         y = y.astype(int)
         dataSource = callLinearRegression(x, y)
-        column2D = FusionCharts("column3D", "ex1", "100%", "50%", "chart-1", "json", dataSource)
+        column2D = FusionCharts("column3D", "ex1", "100%", "100%", "chart-1", "json", dataSource)
         context = {
             'total': column2D.render(),
             'crime': 'All Crime',
@@ -151,6 +151,7 @@ def callLinearRegression(x,y):
         "numberPrefix": "",
         "theme": "fint",
         "labelDisplay": "auto",
+        "baseFontSize": "25"
     }
     dataSource['data'] = []
     for i in range(2018,2022):
@@ -208,7 +209,7 @@ def prominent_city(request):
         dataSource['data'].append(data)
 
     print (dataSource)
-    column2D = FusionCharts("column3D", "ex10", "100%", "50%", "chart-1", "json", dataSource)
+    column2D = FusionCharts("column3D", "ex10", "100%", "100%", "chart-1", "json", dataSource)
     context = {
         'total': column2D.render(),
     }
@@ -258,7 +259,7 @@ def prominent_crime(request):
         dataSource['data'].append(data)
 
     print (dataSource)
-    column2D = FusionCharts("column3D", "ex10", "100%", "50%", "chart-1", "json", dataSource)
+    column2D = FusionCharts("column3D", "ex10", "100%", "100%", "chart-1", "json", dataSource)
     context = {
         'total': column2D.render(),
     }

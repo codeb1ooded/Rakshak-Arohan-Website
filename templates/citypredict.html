@@ -13,14 +13,17 @@
 <!--</html>-->
 {% extends 'base_internal_dashboard_structure.html' %}
 {% load staticfiles %}
-{% block additional_styles %}
 
+{% block additional_styles %}
+    <link href="{% static 'css/citypredict.css' %}" rel="stylesheet">
+    <script type="text/javascript" src="{% static 'fusioncharts/fusioncharts.js' %}"></script>
+    <script type="text/javascript" src=" {% static 'fusioncharts/themes/fusioncharts.theme.fint.js' %}"></script>
 {% endblock %}
 
 {% block page_body %}
     {% include "components/base_header.html" %}
     <main class="container-fluid">
-        <h1>MOST PROMINENT CRIME CITIES</h1>
+        <h2>MOST PROMINENT CRIME STATES</h2>
         <div id="chart-1">{{total |safe}}</div>
     </main>
 
@@ -28,6 +31,5 @@
 
 
 {% block additional_scripts %}
-    <script type="text/javascript" src="{% static 'fusioncharts/fusioncharts.js' %}"></script>
-    <script type="text/javascript" src=" {% static 'fusioncharts/themes/fusioncharts.theme.fint.js' %}"></script>
+
 {% endblock %}
