@@ -1,4 +1,4 @@
-{% extends 'base_internal_dashboard' %}
+{% extends 'base_internal_dashboard_structure.html' %}
 {% load staticfiles %}
 
 {% block additional_styles %}
@@ -8,7 +8,28 @@
 
 {% block page_body %}
     {% include "components/base_header.html" %}
+    <div class="container-fluid">
 
+        <div class="row" id="map-container">
+            <div class="col-lg-2">
+
+                {% include 'components/map_functionality/map_filters.html' %}
+
+            </div>
+            <div class="col-lg-8">
+
+                {% include 'components/map_functionality/map_main.html' %}
+
+            </div>
+            <div class="col-lg-2">
+
+                {% include 'components/map_functionality/map_stats.html' %}
+
+            </div>
+
+
+        </div>
+    </div>
 
 {% endblock %}
 

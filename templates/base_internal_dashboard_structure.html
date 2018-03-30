@@ -4,7 +4,7 @@
 <html>
     <head>
         <!--including bootstrap-->
-        <link href="{% static bootstrap/css/bootstrap.min.css %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
 
         {% block additional_styles %}
 
@@ -21,7 +21,7 @@
 
 
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <static src="{% static bootstrap/js/bootstrap.min.js %}"></static>
+        <static src="{% static 'bootstrap/js/bootstrap.min.js' %}"></static>
         {% block additional_scripts %}
 
         {% endblock %}

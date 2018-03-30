@@ -1,0 +1,46 @@
+<div id="filter" >
+
+  <form action="{% url 'request_page' %}" method="GET">
+    <h3>FILTERS</h3>
+    <div style="float: left; width: 50%; margin-right:10px; ">
+      <h4>Crime Wise</h4>
+      <input type="checkbox" name="crime" value="theft" class="box">THEFT<br>
+      <input type="checkbox" name="crime" value="kidnap" class="box">KIDNAPPING <br>
+    </div>
+    <div  style="float: left; width: 50%; margin-left:10px;">
+      <h4>Date</h4>
+      Start Date: <input type="date" name="date_crime_start"><br>
+      End Date :  <input type="date" name="date_crime_end"><br>
+    </div>
+    <div style="float: left; width: 50%; margin-right:10px;">
+      <h4>Crime Status</h4>
+      <input type="checkbox" name="status" value="lodged" class="box">LODGED<br>
+      <input type="checkbox" name="status" value="pending" class="box"> PENDING<br>
+      <input type="checkbox" name="status" value="investigated" class="box">INVESTIGATED<br>
+      <input type="checkbox" name="status" value="evidence_collection" class="box">EVIDENCE COLLECTION<br>
+      <input type="checkbox" name="status" value="moved" class="box">MOVED TO COURT<br>
+      <input type="checkbox" name="status" value="closed" class="box">CLOSED<br>
+      <input type="submit" value="Submit" name="mybtn" class="box button">
+    </div>
+  </form>
+
+  <div id="receive_app">
+  <a href="{% url 'receive_alert' %}">Receive alert</a>
+
+
+  <div id="notifications">
+     <a href="{% url 'notifications' %}" class="notif"><span class="num">20</span></a>
+
+</div>
+</div>
+  <div id="locationField">
+  <input id="autocomplete" placeholder="Enter your address" type="text" name="address"></input>
+</div>
+
+  <!--<div onclick="start_selection()">
+     <button type="button">Click to select an area!</button>
+  </div>-->
+ <!-- <div id="analyse_selected_area" onclick="circleMake()">
+     <button type="button">Click to analyse selected area!</button>
+  </div>-->
+</div>
