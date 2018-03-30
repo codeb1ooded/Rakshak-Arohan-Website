@@ -56,10 +56,18 @@
     padding: 10px 0;
     color: white;
     box-shadow: 2px 3px 8px 4px lightgrey;
-    margin-top: 55px;
+    margin-top: 20x;
 }
 
 #other-dashboard-link-container a:nth-child(2){
+    background-color: rgb(64, 182, 155);;
+    margin-top: 25px;
+    color: white;
+    height: 30px;
+    line-height: 20px;
+}
+
+#other-dashboard-link-container a:nth-child(3){
     margin-top: 35px;
     color: white;
     height: 30px;
@@ -67,7 +75,7 @@
 }
 
 
-#other-dashboard-link-container a:nth-child(3){
+#other-dashboard-link-container a:nth-child(4){
     color: white;
     height: 30px;
     line-height: 25px;
