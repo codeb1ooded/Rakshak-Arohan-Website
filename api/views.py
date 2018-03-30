@@ -12,6 +12,8 @@ import simplejson
 from crimeReporting.models import *
 from api.safest_route import *
 
+
+
 def get_user(username):
     inbuilt_user = User.objects.filter(username=username)
     user = USER.objects.filter(USER_REF = inbuilt_user)
@@ -22,9 +24,7 @@ def get_user(username):
 
 
 ''' JSON format
-name
-aadharcard
-phone
+username
 crimetype
 latitude
 longitude
@@ -33,12 +33,11 @@ date_crime
 time_crime
 complaint_time
 complaint_date
-Sample http request:http://127.0.0.1:8000/api/reportcrime/?crimetype=murder&latitude=28.665236&longitude=77.2323689&crime_description=xyz&complaint_by=anonymous&date_crime=2017-03-21&time_crime=11:11:11&fir_location=delhi&complaint_time=10:11:10&phone=1234567890&status=lodged
+isFIR
+Sample http request:http://127.0.0.1:8000/api/report_complaint/?crimetype=murder&latitude=28.665236&longitude=77.2323689&crime_description=xyz&complaint_by=anonymous&date_crime=2017-03-21&time_crime=11:11:11&fir_location=delhi&complaint_time=10:11:10&phone=1234567890&status=lodged
 '''
-def reportFIR(request):
-    _name = request.GET['name']
-    _aadharcard = request.GET['aadharcard']
-    _phone = request.GET['phone']
+def reportComplaint(request):
+    _username = request.GET['username']
     _crime_type = request.GET['crimetype']
     _lat = float(request.GET['latitude'])
     _long = float(request.GET['longitude'])
@@ -48,10 +47,11 @@ def reportFIR(request):
     _time_crime = request.GET['time_crime']
     _complaint_time = request.GET['complaint_time']
     _complaint_date = request.GET['complaint_date']
+    _isFIR = request.GET['isFIR']
+
+    police_name = get_user(_username)
 
     query_report_fir = INFORMATION_FILING_APP( name = _name,
-							   aadharcard = _aadharcard,
-							   phone = _phone,
 							   crimetype = _crime_type,
                                latitude = _lat,
 					   		   longitude = _long,
@@ -60,7 +60,8 @@ def reportFIR(request):
 					   		   date_crime = _date_crime,
 					   		   time_crime = _time_crime,
 					   		   complaint_time = _complaint_time,
-					   		   complaint_date = _complaint_date)
+					   		   complaint_date = _complaint_date,
+                               isFIR = _isFIR)
     query_report_fir.save()
     return JsonResponse({"status" : "success"})
 
@@ -119,7 +120,7 @@ def neighbourhood(request):
                 'latitude': report.LAT,
                 'longitude': report.LNG,
                 'crime_description': report.CRIME_DESCRIPTION,
-                'complaint_by': report.COMPLAINT_BY,
+                'complaint_by': report.PERSON_COMPLAINT.NAME,
                 'date_crime': report.DATE_CRIME,
                 'time_crime': report.TIME_CRIME,
                 'fir_location': report.FIR_LOC,

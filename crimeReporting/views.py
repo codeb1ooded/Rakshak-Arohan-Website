@@ -74,7 +74,10 @@ def sign_in_view(request):
         username = userObj['username']
         password =  userObj['password']
         user = authenticate(username=username, password=password)
+        global varuser
+        varuser=user
         if user is not None:
+
             login(request, user)
             if 'next' in request.POST:
               return redirect(request.POST.get('next'))
@@ -85,7 +88,6 @@ def sign_in_view(request):
             return HttpResponseRedirect('/')
     messages.error(request, "You have not filled valid details, please try again!")
     return HttpResponseRedirect('/')
-
 
 def sign_up_view(request):
     form = UserRegistrationForm(request.POST)
