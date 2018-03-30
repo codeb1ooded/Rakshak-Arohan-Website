@@ -25,7 +25,7 @@ SECRET_KEY = 'i^jb*@$r46qm9=kuxmxo&ze64zu&sq)elw$x41-_)15ozd-q_9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['crime-mapping.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['crime-mapping.herokuapp.com', '127.0.0.1', '0.0.0.0', '192.168.1.101']
 
 
 # Application definition
@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-  
+
 ]
 
 ROOT_URLCONF = 'CrimeMapping.urls'

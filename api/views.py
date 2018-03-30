@@ -4,9 +4,10 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.db import models
+from django.views.decorators.csrf import csrf_exempt
 
 from datetime import *
-import json
+import json, uuid
 import simplejson
 
 from crimeReporting.models import *
@@ -45,11 +46,13 @@ def reportComplaint(request):
     _time_crime = request.GET['time_crime']
     _complaint_time = request.GET['complaint_time']
     _complaint_date = request.GET['complaint_date']
-    _isFIR = request.GET['isFIR']
+    _isFIR = False
+    if request.GET['isFIR'] == 'true':
+        _isFIR = True
 
     police_name = get_user(_username)
 
-    query_report_fir = INFORMATION_FILING_APP( name = _name,
+    query_report_complaint = INFORMATION_FILING_APP( name = _name,
 							   crimetype = _crime_type,
                                latitude = _lat,
 					   		   longitude = _long,
@@ -59,8 +62,8 @@ def reportComplaint(request):
 					   		   time_crime = _time_crime,
 					   		   complaint_time = _complaint_time,
 					   		   complaint_date = _complaint_date,
-                               isFIR = _isFIR)
-    query_report_fir.save()
+                               isVerify = _isFIR)
+    query_report_complaint.save()
     return JsonResponse({"status" : "success"})
 
 
@@ -208,3 +211,15 @@ def safest_route(request):
     destination = request.GET['destination']
     safest_path = get_route(origin, destination)
     return HttpResponse(simplejson.dumps(safest_path), content_type='application/json')
+
+
+@csrf_exempt
+def uploadImage(request):
+    received_json_data = json.loads(request.body.decode("utf-8"))
+    #print "User: " + received_json_data['user']
+    print "Image: " + received_json_data['image'][0:10]
+    image = received_json_data['image']
+    unique_filename = 'media/' + str(uuid.uuid4()) + ".jpg"
+    with open(unique_filename, "wb") as fh:
+        fh.write(image.decode('base64'))
+    return JsonResponse({"status":"recieved"})
