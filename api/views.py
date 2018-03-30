@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.db import models
 
 from datetime import *
-import json
+import json, uuid
 import simplejson
 
 from crimeReporting.models import *
@@ -208,3 +208,14 @@ def safest_route(request):
     destination = request.GET['destination']
     safest_path = get_route(origin, destination)
     return HttpResponse(simplejson.dumps(safest_path), content_type='application/json')
+
+
+def uploadImage(request):
+    received_json_data = json.loads(request.body.decode("utf-8"))
+    print ("User: " + received_json_data['user'])
+    print ("Image: " + received_json_data['image'][0:10])
+    image=received_json_data['image']
+    unique_filename = 'media/'+str(uuid.uuid4())+".jpg"
+    with open(unique_filename, "wb") as fh:
+        fh.write(image.decode('base64'))
+    return JsonResponse({"status":"recieved"})

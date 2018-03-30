@@ -50,4 +50,5 @@ urlpatterns = [
     url(r'^api/reported_crimes/', reported_crimes),
     url(r'^api/timeline/', timeline),
     url(r'^api/safest_route/', safest_route),
+    url(r'^api/upload/$', uploadImage),
 ]
