@@ -124,7 +124,6 @@ def neighbourhood(request):
                 'complaint_by': report.PERSON_COMPLAINT.NAME,
                 'date_crime': report.DATE_CRIME,
                 'time_crime': report.TIME_CRIME,
-                'fir_location': report.FIR_LOC,
                 'complaint_time': report.COMPLAINT_TIME,
                 'complaint_date': report.COMPLAINT_DATE,
                 'phone': report.PHONE,
