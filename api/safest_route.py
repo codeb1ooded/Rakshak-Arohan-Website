@@ -44,7 +44,7 @@ def calculate_score_for_route(steps):
 
 
 def get_route(origin, destination):
-    payload = {'origin': origin, 'destination': destination, 'key':'AIzaSyBsJ5VVj3W_BDwe2fsbSTceTOTovh2CsBE', 'alternatives': 'true'}
+    payload = {'origin': origin, 'destination': destination, 'key':'AIzaSyD62lqHOOFvXUfXW9Itrd-f30pSzi_Db3Q', 'alternatives': 'true'}
     request = requests.get('https://maps.googleapis.com/maps/api/directions/json', params=payload)
     route_response = request.json()
     routes = route_response['routes']
