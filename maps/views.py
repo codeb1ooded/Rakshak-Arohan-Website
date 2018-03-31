@@ -319,7 +319,7 @@ def report(request):
     reports=json.loads(reports)
     for i in reports:
         date = i["fields"]["DATE_CRIME"]
-        date=datetime.strptime(date, '%Y-%m-%d')
+        date=datetime.datetime.strptime(date, '%Y-%m-%d')
         # print (type(date))
         day = date.weekday()
 

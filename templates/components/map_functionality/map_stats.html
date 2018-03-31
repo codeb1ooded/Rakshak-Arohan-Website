@@ -17,12 +17,12 @@
 
         <div class="row">
             <div class="report-stat coral-blue-color col-8 offset-2">
-                <span class="report-stat__number">5238</span>
+                <span class="report-stat__number">{{total}}</span>
                 <span class="report_stat__name">Total Crimes</span>
             </div>
 
             <div class="report-stat warning-red-color col-8 offset-2">
-                <span class="report-stat__number">Name  Number</span>
+                <span class="report-stat__number">{{maxValue}}: {{countOfMax}}</span>
                 <span class="report_stat__name">Highest Crime</span>
             </div>
 
@@ -62,8 +62,10 @@
           </div>
           <div class="modal-body">
             <form id="new-reg-form" method="post" action="">
+                <input id="autocomplete1" placeholder="Enter your address" type="text"  name="address"></input>
+
                 {% csrf_token %}
-                {{form}}
+                {{form.as_p}}
 
             </form>
           </div>
@@ -103,9 +105,14 @@
      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDA72RxHoUnAPfspsUxDgVykHK2ONPIckc&signed_in=true&libraries=places&callback=initialize" async defer></script>
 
    <script>
-          var map, bounds,donut,marker1;
+          var map, bounds,donut,marker1, user_lat, user_long;
              function initMap() {
-              var user_lat = parseFloat(sessions[0].fields.POLICE_STATION_LAT)  , user_long = parseFloat(sessions[0].fields.POLICE_STATION_LNG);
+                 if (!user_lat && !user_long)
+                    user_lat = parseFloat(sessions[0].fields.POLICE_STATION_LAT)  , user_long = parseFloat(sessions[0].fields.POLICE_STATION_LNG);
+                 else {
+                     user_lat = 20.5937;
+                     user_long = 78.9629;
+                 }
                 map = new google.maps.Map(document.getElementById('map'), {
                   zoom: 14,
                   center: {lat: user_lat, lng: user_long},
@@ -171,9 +178,19 @@
                   };
 
                   var input = document.getElementById('autocomplete');
+                  var input2=document.getElementById('autocomplete1');
+                  console.log(input2);
                 var autocomplete = new google.maps.places.Autocomplete(input,options);
                 google.maps.event.addListener(autocomplete, 'place_changed', function () {
                     var place = autocomplete.getPlace();
+                    console.log(place.geometry.location.lat());
+                    console.log(place.geometry.location.lng());
+                    circleMake(place.geometry.location.lat(),place.geometry.location.lng());
+                });
+
+                var autocomplete1 = new google.maps.places.Autocomplete(input1,options);
+                google.maps.event.addListener(autocomplete1, 'place_changed', function () {
+                    var place = autocomplete1.getPlace();
                     console.log(place.geometry.location.lat());
                     console.log(place.geometry.location.lng());
                     circleMake(place.geometry.location.lat(),place.geometry.location.lng());
@@ -182,7 +199,7 @@
                  function drawCircle(point, radius, dir) {
               var d2r = Math.PI / 180;   // degrees to radians
               var r2d = 180 / Math.PI;   // radians to degrees
-              var earthsradius = 3984000; // 3963 is the radius of the earth in miles
+              var earthsradius = 3999999; // 3963 is the radius of the earth in miles
                  var points = 32;
                  // find the raidus in lat/lon
                  var rlat = (radius / earthsradius) * r2d;
@@ -229,7 +246,7 @@
                         icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
                         position: myCenter,
                         animation: google.maps.Animation.DROP,
-                        label: "Selected Location"
+                        label: "Your Location"
 
 
                     });
