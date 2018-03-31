@@ -69,7 +69,7 @@ class INFORMATION_FILING_APP(models.Model):
     time_crime = models.TimeField()
     complaint_time = models.TimeField()
     complaint_date = models.DateField()
-    isVerify=models.CharField(default="1",max_length=100)
+    isVerify=models.BooleanField(default=False,max_length=100)
 
     def __str__(self):
         return self.crimetype

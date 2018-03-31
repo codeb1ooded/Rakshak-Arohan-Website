@@ -15,7 +15,7 @@ from django.contrib.auth.decorators import login_required
 from prediction.fusioncharts import FusionCharts
 from django.contrib.sessions.models import Session
 from django.contrib.auth.models import User
-
+from crimeReporting.views import *
 @login_required(login_url="/signinup/")
 def map_render(request):
     is_logged_in = request.user.is_authenticated()
@@ -51,6 +51,15 @@ def map_render(request):
             cnt=cnt+1
     print(cnt)
     reports = json_serializer.serialize(FIR_REPORT.objects.all(), ensure_ascii=False)
+    if request.method=="POST":
+        form = InformationFilling(request.post)
+
+        if form.is_valid():
+            data = form.save(commit=False)
+            data.save()
+            return map_render(request)
+    else:
+        form = InformationFilling()
     context = {
         'report' : reports,
         'is_logged_in' : is_logged_in,
@@ -59,6 +68,7 @@ def map_render(request):
         'total':total,
         'maxValue':maxvalue,
         'countOfMax':cnt,
+        'form':form
     }
 
     # request_page(request)

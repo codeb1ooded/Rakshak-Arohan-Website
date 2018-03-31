@@ -36,8 +36,7 @@
 
         <div id="other-dashboard-link-container" class="row">
 
-            <a href="{% url 'fir_reg' %}" data-toggle="modal" data-target="#gde-modal" class="btn offset-2 col-8">Complaint Registration</a>
-
+            <a href="#" data-toggle="modal" data-target="#gde-modal"  class="btn offset-2 col-8">Complaint Registration</a>
             <a href="{% url 'report' %}" class="offset-2 col-8 badge badge-primary">Reports</a>
             <a href="{% url 'predict_graph' %}" class="offset-2 col-8 badge badge-warning">Predictions</a>
 
@@ -56,9 +55,16 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
+
           <div class="modal-body">
-            ...
+                <form  method="POST">{%csrf_token%}
+                 <!--<table> {{form.as_table}} </table>-->
+                    <input id="autocomplete" placeholder="Enter your address"
+             onFocus="geolocate()" type="text" name="address"></input>
+                   {{ form.as_p}}
+                 </form>
           </div>
+
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary">Save changes</button>
@@ -75,6 +81,21 @@
 
    <script>
           var map, bounds,donut,marker1;
+          function geolocate() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var geolocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            var circle = new google.maps.Circle({
+              center: geolocation,
+              radius: position.coords.accuracy
+            });
+            autocomplete.setBounds(circle.getBounds());
+          });
+        }
+      }
              function initMap() {
               var user_lat = parseFloat(sessions[0].fields.POLICE_STATION_LAT)  , user_long = parseFloat(sessions[0].fields.POLICE_STATION_LNG);
                 map = new google.maps.Map(document.getElementById('map'), {
@@ -199,8 +220,5 @@
            initMap();
            initAutocomplete();
         }
-
-
-
 
     </script>

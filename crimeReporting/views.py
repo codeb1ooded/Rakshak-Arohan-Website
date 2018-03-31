@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 import requests
+from maps.views import *
 from django.contrib import messages
 
 from django.contrib.auth import authenticate, login
@@ -109,3 +110,18 @@ def sign_up_view(request):
             return HttpResponseRedirect('/')
     messages.error(request, "You have not filled valid details, please try again!")
     return HttpResponseRedirect('/')
+
+
+def GDD(request):
+    print("************")
+    if request.method=="POST":
+        form = InformationFilling(request.post)
+
+        if form.is_valid():
+            data = form.save(commit=False)
+            data.save()
+            return map_render(request)
+    else:
+        form = InformationFilling()
+    return render(request,"components/map_functionality/map_stats.html",{'form':form})
+
