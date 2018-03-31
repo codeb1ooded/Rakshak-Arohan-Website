@@ -374,3 +374,30 @@ input[type='radio']:checked + label li:nth-of-type(4) {
 .brand img {
   width: 30px;
 }
+
+#selected-state-crime{
+    margin-top: 15px;
+    font-size: 1rem;
+    background-color: #6d63ffb3;
+    color: white;
+    padding: 5px
+}
+
+main{
+  height: 100vh;
+}
+
+#filter{
+  margin-top: 15px;
+  border-top: 1px solid black;
+  padding-top: 14px;
+}
+
+#chart-1{
+  height: 650px;
+}
+
+.left-sidebar{
+  box-shadow: 1px 1px 1px 1px lightgrey;
+  height: 100%;
+}

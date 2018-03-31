@@ -5,6 +5,8 @@ from prediction.fusioncharts import FusionCharts
 from collections import defaultdict
 from django.contrib.auth.decorators import login_required
 import operator
+import os
+from django.conf import settings
 # def my_view(request):
 #     context={}
 #     total=total_view(request)
@@ -102,7 +104,7 @@ def predict_graph(request):
         somevar1 = (request.GET.get('state'))
         totalvar=somevar1+somevar
         print (somevar)
-        data_main = np.recfromcsv('static\dataset.csv')
+        data_main = np.recfromcsv(os.path.join(settings.BASE_DIR, 'static/dataset.csv'))
         data = list(range(2001, 2013))
         data1 = data_main[totalvar]
         x = np.squeeze(np.array(data))
@@ -117,7 +119,8 @@ def predict_graph(request):
             'state': somevar1.upper()
              }
     else :
-        data_main = np.recfromcsv('static\dataset.csv')
+        # data_main = np.recfromcsv('static\dataset.csv')
+        data_main = np.recfromcsv(os.path.join(settings.BASE_DIR, 'static/dataset.csv'))
         data = list(range(2001, 2013))
         data1 = data_main['totaltotal']
         x = np.squeeze(np.array(data))
@@ -125,7 +128,7 @@ def predict_graph(request):
         y = np.delete(y, (0), axis=0)
         y = y.astype(int)
         dataSource = callLinearRegression(x, y)
-        column2D = FusionCharts("column3D", "ex1", "100%", "50%", "chart-1", "json", dataSource)
+        column2D = FusionCharts("column3D", "ex1", "100%", "100%", "chart-1", "json", dataSource)
         context = {
             'total': column2D.render(),
             'crime': 'All Crime',
@@ -148,6 +151,7 @@ def callLinearRegression(x,y):
         "numberPrefix": "",
         "theme": "fint",
         "labelDisplay": "auto",
+        "baseFontSize": "25"
     }
     dataSource['data'] = []
     for i in range(2018,2022):
@@ -164,7 +168,8 @@ def callLinearRegression(x,y):
 
 @login_required(login_url="/signinup/")
 def prominent_city(request):
-    data_main = np.recfromcsv('static\dataset.csv')
+    # data_main = np.recfromcsv('static\dataset.csv')
+    data_main = np.recfromcsv(os.path.join(settings.BASE_DIR, 'static/dataset.csv'))
     #x-->year
     #y-->crime total
     data=list(range(2001,2013))
@@ -204,7 +209,7 @@ def prominent_city(request):
         dataSource['data'].append(data)
 
     print (dataSource)
-    column2D = FusionCharts("column3D", "ex10", "100%", "50%", "chart-1", "json", dataSource)
+    column2D = FusionCharts("column3D", "ex10", "100%", "100%", "chart-1", "json", dataSource)
     context = {
         'total': column2D.render(),
     }
@@ -213,7 +218,8 @@ def prominent_city(request):
 
 @login_required(login_url="/signinup/")
 def prominent_crime(request):
-    data_main = np.recfromcsv('static\dataset.csv')
+    # data_main = np.recfromcsv('static\dataset.csv')
+    data_main = np.recfromcsv(os.path.join(settings.BASE_DIR, 'static/dataset.csv'))
     #x-->year
     #y-->crime total
     data=list(range(2001,2013))
@@ -253,7 +259,7 @@ def prominent_crime(request):
         dataSource['data'].append(data)
 
     print (dataSource)
-    column2D = FusionCharts("column3D", "ex10", "100%", "50%", "chart-1", "json", dataSource)
+    column2D = FusionCharts("column3D", "ex10", "100%", "100%", "chart-1", "json", dataSource)
     context = {
         'total': column2D.render(),
     }

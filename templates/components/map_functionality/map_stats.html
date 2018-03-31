@@ -27,6 +27,8 @@
                 <span class="report_stat__name">Highest Crime</span>
             </div>
 
+
+
             <!--<div class="report-stat coral-blue-color col-8 offset-2">-->
                 <!--<span class="report-stat__number">5238</span>-->
                 <!--<span class="report_stat__name"></span>-->
@@ -36,7 +38,15 @@
 
         <div id="other-dashboard-link-container" class="row">
 
+
             <a href="#" data-toggle="modal" data-target="#gde-modal"  class="btn offset-2 col-8">Complaint Registration</a>
+
+            <a href="{% url 'fir_reg' %}" data-toggle="modal" data-target="#gde-modal" class="btn offset-2 col-8"><i class="fas fa-book"></i>  Complaint Registration</a>
+
+            <a href="" data-toggle="modal" data-target="#gde-list-modal" class="btn offset-2 col-8"><i class="fas fa-list-alt"></i> General Diary Entries</a>
+
+
+
             <a href="{% url 'report' %}" class="offset-2 col-8 badge badge-primary">Reports</a>
             <a href="{% url 'predict_graph' %}" class="offset-2 col-8 badge badge-warning">Predictions</a>
 
@@ -74,6 +84,27 @@
     </div>
 
 
+    <div class="modal fade" id="gde-list-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="gde-list-modal-title">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
 
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 
@@ -100,7 +131,16 @@
               var user_lat = parseFloat(sessions[0].fields.POLICE_STATION_LAT)  , user_long = parseFloat(sessions[0].fields.POLICE_STATION_LNG);
                 map = new google.maps.Map(document.getElementById('map'), {
                   zoom: 14,
-                  center: {lat: user_lat, lng: user_long}
+                  center: {lat: user_lat, lng: user_long},
+                   styles: [
+                       {
+                          featureType: 'poi',
+                            stylers: [
+                              { visibility: "off" }
+                            ]
+                        }
+
+                   ]
                 });
                 circleMake(user_lat,user_long);
                 var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -209,9 +249,13 @@
                    });
                     var myCenter = new google.maps.LatLng(lat,lng);
                    marker1 = new google.maps.Marker({
-            position: myCenter,
-            animation: google.maps.Animation.BOUNCE
-          });
+                        icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+                        position: myCenter,
+                        animation: google.maps.Animation.DROP,
+                        label: "Selected Location"
+
+
+                    });
           marker1.setMap(map);
                    donut.setMap(map);
                 map.fitBounds(bounds);

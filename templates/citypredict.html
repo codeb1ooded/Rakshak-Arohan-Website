@@ -1,16 +1,35 @@
+
+<!--<html>-->
+    <!--<title>Filters</title>-->
+
+    <!--<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+
+<!--</head>-->
+<!--<body>-->
+
+<!--</body>-->
+<!--</html>-->
+{% extends 'base_internal_dashboard_structure.html' %}
 {% load staticfiles %}
 
-<html>
-    <title>Filters</title>
+{% block additional_styles %}
+    <link href="{% static 'css/citypredict.css' %}" rel="stylesheet">
     <script type="text/javascript" src="{% static 'fusioncharts/fusioncharts.js' %}"></script>
     <script type="text/javascript" src=" {% static 'fusioncharts/themes/fusioncharts.theme.fint.js' %}"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<head>
-    <meta charset="UTF-8">
+{% endblock %}
 
-</head>
-<body>
-<h1>MOST PROMINENT CRIME CITIES</h1>
-<div id="chart-1">{{total |safe}}</div>
-</body>
-</html>
+{% block page_body %}
+    {% include "components/base_header.html" %}
+    <main class="container-fluid">
+        <h2>MOST PROMINENT CRIME STATES</h2>
+        <div id="chart-1">{{total |safe}}</div>
+    </main>
+
+{% endblock %}
+
+
+{% block additional_scripts %}
+
+{% endblock %}
