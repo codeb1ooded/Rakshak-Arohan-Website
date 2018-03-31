@@ -52,7 +52,7 @@ def reportComplaint(request):
 
     police_name = get_user(_username)
 
-    query_report_complaint = INFORMATION_FILING_APP( name = _name,
+    query_report_complaint = INFORMATION_FILING_APP( police_name = police_name,
 							   crimetype = _crime_type,
                                latitude = _lat,
 					   		   longitude = _long,
