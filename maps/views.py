@@ -15,13 +15,14 @@ from django.contrib.auth.decorators import login_required
 from prediction.fusioncharts import FusionCharts
 from django.contrib.sessions.models import Session
 from django.contrib.auth.models import User
+from crimeReporting.views import *
 
+session_key = 'a3053y827y5ref9mk55yailotwz92ywd'
 @login_required(login_url="/signinup/")
+
 def map_render(request):
     is_logged_in = request.user.is_authenticated()
     json_serializer = serializers.get_serializer("json")()
-    if not request.session.exists(request.session.session_key):
-        request.session.create()
     session = Session.objects.get(session_key=request.session.session_key)
     session_data = session.get_decoded()
     uid = session_data.get('_auth_user_id')
@@ -30,6 +31,8 @@ def map_render(request):
     var = json_serializer.serialize(USER.objects.filter(USER_REF=user), ensure_ascii=False)
     abc=json.loads(var)
     var = json_serializer.serialize(POLICE_STATION.objects.filter(pk=abc[0]["fields"]["LAT"]), ensure_ascii=False)
+    x = json.loads(var)
+    add = x[0]["fields"]["POLICE_ADDRESS"]
     check=abc[0]["fields"]["LAT"]
     l=[]
 
@@ -51,6 +54,15 @@ def map_render(request):
             cnt=cnt+1
     print(cnt)
     reports = json_serializer.serialize(FIR_REPORT.objects.all(), ensure_ascii=False)
+    if request.method=="POST":
+        form = InformationFilling(request.POST)
+
+        if form.is_valid():
+            data = form.save(commit=False)
+            data.save()
+            return map_render(request)
+    else:
+        form = InformationFilling()
     context = {
         'report' : reports,
         'is_logged_in' : is_logged_in,
@@ -59,6 +71,8 @@ def map_render(request):
         'total':total,
         'maxValue':maxvalue,
         'countOfMax':cnt,
+        'form':form,
+        'add': add
     }
 
     # request_page(request)
@@ -69,6 +83,7 @@ def map_render(request):
 def request_page(request):
     reports=[]
     json_serializer = serializers.get_serializer("json")()
+    print ("%"*30)
     if (request.GET.get('mybtn')):
         somevar = (request.GET.getlist('crime'))
         date_start = (request.GET.get('date_crime_start'))
@@ -100,34 +115,62 @@ def request_page(request):
                     report = FIR_REPORT.objects.filter(CRIME_TYPE__in=somevar,STATUS__in=status_var,DATE_CRIME__range=[date_start, date_end])
 
         reports = json_serializer.serialize(report, ensure_ascii=False)
-    session = Session.objects.get(session_key=session_key)
+    print ("#"*30)
+    session = Session.objects.get(session_key=request.session.session_key)
     session_data = session.get_decoded()
-
     uid = session_data.get('_auth_user_id')
     user = User.objects.get(id=uid)
-    print(user)
-    var = USER.objects.filter(USER_REF=user)
-    print(var)
+    # print(user)
+    print("*"*30)
+    var = json_serializer.serialize(USER.objects.filter(USER_REF=user), ensure_ascii=False)
+    abc = json.loads(var)
+    var = json_serializer.serialize(POLICE_STATION.objects.filter(pk=abc[0]["fields"]["LAT"]), ensure_ascii=False)
+    x=json.loads(var)
+    add=x[0]["fields"]["POLICE_ADDRESS"]
+    check = abc[0]["fields"]["LAT"]
+    l = []
+
+    var1 = json.loads(reports)
+    for i in var1:
+        user = json.loads(json_serializer.serialize(USER.objects.filter(pk=i["fields"]["PERSON_COMPLAINT"])))
+        if user[0]["fields"]["LAT"] == check:
+            l.append(i)
+    total = len(l)
+
+    types = []
+    for t in l:
+        types.append(t["fields"]["CRIME_TYPE"])
+
+    cnt = 0
+    maxvalue = max(types, key=types.count)
+    for i in types:
+        if i == maxvalue:
+            cnt = cnt + 1
+
     context = {
         'report': reports,
         'sessions': var,
+        'report_data': l,
+        'total': total,
+        'maxValue': maxvalue,
+        'countOfMax': cnt,
+        'add':add
     }
 
     return render(request, 'dashboards/wall_map_dashboard.html', context)
 
 
 def map_render_filter(request):
-
+    print ("*"*40)
     json_serializer = serializers.get_serializer("json")()
     reports = json_serializer.serialize(FIR_REPORT.objects.all(), ensure_ascii=False)
-    session = Session.objects.get(session_key=session_key)
+    session = Session.objects.get(session_key=request.session.session_key)
     session_data = session.get_decoded()
-
     uid = session_data.get('_auth_user_id')
     user = User.objects.get(id=uid)
-    print(user)
+    # print(user)
     var = USER.objects.filter(USER_REF=user)
-    print(var)
+    # print(var)
     context = {
         'report' : reports,
         'sessions':var,
@@ -147,7 +190,7 @@ def crime_status(request):
         reports = json_serializer.serialize(report, ensure_ascii=False)
         details= json_serializer.serialize(detail, ensure_ascii=False)
         users = json_serializer.serialize(USER.objects.all(), ensure_ascii = False)
-        session = Session.objects.get(session_key=session_key)
+        session = Session.objects.get(session_key=request.session.session_key)
         session_data = session.get_decoded()
 
         uid = session_data.get('_auth_user_id')
@@ -191,7 +234,7 @@ def report(request):
     if not week_ago:
         today = DT.date.today()
         week_ago = today - DT.timedelta(days=7)
-        print (week_ago)
+        # print (week_ago)
     report = FIR_REPORT.objects.filter(DATE_CRIME__range=[week_ago, today])
     dataSource = {}
     pieSource={}
@@ -462,14 +505,15 @@ def send_email(toaddr,id):
 '''
 
 def crime_statistics(request):
+
     json_serializer = serializers.get_serializer("json")()
-    session = Session.objects.get(session_key=session_key)
+    session = Session.objects.get(session_key=request.session.session_key)
     session_data = session.get_decoded()
     uid = session_data.get('_auth_user_id')
     user = User.objects.get(id=uid)
     abc = USER.objects.filter(USER_REF=user)
     var = json_serializer.serialize(USER.objects.filter(USER_REF=user), ensure_ascii=False)
     abc = json.loads(var)
-    print(abc[0]["fields"]["LAT"])
+    # print(abc[0]["fields"]["LAT"])
     var1=json_serializer.serialize(FIR_REPORT.objects.filter(USER_REF=user))
-    print(var)
+    # print(var)

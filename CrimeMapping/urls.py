@@ -25,7 +25,7 @@ from Notification.views import *
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', home, name='HOME_PAGE'),
-    url(r'^logout/$', auth_views.logout, {'template_name': 'logout.html'}),
+    url(r'^logout/$', auth_views.logout, {'template_name': 'logout.html'}, name="logout"),
     url(r'^signinup/$', sign_in_up_view),
     url(r'^signin/$', sign_in_view),
     url(r'^signup/$', sign_up_view),

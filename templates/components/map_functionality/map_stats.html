@@ -61,11 +61,15 @@
             </button>
           </div>
           <div class="modal-body">
-            ...
+            <form id="new-reg-form" method="post" action="">
+                {% csrf_token %}
+                {{form}}
+
+            </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="submit" form="new-reg-form" class="btn btn-primary">Save changes</button>
           </div>
         </div>
       </div>

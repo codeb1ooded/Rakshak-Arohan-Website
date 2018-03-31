@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django import forms
-from .models import FIR_REPORT
+# from .models import FIR_REPORT
+from .models import *
 
 class FirRegistrationForm(forms.ModelForm):
     class Meta:
@@ -54,3 +55,10 @@ class UserAuthenticationForm(forms.Form):
         max_length = 32,
         widget = forms.PasswordInput()
     )
+
+
+class InformationFilling(forms.ModelForm):
+    class Meta:
+        model = INFORMATION_FILING_APP
+        template_name = 'templates/components/map_stats'
+        fields = ['crimetype', 'location', 'crime_description']
