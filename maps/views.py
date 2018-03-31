@@ -210,7 +210,6 @@ def crime_status(request):
         users = json_serializer.serialize(USER.objects.all(), ensure_ascii = False)
         session = Session.objects.get(session_key=request.session.session_key)
         session_data = session.get_decoded()
-
         uid = session_data.get('_auth_user_id')
         user = User.objects.get(id=uid)
         print(user)
@@ -254,6 +253,9 @@ def report(request):
         week_ago = today - DT.timedelta(days=7)
         # print (week_ago)
     report = FIR_REPORT.objects.filter(DATE_CRIME__range=[week_ago, today])
+    gender_age = "FIR_REPORT.objects.filter(DATE_CRIME__range=[gender, age])"
+    data3 = []
+    data3.append(gender_age)
     dataSource = {}
     pieSource={}
     pieSource['chart']={

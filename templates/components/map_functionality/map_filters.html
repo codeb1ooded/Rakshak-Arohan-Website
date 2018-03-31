@@ -13,7 +13,7 @@
      <button type="button">Click to analyse selected area!</button>
   </div>-->
     <div class="container-fluid">
-          <p class="form-filter-header form-header">Filter Crimes</p>
+          <p class="form-filter-header form-header" style=""font-size:33px; margin-top:10px;>Filter Crimes</p>
 
 
         <form action="{% url 'request_page'  %}" method="GET">
@@ -21,7 +21,7 @@
 
 
             <div class="form-field-group date-group">
-                <p class="form-filter-header text-light bg-dark">Select Date</p>
+                <p class="form-filter-header text-light bg-dark" style="font-size:20px;">Select Date</p>
                 <div class="form-group">
                     <label for="crime-start-date" class="col-md-2">From</label>
                     <input type="date" class="form-control col-md-9" id="crime-start-date" name="date_crime_start"><br>
@@ -34,7 +34,7 @@
             </div>
 
             <div class="form-field-group">
-                <p class="form-filter-header text-light bg-dark">Select Incident Type</p>
+                <p class="form-filter-header text-light bg-dark" style="font-size:20px;">Select Incident Type</p>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="theft" name="crime" id="theft-filter">
                     <label class="form-check-label" for="theft-filter">
@@ -53,7 +53,7 @@
             </div>
 
             <div class="form-field-group">
-                <p class="form-filter-header text-light bg-dark">Select By Address</p>
+                <p class="form-filter-header text-light bg-dark" style="font-size:20px;">Select By Address</p>
                 <div id="locationField" class="form-check">
                     <!--<input class="form-check-input" type="checkbox" value="theft" name="crime" id="theft-filter">-->
                       <!--<div id="locationField" class="">-->
@@ -69,7 +69,7 @@
             </div>
 
             <div class="text-center">
-                <input type="submit" value="Submit" name="mybtn" class="btn btn-info">
+                <input type="submit" value="Submit" name="mybtn" class="btn btn-info" style=""width:80px; height:auto; font-size:18px;>
 
             </div>
 

@@ -13,7 +13,7 @@
     <main class="container-fluid">
         <div class="row">
             <div class="col-2">
-                <h2>MOST PROMINENT CRIMES</h2>
+                <h2>WEEKLY UPDATES</h2>
 
                 <form action="{% url 'report'%}" method="get">
                     <div class="form-group">
@@ -23,6 +23,20 @@
                      <div class="form-group">
                         <label for="date_crime_end">End Date</label>
                          <input type="date" name="date_crime_end" id="date_crime_end"><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="age_group">Age Group</label>
+                        <select>
+                          <option value="lessthanten">&lt;10</option>
+                          <option value="tentotwentyfive">10 - 25</option>
+                          <option value="twentyficetofifty">25 - 50</option>
+                          <option value="greaterthanfifty">&gt;50</option>
+                        </select><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender_wise">Crime Against ...</label><br>
+                        <input type="radio" name="female">Female<br>
+                        <input type="radio" name="male" checked>Male<br>                     
                     </div>
                     <input class="btn btn-info" type="submit" value="submit">
                 </form>
