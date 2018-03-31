@@ -30,7 +30,7 @@ urlpatterns = [
     url(r'^signin/$', sign_in_view),
     url(r'^signup/$', sign_up_view),
 
-    url(r'^viewMap/$', map_render),
+    url(r'^viewMap/$', map_render,name='map_render'),
     url(r'^prediction/$', predict_graph, name='predict_graph'),
     url(r'^register/$', request_page, name='request_page'),
     url(r'^most_prominent_city/$',prominent_city, name='most_prominent_city'),

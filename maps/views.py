@@ -27,7 +27,7 @@ def map_render(request):
     session_data = session.get_decoded()
     uid = session_data.get('_auth_user_id')
     user = User.objects.get(id=uid)
-    abc=USER.objects.filter(USER_REF=user)
+    abc1=USER.objects.filter(USER_REF=user)
     var = json_serializer.serialize(USER.objects.filter(USER_REF=user), ensure_ascii=False)
     abc=json.loads(var)
     var = json_serializer.serialize(POLICE_STATION.objects.filter(pk=abc[0]["fields"]["LAT"]), ensure_ascii=False)
@@ -54,11 +54,26 @@ def map_render(request):
             cnt=cnt+1
     print(cnt)
     reports = json_serializer.serialize(FIR_REPORT.objects.all(), ensure_ascii=False)
-    if request.method=="POST":
-        form = InformationFilling(request.POST)
+    if request.method=="GET":
+        form = InformationFilling(request.GET)
 
         if form.is_valid():
             data = form.save(commit=False)
+            data.crimetype= request.GET.get('crime_type')
+            data.latitude = 23.12
+            data.longitude = 72.16
+            data.police_name=abc1[0]
+            print (datetime.datetime.now())
+            time_crime=datetime.datetime.now()
+            # time_crime=time_crime.split(" ")
+            data.location=request.GET.get('location')
+            data.date_crime=time_crime.date()
+            # print(date.date_crime)
+            data.time_crime=time_crime.time()
+            data.complaint_time = time_crime.date()
+            data.complaint_date = time_crime.date()
+            data.crime_description=request.GET.get('crime_description')
+
             data.save()
             return map_render(request)
     else:
@@ -72,7 +87,8 @@ def map_render(request):
         'maxValue':maxvalue,
         'countOfMax':cnt,
         'form':form,
-        'add': add
+        'add': add,
+        'gde': INFORMATION_FILING_APP.objects.filter(isVerify = '0')
     }
 
     # request_page(request)
@@ -154,7 +170,8 @@ def request_page(request):
         'total': total,
         'maxValue': maxvalue,
         'countOfMax': cnt,
-        'add':add
+        'add':add,
+        'gde': INFORMATION_FILING_APP.objects.filter(isVerify = '0')
     }
 
     return render(request, 'dashboards/wall_map_dashboard.html', context)
@@ -174,6 +191,7 @@ def map_render_filter(request):
     context = {
         'report' : reports,
         'sessions':var,
+        'gde': INFORMATION_FILING_APP.objects.filter(isVerify = '0')
 
     }
     return render(request, 'dashboards/wall_map_dashboard.html', context)

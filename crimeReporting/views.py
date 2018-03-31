@@ -79,7 +79,6 @@ def sign_in_view(request):
         #varuser=user
         if not request.session.exists(request.session.session_key):
             request.session.create()
-
         if user is not None:
 
             login(request, user)
